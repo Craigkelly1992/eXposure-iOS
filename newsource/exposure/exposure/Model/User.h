@@ -44,6 +44,9 @@
 /// for signup || edit
 @property (nonatomic, copy) NSString *password;
 
+/// for ranking
+@property (nonatomic, retain) NSNumber *current_user_following;
+
 @end
 
 // An example

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPLoginViewController : UIViewController <UITextFieldDelegate>
+@interface EXPLoginViewController : EXPBaseViewController <UITextFieldDelegate>
 
 
 //IB Outlets

@@ -9,7 +9,7 @@
 #import "EXPTabBarController.h"
 #import "EXPLoginViewController.h"
 #import <DAKeyboardControl/DAKeyboardControl.h>
-#import "EXPStreamViewController.h"
+#import "EXPPhotoStreamViewController.h"
 #import "EXPPortfolioViewController.h"
 #import "EXPRankingsViewController.h"
 #import "EXPNotificationsViewController.h"
@@ -19,6 +19,12 @@
 //#import "CLImageEditor.h"
 #import "EXPNewPostViewController.h"
 #import "EXPLoginViewController.h"
+
+// View Controler Identifer
+#define VC_PHOTOSTREAM_ID @"EXPPhotoStreamViewControllerIdentifier"
+#define VC_CONTEST_ID @"EXPContestsViewControllerIdentifier"
+#define VC_NOTIFICATION_ID @"EXPNotificationsViewControllerIdentifier"
+#define VC_PORTFOLIO_ID @"EXPPortfolioViewControllerIdentifier"
 
 @interface EXPTabBarController ()
 
@@ -40,32 +46,75 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.viewControllers = [self createTabBarViewControllers];
-    
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"tab_camera_normal"] highlightImage:[UIImage imageNamed:@"tab_camera_active"]];
-    // Do any additional setup after loading the view.
-    
-    
-    UITabBarItem *item = [self.tabBar.items objectAtIndex:0];
-    UITabBarItem *item2 = [self.tabBar.items objectAtIndex:1];
-    UITabBarItem *item4 = [self.tabBar.items objectAtIndex:3];
-    UITabBarItem *item5 = [self.tabBar.items objectAtIndex:4];
-    // here you need to use the icon with the color you want, as it will be rendered as it is
-    item.image =  [[UIImage imageNamed:@"tab_photo_stream_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item2.image = [[UIImage imageNamed:@"tab_contests_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item4.image = [[UIImage imageNamed:@"tab_notifications_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item5.image = [[UIImage imageNamed:@"tab_portfolio_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    // this icon is used for selected tab and it will get tinted as defined in self.tabBar.tintColor
-    item.selectedImage =  [[UIImage imageNamed:@"tab_photo_stream_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item2.selectedImage = [[UIImage imageNamed:@"tab_contests_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item4.selectedImage = [[UIImage imageNamed:@"tab_notifications_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    item5.selectedImage = [[UIImage imageNamed:@"tab_portfolio_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
+    [self customTabbarItem];
     [self.navigationController.navigationBar setTranslucent:NO];
     self.tabBar.translucent = NO;
     self.tabBar.barTintColor = [UIColor colorWithRed:0.0f green:0.17647059f blue:0.4f alpha:1];
 }
 
+// Create ViewControllers for Tab Bar
+-(NSArray *)createTabBarViewControllers {
+    
+    // create view controller
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    // #1
+    EXPPhotoStreamViewController *photoStreamVC = [storyboard instantiateViewControllerWithIdentifier:VC_PHOTOSTREAM_ID];
+    UINavigationController *photoStreamNavigationVC = [[UINavigationController alloc]initWithRootViewController:photoStreamVC];
+    photoStreamVC.title = @"Photo Stream";
+    // #2
+    EXPContestsViewController *contestVC = [storyboard instantiateViewControllerWithIdentifier:VC_CONTEST_ID];
+    UINavigationController *contestNavigationVC = [[UINavigationController alloc]initWithRootViewController:contestVC];
+    contestVC.title = @"Contest";
+    // #3
+    // Camera Button
+    // #4
+    EXPNotificationsViewController *notificationVC = [storyboard instantiateViewControllerWithIdentifier:VC_NOTIFICATION_ID];
+    UINavigationController *notificationNavigationVC = [[UINavigationController alloc]initWithRootViewController:notificationVC];
+    notificationVC.title = @"Notification";
+    // #5
+    EXPPortfolioViewController *portfolioVC = [storyboard instantiateViewControllerWithIdentifier:VC_PORTFOLIO_ID];
+    UINavigationController *portfolioNavigationVC = [[UINavigationController alloc]initWithRootViewController:portfolioVC];
+    portfolioVC.title = @"Portfolio";
+    // list
+    return [NSArray arrayWithObjects:
+            photoStreamNavigationVC,
+            contestNavigationVC,
+            [[UIViewController alloc]init],
+            notificationNavigationVC,
+            portfolioNavigationVC, nil];
+}
+
+#pragma mark - custom tabbar item
+- (void) customTabbarItem {
+    
+    // create another tab
+    UITabBarItem *tabPhotoStream = [self.tabBar.items objectAtIndex:0];
+    UITabBarItem *tabContest = [self.tabBar.items objectAtIndex:1];
+    UITabBarItem *tabNotification = [self.tabBar.items objectAtIndex:3];
+    UITabBarItem *tabPortfolio = [self.tabBar.items objectAtIndex:4];
+    
+    // #1 : PhotoStream
+    tabPhotoStream.image =  [[UIImage imageNamed:@"tab_photo_stream_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabPhotoStream.selectedImage =  [[UIImage imageNamed:@"tab_photo_stream_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    // #2 : Contest
+    tabContest.image = [[UIImage imageNamed:@"tab_contests_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabContest.selectedImage = [[UIImage imageNamed:@"tab_contests_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    // #3 : Camera
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"tab_camera_normal"] highlightImage:[UIImage imageNamed:@"tab_camera_active"]];
+    
+    // #4 : Notification
+    tabNotification.image = [[UIImage imageNamed:@"tab_notifications_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabNotification.selectedImage = [[UIImage imageNamed:@"tab_notifications_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    // #5 : Portfolio
+    tabPortfolio.image = [[UIImage imageNamed:@"tab_portfolio_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabPortfolio.selectedImage = [[UIImage imageNamed:@"tab_portfolio_active"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
+
+#pragma mark - Central Button Camera
+// Add button Camera
 -(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
 {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -96,44 +145,14 @@
 }
 
 -(void)didPressCamera {
-//    if([User currentUser] == nil){
-//        EXPLoginViewController *vc = [[EXPLoginViewController alloc]init];
-//        [self presentViewController:vc animated:YES completion:nil];
-//    } else {
-//        
-//        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", nil]showInView:self.view];
-//    }
-}
-
--(NSArray *)createTabBarViewControllers {
-    EXPStreamViewController *vc = [[EXPStreamViewController alloc]init];
-    
-//    EXPPortfolioViewController *portfolio = [[EXPPortfolioViewController alloc]initWithUser:[User currentUser]];
-    EXPPortfolioViewController *portfolio = [[EXPPortfolioViewController alloc]init];
-    
-    EXPNotificationsViewController *notifications = [[EXPNotificationsViewController alloc]init];
-    EXPContestsViewController *contests = [[EXPContestsViewController alloc]init];
-    
-    UINavigationController *streamNav = [[UINavigationController alloc]initWithRootViewController:vc];
-    UINavigationController *notificationnav = [[UINavigationController alloc]initWithRootViewController:notifications];
-    UINavigationController *portfolioNav = [[UINavigationController alloc]initWithRootViewController:portfolio];
-    
-    UINavigationController *contestsNav = [[UINavigationController alloc]initWithRootViewController:contests];
-    
-    notifications.title = @"Notifications";
-    portfolio.title = @"Portfolio";
-    vc.title = @"Photo Stream";
-    
-    contests.title = @"Contests";
-    return [NSArray arrayWithObjects:streamNav, contestsNav, [[UIViewController alloc]init], notificationnav, portfolioNav, nil];
-}
-
--(NSArray *)createTabBarItems {
-    
-    UIViewController *controller = [self.viewControllers objectAtIndex:0];
-    UITabBarItem *item = [[UITabBarItem alloc]initWithTitle:controller.title image:[UIImage imageNamed:@"tab_photo_stream_normal"] selectedImage:[UIImage imageNamed:@"tab_photo_stream_active"]];
-    
-    return [NSArray arrayWithObject:item];
+    if([[Infrastructure sharedClient] currentUser]){
+        // anonymous
+        EXPLoginViewController *vc = [[EXPLoginViewController alloc]init];
+        [self presentViewController:vc animated:YES completion:nil];
+    } else {
+        // has login
+        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", nil]showInView:self.view];
+    }
 }
 
 #pragma mark - actionsheet delegate
@@ -164,41 +183,10 @@
 #pragma mark - image picker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-//    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-//    
-//    CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:image];
-//    editor.delegate = self;
-//    CLImageToolInfo *tonalTool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
-//    tonalTool.available = NO;
-//    
-//    CLImageToolInfo *adjustmentTool = [editor.toolInfo subToolInfoWithToolName:@"CLAdjustmentTool" recursive:NO];
-//    adjustmentTool.available = NO;
-//    
-//    CLImageToolInfo *effectTool = [editor.toolInfo subToolInfoWithToolName:@"CLEffectTool" recursive:NO];
-//    effectTool.available = NO;
-//    
-//    CLImageToolInfo *blurTool = [editor.toolInfo subToolInfoWithToolName:@"CLBlurTool" recursive:NO];
-//    blurTool.available = NO;
-//    
-//    NSArray *array = [editor.toolInfo subtools];
-//    for (CLImageToolInfo *tool in array) {
-//        NSLog(@"%@",tool.toolName);
-//    }
-//    [picker pushViewController:editor animated:YES];
-    
 }
 
 #pragma mark - image editor delegate
-//- (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
-//{
-//    NSLog(@"oh hey sup there");
-//    //   EXPNewPostViewController *vc = [[EXPNewPostViewController alloc]initWithImage:image attributes:@{@"contest_id": @""}];
-//    NSDictionary *dict = @{@"image": image};
-//    [self setSelectedIndex:0];
-//    [[NSNotificationCenter defaultCenter]postNotificationName:@"kNewPost" object:nil userInfo:dict];
-//    [editor dismissViewControllerAnimated:YES completion:nil];
-//    
-//}
+
 
 #pragma mark - life cycle
 - (void)didReceiveMemoryWarning
@@ -206,16 +194,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

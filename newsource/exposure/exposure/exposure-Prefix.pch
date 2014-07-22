@@ -13,4 +13,9 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+//
+    #import "APConnectionLayer.h"
+    #import "Infrastructure.h"
+    #import "AsyncImageView.h"
+    #import "SVProgressHUD.h"
 #endif

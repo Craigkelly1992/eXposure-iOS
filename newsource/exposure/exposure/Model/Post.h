@@ -16,6 +16,8 @@
 @property (nonatomic, retain) NSNumber * uploader_id;
 @property (nonatomic, retain) NSNumber * contest_id;
 @property (nonatomic, copy) NSString * text;
+@property (nonatomic, copy) NSString * image_url;
+@property (nonatomic, retain) NSNumber * brand;
 @property (nonatomic, copy) NSString * created_at;
 @property (nonatomic, copy) NSString * updated_at;
 @property (nonatomic, copy) NSString * image_file_name;

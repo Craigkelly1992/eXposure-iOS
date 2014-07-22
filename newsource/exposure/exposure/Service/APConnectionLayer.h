@@ -246,6 +246,10 @@
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+// get all post- anonymous
+- (void)getAllPostWithSuccess:(void (^)(id responseObject))success
+                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 // get posts from current user
 - (void)getUserPostWithUserEmail:(NSString*)userEmail
                       userToken:(NSString*)userToken

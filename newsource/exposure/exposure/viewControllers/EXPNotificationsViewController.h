@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPNotificationsViewController : UIViewController
+@interface EXPNotificationsViewController : EXPBaseViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UITableView *tableViewNotification;
 
 @end

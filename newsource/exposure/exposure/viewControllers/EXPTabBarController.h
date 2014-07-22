@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EXPTabBarController : UITabBarController
+@interface EXPTabBarController : UITabBarController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+-(NSArray *)createTabBarViewControllers;
+    
 @end

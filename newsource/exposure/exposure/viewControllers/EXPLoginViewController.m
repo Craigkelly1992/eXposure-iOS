@@ -74,7 +74,22 @@
 #pragma mark - IB Actions
 - (IBAction)buttonSignInTap:(id)sender {
     [SVProgressHUD showWithStatus:@"Logging In"];
-    
+    [self.serviceAPI loginWithUserEmail:self.textFieldEmail.text password:self.textFieldPassword.text success:^(id responseObject) {
+        
+        NSLog(@"Signin Successfully !");
+        // save to global variables
+        [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
+        [SVProgressHUD dismiss];
+        // go to home screen
+        EXPTabBarController *tc = [[EXPTabBarController alloc]init];
+        [[[UIApplication sharedApplication] keyWindow] setRootViewController:tc];
+        [self removeFromParentViewController];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Signin Failed !");
+        [SVProgressHUD dismiss];
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Email or password is not correct" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }];
 }
 
 - (IBAction)buttonSignUpTap:(id)sender {

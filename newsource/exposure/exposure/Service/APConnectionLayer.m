@@ -462,7 +462,7 @@
     }];
 }
 
-// get post by post id
+// get post by post id - checked
 - (void)getPostByPostId:(NSNumber*)postId
               userEmail:(NSString*)userEmail
               userToken:(NSString*)userToken
@@ -485,7 +485,7 @@
     }];
 }
 
-// get all post
+// get all post - checked
 - (void)getAllPostWithUserEmail:(NSString*)userEmail
                       userToken:(NSString*)userToken
                         success:(void (^)(id responseObject))success
@@ -507,7 +507,23 @@
     }];
 }
 
-// get posts from current user
+// get all post - anonymous - checked
+- (void)getAllPostWithSuccess:(void (^)(id responseObject))success
+                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:GET_ALL_POST];
+    [self GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
+// get posts from current user - checked
 - (void)getUserPostWithUserEmail:(NSString*)userEmail
                        userToken:(NSString*)userToken
                          success:(void (^)(id responseObject))success
@@ -519,6 +535,7 @@
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return a list of Post
         if (success) {
             success(responseObject);
         }
@@ -529,7 +546,7 @@
     }];
 }
 
-// get posts by user id
+// get posts by user id - checked
 - (void)getPostByUserId:(NSNumber*)userId
               userEmail:(NSString*)userEmail
               userToken:(NSString*)userToken
@@ -543,6 +560,7 @@
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return a list of Post
         if (success) {
             success(responseObject);
         }
@@ -553,7 +571,7 @@
     }];
 }
 
-// get posts by contest id
+// get posts by contest id - checked
 - (void)getPostByContestId:(NSNumber*)contestId
                  userEmail:(NSString*)userEmail
                  userToken:(NSString*)userToken
@@ -567,6 +585,7 @@
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return a list of Post
         if (success) {
             success(responseObject);
         }
@@ -577,7 +596,7 @@
     }];
 }
 
-// get posts by brand id
+// get posts by brand id - not OK
 - (void)getPostByBrandId:(NSNumber*)brandId
                userEmail:(NSString*)userEmail
                userToken:(NSString*)userToken
@@ -601,7 +620,7 @@
     }];
 }
 
-// get stream post, posts from who you follow
+// get stream post, posts from who you follow - checked
 - (void)getPostStreamWithUserEmail:(NSString*)userEmail
                          userToken:(NSString*)userToken
                            success:(void (^)(id responseObject))success
@@ -623,7 +642,7 @@
     }];
 }
 
-// like a post
+// like a post - not OK
 - (void)likePostWithPostId:(NSNumber*)postId
                  userEmail:(NSString*)userEmail
                  userToken:(NSString*)userToken
@@ -646,7 +665,7 @@
     }];
 }
 
-// unlike a post
+// unlike a post - not OK
 - (void)unlikePostWithPostId:(NSNumber*)postId
                    userEmail:(NSString*)userEmail
                    userToken:(NSString*)userToken
@@ -670,7 +689,7 @@
 }
 
 #pragma mark - Comment
-// get comment for post id
+// get comment for post id - not OK
 - (void)getCommentFromPostId:(NSNumber*)postId
                   userEmail:(NSString*)userEmail
                   userToken:(NSString*)userToken
@@ -720,7 +739,7 @@
 }
 
 #pragma mark - Ranking
-// global ranking - Global shows only top 50. All results are sorted by cached_score DESC
+// global ranking - Global shows only top 50. All results are sorted by cached_score DESC - checked
 - (void)getGlobalRankingWithUserEmail:(NSString*)userEmail
                                 token:(NSString*)userToken
                               success:(void (^)(id responseObject))success
@@ -732,6 +751,22 @@
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // return a list of user with following information
+        /*
+        {
+            id: 3
+            email: "audra@yahoo.com"
+            first_name: "Gladyce"
+            last_name: "Goyette"
+            username: "joshuah"
+            phone: "(999) 999-9999"
+            cached_score: 9
+            profile_picture_url: http://s3.amazonaws.com/exposure_app_production/users/profile_pictures/000/000/003/original/art_2.jpg?1402090922
+            background_picture_url: http://s3.amazonaws.com/exposure_app_production/users/background_pictures/000/000/003/original/art_2.jpg?1402090923
+            current_user_following: false
+        }
+         */
+        
         if (success) {
             success(responseObject);
         }
@@ -754,6 +789,13 @@
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if user didn't follow anyone
+        /*
+        {
+            status: true
+            message: "Current user is not following anyone."
+        }
+         */
         if (success) {
             success(responseObject);
         }
@@ -770,12 +812,19 @@
                                  success:(void (^)(id responseObject))success
                                  failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
-    NSString *path = [NSString stringWithFormat:GET_FOLLOWING_RANKING];
+    NSString *path = [NSString stringWithFormat:GET_FOLLOWER_RANKING];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 userEmail, PARAM_USER_EMAIL,
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if user has no follower
+        /*
+        {
+            status: true
+            message: "Current user has no followers."
+        }
+        */
         if (success) {
             success(responseObject);
         }
@@ -911,7 +960,7 @@
 }
 
 #pragma mark - Notification
-// get notification for user
+// get notification for user - checked
 - (void)getNotificationWithUserEmail:(NSString*)userEmail
                            userToken:(NSString*)userToken
                              success:(void (^)(id responseObject))success
@@ -923,6 +972,7 @@
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return a list of notificaitons
         if (success) {
             success(responseObject);
         }
@@ -934,7 +984,7 @@
 }
 
 #pragma mark - register device
-// register device token for notification
+// register device token for notification - not OK
 - (void)registerDeviceWithUserId:(NSString*)userId
                            email:(NSString*)userEmail
                        userToken:(NSString*)userToken

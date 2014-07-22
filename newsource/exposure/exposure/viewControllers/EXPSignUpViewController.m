@@ -7,7 +7,7 @@
 //
 
 #import "EXPSignUpViewController.h"
-#import "EXPStreamViewController.h"
+#import "EXPPhotoStreamViewController.h"
 #import "EXPPortfolioViewController.h"
 #import "EXPRankingsViewController.h"
 #import "EXPNotificationsViewController.h"

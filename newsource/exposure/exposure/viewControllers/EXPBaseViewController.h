@@ -10,4 +10,6 @@
 
 @interface EXPBaseViewController : UIViewController
 
+@property(nonatomic, strong) APConnectionLayer *serviceAPI;
+
 @end
