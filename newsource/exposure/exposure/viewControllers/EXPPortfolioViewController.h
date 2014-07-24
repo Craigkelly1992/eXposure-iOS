@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPPortfolioViewController : UIViewController <UIScrollViewDelegate>
+@interface EXPPortfolioViewController : EXPBaseViewController <UIScrollViewDelegate,
+                            UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *textViewDescription;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewBackground;
@@ -23,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelSubmissionCount;
 @property (weak, nonatomic) IBOutlet UILabel *labelFollowerCount;
 @property (weak, nonatomic) IBOutlet UILabel *labelFollowingCount;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionViewPost;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
+
 - (IBAction)buttonXPTap:(id)sender;
 - (IBAction)buttonSettingTap:(id)sender;
 - (IBAction)buttonFacebookTap:(id)sender;

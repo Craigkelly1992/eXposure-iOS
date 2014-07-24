@@ -145,10 +145,9 @@
 }
 
 -(void)didPressCamera {
-    if([[Infrastructure sharedClient] currentUser]){
+    if(![[Infrastructure sharedClient] currentUser]){
         // anonymous
-        EXPLoginViewController *vc = [[EXPLoginViewController alloc]init];
-        [self presentViewController:vc animated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     } else {
         // has login
         [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", nil]showInView:self.view];

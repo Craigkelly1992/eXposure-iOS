@@ -15,6 +15,7 @@
 {
     // Override point for customization after application launch.
     [self setupUI];
+    
     return YES;
 }
 							
@@ -48,6 +49,7 @@
 #pragma mark - UI
 - (void) setupUI {
     
+    // set navigation bar to blue color
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:69.0f/255.0f green:178.0f/255.0f blue:157.0f/255.0f alpha:1.0]];
     
     [[UINavigationBar appearance] setTitleTextAttributes:@{
@@ -67,15 +69,15 @@
     [[UISegmentedControl appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                              [UIColor whiteColor], NSForegroundColorAttributeName,
                                                              nil] forState:UIControlStateSelected];
-    [[UISegmentedControl appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                             [UIColor whiteColor], NSForegroundColorAttributeName,
-                                                             nil] forState:UIControlStateNormal];
     
     UIFont *font = [UIFont systemFontOfSize:10.0f];
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
                                                            forKey:NSFontAttributeName];
     [[UISegmentedControl appearance] setTitleTextAttributes:attributes
                                                    forState:UIControlStateNormal];
+    
+    // Set appearance for progress bar
+    [SVProgressHUD setBackgroundColor:Rgb2UIColor(138, 199, 82)];
 }
 
 @end

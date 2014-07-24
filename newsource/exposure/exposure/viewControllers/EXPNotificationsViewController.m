@@ -7,12 +7,15 @@
 //
 
 #import "EXPNotificationsViewController.h"
+#import "Notification.h"
 
 @interface EXPNotificationsViewController ()
 
 @end
 
-@implementation EXPNotificationsViewController
+@implementation EXPNotificationsViewController {
+    NSMutableArray *arrayNotification;
+}
 
 #pragma mark - Life cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,17 +32,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"Notifications";
+    //
+    arrayNotification = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
-    [SVProgressHUD showWithStatus:@"Loading"];
     if ([Infrastructure sharedClient].currentUser) {
         User *user = [Infrastructure sharedClient].currentUser;
+        [SVProgressHUD showWithStatus:@"Loading"];
         [self.serviceAPI getNotificationWithUserEmail:user.email userToken:user.authentication_token success:^(id responseObject) {
             
-            
             [SVProgressHUD dismiss];
+            arrayNotification = responseObject;
+            [self.tableViewNotification reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
             [SVProgressHUD dismiss];
@@ -66,7 +72,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [arrayNotification count];
 }
 
 // Customize the appearance of table view cells.
@@ -76,6 +82,27 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notificationTableViewCellIdentifier"];
     }
+    // convert to notification
+    Notification *notification = [Notification objectFromDictionary:arrayNotification[indexPath.row]];
+    //
+    UIImageView *imageViewSender = (UIImageView*)[cell viewWithTag:1];
+    UILabel *labelSender = (UILabel*)[cell viewWithTag:2];
+    UILabel *labelDetail = (UILabel*)[cell viewWithTag:3];
+    UIImageView *imageViewWinner = (UIImageView*)[cell viewWithTag:4];
+    //
+    if ([notification.sender_picture rangeOfString:@"placeholder"].location != NSNotFound ) {
+        [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];
+    } else {
+        [imageViewSender setImageURL:[NSURL URLWithString:notification.sender_picture]];
+    }
+    labelSender.text = notification.sender_name;
+    labelDetail.text = notification.text;
+    if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
+        imageViewWinner.image = [UIImage imageNamed:@"badge_winner"];
+    } else {
+        imageViewWinner.image = nil;
+    }
+    
     return cell;
 }
 

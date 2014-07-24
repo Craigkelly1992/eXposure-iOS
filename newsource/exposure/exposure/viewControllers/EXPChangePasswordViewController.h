@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPChangePasswordViewController : UIViewController
+@interface EXPChangePasswordViewController : EXPBaseViewController
+
+@property (strong, nonatomic) IBOutlet UITextField *textFieldCurrentPassword;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldNewPassword;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldConfirmPassword;
 
 @end

@@ -2,7 +2,7 @@
 //  EXPSignUpViewController.m
 //  exposure
 //
-//  Created by stuart on 2014-05-22.
+//  Created by Binh Nguyen on 2014-07-23.
 //  Copyright (c) 2014 exposure. All rights reserved.
 //
 
@@ -16,11 +16,10 @@
 #import "EXPContestsViewController.h"
 #import "User.h"
 #import "EXPTabBarController.h"
-#import <SVProgressHUD/SVProgressHUD.h>
-
 
 @interface EXPSignUpViewController ()<UITextFieldDelegate>{
     UITextField *activeField;
+    NSString *deviceToken;
 }
 
 @end
@@ -40,14 +39,26 @@
 {
     [super viewDidLoad];
     self.title = @"Sign Up";
+    // Back
+    self.navigationController.navigationItem.backBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    // Done button
     UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneBtnPressed)];
     self.navigationItem.rightBarButtonItem = doneBtn;
+    // Navigation
     [self.navigationController.navigationBar setTranslucent:NO];
-    [self registerForKeyboardNotifications];
-    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    // Keyboard
+//    [self registerForKeyboardNotifications];
+    NSLog(@"Registering for push notifications...");
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+}
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
     
-    self.navigationController.navigationItem.backBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    // Do any additional setup after loading the view from its nib.
+    NSString *token = [[_deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"content---%@", token);
+    deviceToken = token;
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,6 +70,36 @@
 -(void)doneBtnPressed {
     [SVProgressHUD showWithStatus:@"Signing Up"];
     // signup here
+    NSString *firstName = self.textFieldFirstname.text;
+    NSString *lastName = self.textFieldLastname.text;
+    NSString *email = self.textFieldEmail.text;
+    NSString *phone = self.textFieldPhone.text;
+    NSString *username = self.textFieldUsername.text;
+    NSString *password = self.textFieldPassword.text;
+    User *user = [[User alloc] init];
+    user.first_name = firstName;
+    user.last_name = lastName;
+    user.phone = phone;
+    user.email = email;
+    user.username = username;
+    user.password = password;
+    user.device_token = deviceToken;
+    // call service
+    [SVProgressHUD showWithStatus:@"Signing up"];
+    [self.serviceAPI signupWithUser: user
+        success:^(id responseObject) {
+            [SVProgressHUD showSuccessWithStatus:@"Sign up successfully !"];
+            // save to global variables
+            [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
+            // go to home screen
+//            EXPTabBarController *tabBarVC = [[EXPTabBarController alloc]init];
+            [self.navigationController popViewControllerAnimated:NO]; // back to login
+//            [self.navigationController removeFromParentViewController];
+//            [self.navigationController pushViewController:tabBarVC animated:YES]; // go to tab bar
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showSuccessWithStatus:@"Sign up failed !"];
+        }];
 }
 #pragma mark - text field delegate methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -83,30 +124,6 @@
                                                  name:UIKeyboardWillHideNotification object:nil];
     
 }
-
-
-//-(NSArray *)createTabBarViewControllers {
-//    EXPStreamViewController *vc = [[EXPStreamViewController alloc]init];
-//    EXPPortfolioViewController *portfolio = [[EXPPortfolioViewController alloc]init];
-//    EXPRankingsViewController *rankings = [[EXPRankingsViewController alloc]init];
-//    EXPNotificationsViewController *notifications = [[EXPNotificationsViewController alloc]init];
-//    EXPContestsViewController *contests = [[EXPContestsViewController alloc]init];
-//    
-//    UINavigationController *streamNav = [[UINavigationController alloc]initWithRootViewController:vc];
-//    UINavigationController *notificationnav = [[UINavigationController alloc]initWithRootViewController:notifications];
-//    UINavigationController *portfolioNav = [[UINavigationController alloc]initWithRootViewController:portfolio];
-//    
-//    UINavigationController *contestsNav = [[UINavigationController alloc]initWithRootViewController:contests];
-//    UINavigationController *rankingsNav = [[UINavigationController alloc]initWithRootViewController:rankings];
-//    
-//    notifications.title = @"Notifications";
-//    portfolio.title = @"Portfolio";
-//    vc.title = @"Photo Stream";
-//    rankings.title = @"Rankings";
-//    contests.title = @"Contests";
-//    return [NSArray arrayWithObjects:streamNav, contestsNav, rankingsNav, notificationnav, portfolioNav, nil];
-//}
-
 
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWasShown:(NSNotification*)aNotification

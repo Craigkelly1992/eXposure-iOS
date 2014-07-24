@@ -26,7 +26,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.title = @"Change Password";
+    [self.navigationController.navigationBar setTranslucent:NO];
+    // Back
+    self.navigationController.navigationItem.backBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    // Done
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneEditing)];
+    //
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    tapGesture.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tapGesture];
+}
+
+- (void) dismissKeyboard {
+    [self.textFieldCurrentPassword resignFirstResponder];
+    [self.textFieldNewPassword resignFirstResponder];
+    [self.textFieldConfirmPassword resignFirstResponder];
+}
+
+- (void)doneEditing {
+    
 }
 
 - (void)didReceiveMemoryWarning

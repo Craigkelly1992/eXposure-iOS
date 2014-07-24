@@ -22,7 +22,7 @@
 #define POST_USER_UNFOLLOW @"users/%@/unfollow"
 #define GET_USER_WITH_ID @"users/%@" // users/<userID>
 #define GET_USER_PROFILE @"profile"
-#define PATCH_USER_PROFILE @"users/%@"
+#define UPDATE_USER_PROFILE @"profile/update"
 #define DELETE_USER_PROFILE @"users/%@"
 #define GET_USER_SEARCH @"users/search"
 #define GET_USER_GLOBAL_RANKING @"rankings/following"
@@ -75,7 +75,7 @@
 #define PARAM_SIGNUP_PHONE @"user[phone]"
 #define PARAM_SIGNUP_DEVICE_TOKEN @"user[device_token]"
 #define PARAM_SIGNUP_PROFILE_PICTURE @"user[profile_picture]"
-#define PARAM_SIGNUP_BACKDROP_PICTURE @"user[backdrop_picture]"
+#define PARAM_SIGNUP_BACKGROUND_PICTURE @"user[background_picture]"
 #define PARAM_POST_CONTEST_ID @"post[contest_id]"
 #define PARAM_POST_UPLOADER_ID @"post[uploader_id]"
 #define PARAM_POST_TEXT @"post[text]"
@@ -141,6 +141,8 @@
 
 // edit user profile
 - (void)editUserProfileWithUser:(User*)user
+                 profilePicture:(NSData*)profilePicture
+              backgroundPicture:(NSData*)backgroundPicture
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 

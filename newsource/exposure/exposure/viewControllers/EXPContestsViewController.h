@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPContestsViewController : UIViewController
+@interface EXPContestsViewController : EXPBaseViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBarContest;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
+@property (strong, nonatomic) IBOutlet UITableView *tableViewContest;
+- (IBAction)segmentValueChanged:(id)sender;
 @end

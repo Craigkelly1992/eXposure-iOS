@@ -41,6 +41,11 @@
     [super viewDidLoad];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
+    // load username if existing
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:USERDEFAULT_KEY_EMAIL];
+    if (email) {
+        self.textFieldEmail.text = email;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -65,7 +70,7 @@
 - (void)dismissKeyboard {
     [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
     if(self.view.frame.origin.y != 0){
-        [UIView animateWithDuration:0.3 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         }];
     }
@@ -75,15 +80,18 @@
 - (IBAction)buttonSignInTap:(id)sender {
     [SVProgressHUD showWithStatus:@"Logging In"];
     [self.serviceAPI loginWithUserEmail:self.textFieldEmail.text password:self.textFieldPassword.text success:^(id responseObject) {
-        
+        //
         NSLog(@"Signin Successfully !");
+        // save username for next time
+        [[NSUserDefaults standardUserDefaults] setValue:self.textFieldEmail.text forKey:USERDEFAULT_KEY_EMAIL];
+        [[NSUserDefaults standardUserDefaults] setValue:self.textFieldPassword.text forKey:USERDEFAULT_KEY_PASSWORD];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         // save to global variables
         [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
         [SVProgressHUD dismiss];
         // go to home screen
-        EXPTabBarController *tc = [[EXPTabBarController alloc]init];
-        [[[UIApplication sharedApplication] keyWindow] setRootViewController:tc];
-        [self removeFromParentViewController];
+        EXPTabBarController *tabBarVC = [[EXPTabBarController alloc]init];
+        [self.navigationController pushViewController:tabBarVC animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"Signin Failed !");
@@ -94,7 +102,8 @@
 
 - (IBAction)buttonSignUpTap:(id)sender {
     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController pushViewController:[[EXPSignUpViewController alloc]init] animated:YES];
+    EXPSignUpViewController *signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPSignUpViewControllerIdentifier"];
+    [self.navigationController pushViewController:signupVC animated:YES];
     
 }
 
@@ -105,9 +114,8 @@
 }
 
 - (IBAction)buttonBrowseTap:(id)sender {
-    EXPTabBarController *tc = [[EXPTabBarController alloc]init];
-    [[[UIApplication sharedApplication] keyWindow] setRootViewController:tc];
-    [self removeFromParentViewController];
+    EXPTabBarController *tabBarVC = [[EXPTabBarController alloc]init];
+    [self.navigationController pushViewController:tabBarVC animated:YES];
 }
 
 - (IBAction)buttonForgotPasswordTap:(id)sender {
@@ -135,10 +143,13 @@
     NSLog(@"%f",keyboardHeight);
     __block EXPLoginViewController *weakself = self;
     if (self.view.frame.origin.y == 0) {
-        [UIView animateWithDuration:0.3 animations:^{
-            CGFloat difference = self.view.frame.origin.y - self->keyboardHeight + self.navigationController.navigationBar.frame.size.height;
-            weakself.view.frame = CGRectMake(0, difference, weakself.view.frame.size.width, weakself.view.frame.size.height);//CGPointMake(weakself.view.center.x, self->keyboardHeight - weakself.view.frame.size.height);
-            // NSLog(@"%f %f", weakself.postBtn.center.x, weakself.postBtn.center.y);
+        [UIView animateWithDuration:0.35 animations:^{
+            int signinY = self.buttonSignin.frame.origin.y + self.buttonSignin.frame.size.height;
+            int keyboardY = self.view.frame.size.height - 64 - self->keyboardHeight;
+            if (signinY > keyboardY) {
+                CGFloat difference = - (signinY - keyboardY);
+                weakself.view.frame = CGRectMake(0, difference, weakself.view.frame.size.width, weakself.view.frame.size.height);
+            }
         }];
     }
 }

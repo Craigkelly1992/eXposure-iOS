@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Jastor.h"
-#import "Contest.h"
+#import "SubmissionContest.h"
 #import "Brand.h"
 #import "SubmissionList.h"
 #import "User.h"
@@ -16,8 +16,7 @@
 @interface ContestDetail : Jastor
 
 ///
-@property (nonatomic, copy) NSString *status;
-@property (nonatomic, retain) Contest *info;
+@property (nonatomic, retain) SubmissionContest *contest;
 @property (nonatomic, retain) Brand *brand;
 @property (nonatomic, retain) SubmissionList *submissions;
 @property (nonatomic, retain) NSArray *winners;

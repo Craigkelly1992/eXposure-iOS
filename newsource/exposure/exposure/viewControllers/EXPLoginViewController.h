@@ -15,6 +15,8 @@
 //IB Outlets
 @property (strong, nonatomic) IBOutlet UITextField *textFieldEmail;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldPassword;
+@property (strong, nonatomic) IBOutlet UIButton *buttonSignin;
+@property (strong, nonatomic) IBOutlet UIButton *buttonSignup;
 
 
 //IB Actions

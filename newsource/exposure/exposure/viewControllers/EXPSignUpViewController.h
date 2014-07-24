@@ -2,20 +2,21 @@
 //  EXPSignUpViewController.h
 //  exposure
 //
-//  Created by stuart on 2014-05-22.
+//  Created by Binh Nguyen on 2014-07-23.
 //  Copyright (c) 2014 exposure. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPSignUpViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField *firstNameField;
-@property (weak, nonatomic) IBOutlet UITextField *lastNameField;
-@property (weak, nonatomic) IBOutlet UITextField *emailField;
-@property (weak, nonatomic) IBOutlet UITextField *phoneField;
-@property (weak, nonatomic) IBOutlet UITextField *usernameField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
-@property (weak, nonatomic) IBOutlet UITextField *confirmPasswordField;
+@interface EXPSignUpViewController : EXPBaseViewController
+@property (weak, nonatomic) IBOutlet UITextField *textFieldFirstname;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldLastname;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldEmail;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldPhone;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldUsername;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldPassword;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldConfirmPassword;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
