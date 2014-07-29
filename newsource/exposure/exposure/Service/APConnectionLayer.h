@@ -168,7 +168,7 @@
                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // get brand with id
-- (void)getBrandWithId:(NSString*)brandId
+- (void)getBrandWithId:(NSNumber*)brandId
              userEmail:(NSString*)userEmail
              userToken:(NSString*)userToken
                   success:(void (^)(id responseObject))success

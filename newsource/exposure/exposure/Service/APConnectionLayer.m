@@ -244,7 +244,7 @@
 }
 
 // get brand with id - checked
-- (void)getBrandWithId:(NSString*)brandId
+- (void)getBrandWithId:(NSNumber*)brandId
              userEmail:(NSString*)userEmail
              userToken:(NSString*)userToken
                success:(void (^)(id responseObject))success

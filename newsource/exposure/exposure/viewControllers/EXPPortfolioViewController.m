@@ -10,6 +10,11 @@
 #import "EXPPortFolioSettingsViewController.h"
 #import "Post.h"
 
+#define kContestHeightMin 33
+#define kContestHeightMax 142
+#define kFollowHeaderHeight 44
+#define kCollectionCellSize 120
+
 @interface EXPPortfolioViewController ()
 
 @end
@@ -43,14 +48,24 @@
         // has login yet
         User *user = [Infrastructure sharedClient].currentUser;
         self.labelUsername.text = user.username;
-        [self.imageViewProfile setImageURL:[NSURL URLWithString:user.profile_picture_url]];
-        [self.imageViewBackground setImageURL:[NSURL URLWithString:user.background_picture_url]];
+        // profile image
+        if ([user.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
+            [self.imageViewProfile setImageURL:[NSURL URLWithString:user.profile_picture_url]];
+        } else {
+            [self.imageViewProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
+        }
+        // background image
+        if ([user.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
+            [self.imageViewBackground setImageURL:[NSURL URLWithString:user.background_picture_url]];
+        } else {
+            [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
+        }
+        // description
         self.textViewDescription.text = user.description;
         // following, follower, submission count
         self.labelFollowerCount.text = [user.followers_count stringValue];
         self.labelFollowingCount.text = [user.follow_count stringValue];
     }
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,6 +78,7 @@
             NSLog(@"%@", responseObject);
             arrayPost = responseObject;
             [self.collectionViewPost reloadData];
+            [self updateScrollView];
             [SVProgressHUD dismiss];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -71,6 +87,23 @@
             [SVProgressHUD dismiss];
         }];
     }
+}
+
+- (void)viewWillLayoutSubviews {
+    
+}
+
+-(void)viewDidLayoutSubviews {
+    self.pagingView.contentSize = CGSizeMake(self.pageControl.numberOfPages*self.pagingView.frame.size.width, self.pagingView.frame.size.height);
+    [self updateScrollView];
+}
+
+-(void) updateScrollView {
+    // for update tableview
+    self.constraintHeightFollowContainer.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1)*kCollectionCellSize;
+    // for main scroll view
+    int newHeight = self.viewContestContainer.frame.origin.y + self.constraintHeightContest.constant + kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1) * kCollectionCellSize;
+    self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,6 +136,17 @@
     
 }
 
+- (IBAction)buttonIndicatorContestTap:(id)sender {
+    if (self.constraintHeightContest.constant >= kContestHeightMax) {
+        self.constraintHeightContest.constant = kContestHeightMin;
+        [self.buttonIndicatorContest setImage:[UIImage imageNamed:@"arrow_down"] forState:UIControlStateNormal];
+    } else {
+        self.constraintHeightContest.constant = kContestHeightMax;
+        [self.buttonIndicatorContest setImage:[UIImage imageNamed:@"arrow_up"] forState:UIControlStateNormal];
+    }
+    [self updateScrollView];
+}
+
 #pragma mark - scrollview delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -121,6 +165,9 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
+    // test
+    return 10;
+    //
     if (arrayPost) {
         return [arrayPost count];
     } else {
@@ -132,20 +179,56 @@
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PortfolioPostViewCellIdentifier" forIndexPath:indexPath];
     // parse dictionary to Post object
-    Post *post = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
-    // fill to cell
+//    Post *post = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
+//    // fill to cell
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
-    if ([post.image_url rangeOfString:@"placeholder"].location != NSNotFound ) {
-        [imageView setImageURL:[NSURL URLWithString:post.image_url]];
-    } else {
+//    if ([post.image_url rangeOfString:@"placeholder"].location != NSNotFound ) {
+//        [imageView setImageURL:[NSURL URLWithString:post.image_url]];
+//    } else {
         [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-    }
+//    }
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+}
+
+#pragma mark - Table View
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 2;
+}
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContestTableViewCellIdentifier"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContestTableViewCellIdentifier"];
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // This code is commented out in order to allow users to click on the collection view cells.
 }
 
 @end

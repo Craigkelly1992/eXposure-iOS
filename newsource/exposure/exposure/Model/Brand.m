@@ -7,6 +7,7 @@
 //
 
 #import "Brand.h"
+#import "Submission.h"
 
 @implementation Brand
 
@@ -14,6 +15,10 @@
     NSMutableDictionary *map = [NSMutableDictionary dictionaryWithDictionary:[super map]];
     [map setObject:@"id" forKey:@"brandId"];
     return [NSDictionary dictionaryWithDictionary:map];
+}
+
++ (Class)submissions_class {
+    return [Submission class];
 }
 
 @end

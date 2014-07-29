@@ -10,7 +10,8 @@
 #import "EXPBaseViewController.h"
 
 @interface EXPPortfolioViewController : EXPBaseViewController <UIScrollViewDelegate,
-                            UICollectionViewDataSource, UICollectionViewDelegate>
+                            UICollectionViewDataSource, UICollectionViewDelegate,
+                            UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *textViewDescription;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewBackground;
@@ -27,7 +28,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelFollowingCount;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewPost;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
+@property (strong, nonatomic) IBOutlet UIView *viewContainter;
+@property (strong, nonatomic) IBOutlet UITableView *tableViewContest;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintHeightContest;
+@property (strong, nonatomic) IBOutlet UIButton *buttonIndicatorContest;
+@property (strong, nonatomic) IBOutlet UIView *viewFollowContainer;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintHeightFollowContainer;
+@property (strong, nonatomic) IBOutlet UIView *viewContestContainer;
 
+#pragma mark - Actions
 - (IBAction)buttonXPTap:(id)sender;
 - (IBAction)buttonSettingTap:(id)sender;
 - (IBAction)buttonFacebookTap:(id)sender;
@@ -35,5 +44,6 @@
 - (IBAction)buttonContestTap:(id)sender;
 - (IBAction)buttonFollowTap:(id)sender;
 - (IBAction)buttonTwitterTap:(id)sender;
+- (IBAction)buttonIndicatorContestTap:(id)sender;
 
 @end

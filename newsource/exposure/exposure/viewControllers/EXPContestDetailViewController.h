@@ -24,9 +24,12 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintDetailHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintSubmissionHeight;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewPost;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
+@property (strong, nonatomic) IBOutlet UIView *viewDetailContainer;
 
+
+// Actions
 - (IBAction)buttonEnterContestTap:(id)sender;
-- (IBAction)buttonBrandTap:(id)sender;
 - (IBAction)buttonRuleTap:(id)sender;
 - (IBAction)buttonIndicatorDetail:(id)sender;
 - (IBAction)buttonIndicatorSubmission:(id)sender;

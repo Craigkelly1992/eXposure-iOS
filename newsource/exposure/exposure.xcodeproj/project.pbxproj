@@ -91,6 +91,7 @@
 		B3CD74DC19791F4D00CBE2C6 /* Submission.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD74DB19791F4D00CBE2C6 /* Submission.m */; };
 		B3CD74DF1979202000CBE2C6 /* ContestDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD74DE1979202000CBE2C6 /* ContestDetail.m */; };
 		B3CD74E21979210B00CBE2C6 /* SubmissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD74E11979210B00CBE2C6 /* SubmissionList.m */; };
+		B3DB55561986385A00402BA8 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3DB55551986385A00402BA8 /* sample.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,6 +263,7 @@
 		B3CD74DE1979202000CBE2C6 /* ContestDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContestDetail.m; path = Model/ContestDetail.m; sourceTree = "<group>"; };
 		B3CD74E01979210B00CBE2C6 /* SubmissionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubmissionList.h; path = Model/SubmissionList.h; sourceTree = "<group>"; };
 		B3CD74E11979210B00CBE2C6 /* SubmissionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubmissionList.m; path = Model/SubmissionList.m; sourceTree = "<group>"; };
+		B3DB55551986385A00402BA8 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sample.jpg; path = Resources/Images/sample.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,7 @@
 		B3A4D515197F72C00070185E /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B3DB55551986385A00402BA8 /* sample.jpg */,
 				B3A4D518197FB0B50070185E /* placeholder.png */,
 			);
 			name = image;
@@ -578,12 +581,16 @@
 			children = (
 				B3CD7433196E991900CBE2C6 /* EXPBaseViewController.h */,
 				B3CD7434196E991900CBE2C6 /* EXPBaseViewController.m */,
+				B3AE1E30198105D0003467D7 /* EXPBrandViewController.h */,
+				B3AE1E31198105D0003467D7 /* EXPBrandViewController.m */,
 				B3CD74CB1978374400CBE2C6 /* EXPChangePasswordViewController.h */,
 				B3CD74CC1978374400CBE2C6 /* EXPChangePasswordViewController.m */,
 				B3AE1E261980E051003467D7 /* EXPContestDetailViewController.h */,
 				B3AE1E271980E051003467D7 /* EXPContestDetailViewController.m */,
 				B3CD74B41977873400CBE2C6 /* EXPContestsViewController.h */,
 				B3CD74B51977873400CBE2C6 /* EXPContestsViewController.m */,
+				B3AE1E36198113CE003467D7 /* EXPFollowViewController.h */,
+				B3AE1E37198113CE003467D7 /* EXPFollowViewController.m */,
 				B3CD74A81977864900CBE2C6 /* EXPHowItWorksViewController.h */,
 				B3CD74A91977864900CBE2C6 /* EXPHowItWorksViewController.m */,
 				B3CD74D1197837D900CBE2C6 /* EXPImageDetailViewController.h */,
@@ -596,6 +603,8 @@
 				B3CD74BE197787D000CBE2C6 /* EXPNotificationsViewController.m */,
 				B3A4D504197EAB4D0070185E /* EXPPhotoStreamViewController.h */,
 				B3A4D505197EAB4D0070185E /* EXPPhotoStreamViewController.m */,
+				B3AE1E3319811359003467D7 /* EXPPointViewController.h */,
+				B3AE1E3419811359003467D7 /* EXPPointViewController.m */,
 				B3CD74C8197836D600CBE2C6 /* EXPPortFolioSettingsViewController.h */,
 				B3CD74C9197836D600CBE2C6 /* EXPPortFolioSettingsViewController.m */,
 				B3CD74B71977876400CBE2C6 /* EXPPortfolioViewController.h */,
@@ -608,12 +617,6 @@
 				B3CD742C196E95E900CBE2C6 /* EXPSignUpViewController.m */,
 				B3CD74B1197786E400CBE2C6 /* EXPTabBarController.h */,
 				B3CD74B2197786E400CBE2C6 /* EXPTabBarController.m */,
-				B3AE1E30198105D0003467D7 /* EXPBrandViewController.h */,
-				B3AE1E31198105D0003467D7 /* EXPBrandViewController.m */,
-				B3AE1E3319811359003467D7 /* EXPPointViewController.h */,
-				B3AE1E3419811359003467D7 /* EXPPointViewController.m */,
-				B3AE1E36198113CE003467D7 /* EXPFollowViewController.h */,
-				B3AE1E37198113CE003467D7 /* EXPFollowViewController.m */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3CD73BB196E879800CBE2C6 /* Images.xcassets in Resources */,
+				B3DB55561986385A00402BA8 /* sample.jpg in Resources */,
 				B3A4D519197FB0B50070185E /* placeholder.png in Resources */,
 				B3A4D534197FB4590070185E /* CLImageEditor.bundle in Resources */,
 				B3CD73AD196E879800CBE2C6 /* InfoPlist.strings in Resources */,

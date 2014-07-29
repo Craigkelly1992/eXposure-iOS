@@ -116,8 +116,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // This code is commented out in order to allow users to click on the collection view cells.
+}
+
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:indexPath.row]];
     contestId = contest.contestId;
+    return indexPath;
 }
 
 #pragma mark - Segue

@@ -11,6 +11,13 @@
 #import "SubmissionList.h"
 #import "Submission.h"
 #import "UILabel+DynamicSizeMe.h"
+#import "EXPBrandViewController.h"
+
+#define kDetailHeightMin 33
+#define kDetailHeightMax 172
+#define kSubmissionHeightMin 33
+#define kFollowHeaderHeight 44
+#define kCollectionCellSize 120
 
 @interface EXPContestDetailViewController ()
 
@@ -19,6 +26,8 @@
 @implementation EXPContestDetailViewController {
     ContestDetail *currentContest;
     NSArray *arraySubmission;
+    BOOL isDetailOpen;
+    BOOL isSubmissionOpen;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,6 +42,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isDetailOpen = NO;
+    isSubmissionOpen = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,7 +66,7 @@
         if ([currentContest.contest.info.picture_file_name rangeOfString:@"http"].location != NSNotFound ) {
             [self.imageViewContest setImageURL:[NSURL URLWithString:currentContest.contest.info.picture_file_name]];
         } else {
-            [self.imageViewContest setImage:[UIImage imageNamed:@"placeholder.png"]];
+            [self.imageViewContest setImage:[UIImage imageNamed:@"sample.jpg"]];
         }
         //
         self.textViewDetail.text = currentContest.contest.info.description;
@@ -71,12 +82,22 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Actions
-- (IBAction)buttonEnterContestTap:(id)sender {
-    
+- (void)viewDidLayoutSubviews {
+    [self updateScrollView];
 }
 
-- (IBAction)buttonBrandTap:(id)sender {
+-(void) updateScrollView {
+    // for update tableview
+    if (isSubmissionOpen) {
+        self.constraintSubmissionHeight.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1)*kCollectionCellSize;
+    }
+    // for main scroll view
+    int newHeight = self.viewDetailContainer.frame.origin.y + self.constraintDetailHeight.constant + self.constraintSubmissionHeight.constant;
+    self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
+}
+
+#pragma mark - Actions
+- (IBAction)buttonEnterContestTap:(id)sender {
     
 }
 
@@ -87,22 +108,27 @@
 }
 
 - (IBAction)buttonIndicatorDetail:(id)sender {
-    if (self.constraintDetailHeight.constant == 172) {
-        self.constraintDetailHeight.constant = 33;
-        self.buttonIndicatorDetail.imageView.image = [UIImage imageNamed:@"arrow_down"];
+    if (self.constraintDetailHeight.constant >= kDetailHeightMax) {
+        self.constraintDetailHeight.constant = kDetailHeightMin;
+        [self.buttonIndicatorDetail setImage:[UIImage imageNamed:@"arrow_down"] forState:UIControlStateNormal];
+        isDetailOpen = NO;
     } else {
-        self.constraintDetailHeight.constant = 172;
-        self.buttonIndicatorDetail.imageView.image = [UIImage imageNamed:@"arrow_up"];
+        self.constraintDetailHeight.constant = kDetailHeightMax;
+        [self.buttonIndicatorDetail setImage:[UIImage imageNamed:@"arrow_up"] forState:UIControlStateNormal];;
+        isDetailOpen = YES;
     }
+    [self updateScrollView];
 }
 
 - (IBAction)buttonIndicatorSubmission:(id)sender {
-    if (self.constraintSubmissionHeight.constant == 264) {
-        self.constraintSubmissionHeight.constant = 33;
-        self.buttonIndicatorSubmission.imageView.image = [UIImage imageNamed:@"arrow_down"];
+    if (self.constraintSubmissionHeight.constant > kSubmissionHeightMin) {
+        self.constraintSubmissionHeight.constant = kSubmissionHeightMin;
+        isSubmissionOpen = NO;
+        [self.buttonIndicatorSubmission setImage:[UIImage imageNamed:@"arrow_down"] forState:UIControlStateNormal];
     } else {
-        self.constraintSubmissionHeight.constant = 264;
-        self.buttonIndicatorSubmission.imageView.image = [UIImage imageNamed:@"arrow_up"];
+        isSubmissionOpen = YES;
+        [self updateScrollView];
+        [self.buttonIndicatorSubmission setImage:[UIImage imageNamed:@"arrow_up"] forState:UIControlStateNormal];
     }
 }
 
@@ -113,6 +139,9 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
+    // test
+    return 10;
+    //
     if (arraySubmission) {
         return [arraySubmission count];
     } else {
@@ -123,21 +152,35 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SubmissionCollectionViewCellIdentifier" forIndexPath:indexPath];
-    // parse dictionary to Post object
-    Submission *submission = [arraySubmission objectAtIndex:indexPath.row];
-    // fill to cell
+//    // parse dictionary to Post object
+//    Submission *submission = [arraySubmission objectAtIndex:indexPath.row];
+//    // fill to cell
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
-    if (submission.image_file_name) {
-        [imageView setImageURL:[NSURL URLWithString:submission.image_file_name]];
-    } else {
+//    if (submission.image_file_name) {
+//        [imageView setImageURL:[NSURL URLWithString:submission.image_file_name]];
+//    } else {
         [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-    }
+//    }
     
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+}
+
+#pragma mark - Segue Delegate
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if (currentContest) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    EXPBrandViewController *brandVC = (EXPBrandViewController*) segue.destinationViewController;
+    brandVC.brandId = currentContest.contest.info.brand_id;
 }
 
 @end
