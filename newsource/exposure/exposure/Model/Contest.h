@@ -34,6 +34,7 @@
 @property (nonatomic, retain) NSNumber *winner_id;
 @property (nonatomic, copy) NSString *brand_name;
 
-///
+/// get contest from brand id
+@property (nonatomic, copy) NSString *picture_url;
 
 @end

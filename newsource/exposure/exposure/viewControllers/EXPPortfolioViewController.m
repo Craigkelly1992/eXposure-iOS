@@ -9,6 +9,10 @@
 #import "EXPPortfolioViewController.h"
 #import "EXPPortFolioSettingsViewController.h"
 #import "Post.h"
+#import "EXPFollowViewController.h"
+#import "Contest.h"
+#import "EXPContestDetailViewController.h"
+#import "EXPPointViewController.h"
 
 #define kContestHeightMin 33
 #define kContestHeightMax 142
@@ -21,6 +25,8 @@
 
 @implementation EXPPortfolioViewController {
     NSArray *arrayPost;
+    NSMutableArray *arrayContest;
+    User *currentUser;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,36 +48,64 @@
     self.imageViewProfile.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.buttonSetting setTitle:@"Settings" forState:UIControlStateNormal];
     // post
+    currentUser = [Infrastructure sharedClient].currentUser;
     arrayPost = [[NSArray alloc] init];
-    // fill user's data
-    if ([Infrastructure sharedClient].currentUser) {
-        // has login yet
-        User *user = [Infrastructure sharedClient].currentUser;
-        self.labelUsername.text = user.username;
-        // profile image
-        if ([user.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-            [self.imageViewProfile setImageURL:[NSURL URLWithString:user.profile_picture_url]];
-        } else {
-            [self.imageViewProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
-        }
-        // background image
-        if ([user.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-            [self.imageViewBackground setImageURL:[NSURL URLWithString:user.background_picture_url]];
-        } else {
-            [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
-        }
-        // description
-        self.textViewDescription.text = user.description;
-        // following, follower, submission count
-        self.labelFollowerCount.text = [user.followers_count stringValue];
-        self.labelFollowingCount.text = [user.follow_count stringValue];
-    }
+    // add interaction for follower, following
+    UITapGestureRecognizer *followerTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewFollowerTap)];
+    followerTapGesture.numberOfTapsRequired = 1;
+    [self.viewFollower setGestureRecognizers:[[NSArray alloc] initWithObjects:followerTapGesture, nil]];
+    //
+    UITapGestureRecognizer *followTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewFollowTap)];
+    followTapGesture.numberOfTapsRequired = 1;
+    [self.viewFollowing setGestureRecognizers:[[NSArray alloc] initWithObjects:followTapGesture, nil]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    // synchronize from server
-    if ([Infrastructure sharedClient].currentUser) {
-        User *currentUser = [Infrastructure sharedClient].currentUser;
+    // get current user info
+    [self getUserInfo:currentUser.userId];
+    // get user's info
+    [self getPostByUserId];
+    //
+    [self getContestByUserId];
+}
+
+-(void) getUserInfo:(NSNumber*)userId {
+    // load user
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getUserWithId:userId email:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        currentUser = [User objectFromDictionary:responseObject];
+        // fill user's data
+        if (currentUser) {
+            // has login yet
+            self.labelUsername.text = currentUser.username;
+            // profile image
+            if ([currentUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
+                [self.imageViewProfile setImageURL:[NSURL URLWithString:currentUser.profile_picture_url]];
+            } else {
+                [self.imageViewProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
+            }
+            // background image
+            if ([currentUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
+                [self.imageViewBackground setImageURL:[NSURL URLWithString:currentUser.background_picture_url]];
+            } else {
+                [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
+            }
+            // description
+            self.textViewDescription.text = currentUser.description;
+            // following, follower, submission count
+            self.labelFollowerCount.text = [currentUser.followers_count stringValue];
+            self.labelFollowingCount.text = [currentUser.follow_count stringValue];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+    }];
+}
+
+-(void) getPostByUserId {
+    if (currentUser) {
         [SVProgressHUD showWithStatus:@"Loading"];
         [self.serviceAPI getPostByUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
             
@@ -89,6 +123,26 @@
     }
 }
 
+-(void) getContestByUserId {
+    if ([Infrastructure sharedClient].currentUser) {
+        [SVProgressHUD showWithStatus:@"Loading"];
+        [self.serviceAPI getContestByFollowingUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+           
+            [SVProgressHUD dismiss];
+            NSArray *array = responseObject;
+            Contest *contest = nil;
+            for (int i = 0; i < array.count; i++) {
+                contest = [Contest objectFromDictionary:array[i]];
+                [arrayContest addObject:contest];
+            }
+            [self.tableViewContest reloadData];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD dismiss];
+        }];
+    }
+}
+
 - (void)viewWillLayoutSubviews {
     
 }
@@ -100,9 +154,9 @@
 
 -(void) updateScrollView {
     // for update tableview
-    self.constraintHeightFollowContainer.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1)*kCollectionCellSize;
+    self.constraintHeightFollowContainer.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]%3 + 1)*kCollectionCellSize;
     // for main scroll view
-    int newHeight = self.viewContestContainer.frame.origin.y + self.constraintHeightContest.constant + kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1) * kCollectionCellSize;
+    int newHeight = self.viewContestContainer.frame.origin.y + self.constraintHeightContest.constant + self.constraintHeightFollowContainer.constant;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
 }
 
@@ -114,8 +168,11 @@
 
 #pragma mark - Actions
 - (IBAction)buttonXPTap:(id)sender {
-    
+    EXPPointViewController *pointVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPointViewControllerIdentifier"];
+    pointVC.userId = currentUser.userId;
+    [self.navigationController pushViewController:pointVC animated:YES];
 }
+
 - (IBAction)buttonSettingTap:(id)sender {
     EXPPortFolioSettingsViewController *portfolioSettingVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPortFolioSettingsViewControllerIdentifier"];
     [self.navigationController pushViewController:portfolioSettingVC animated:YES];
@@ -147,6 +204,20 @@
     [self updateScrollView];
 }
 
+-(void)viewFollowerTap {
+    EXPFollowViewController *followVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPFollowViewControllerIdentifier"];
+    followVC.isFollowing = NO;
+    followVC.userId = [Infrastructure sharedClient].currentUser.userId;
+    [self.navigationController pushViewController:followVC animated:YES];
+}
+
+-(void)viewFollowTap {
+    EXPFollowViewController *followVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPFollowViewControllerIdentifier"];
+    followVC.isFollowing = YES;
+    followVC.userId = [Infrastructure sharedClient].currentUser.userId;
+    [self.navigationController pushViewController:followVC animated:YES];
+}
+
 #pragma mark - scrollview delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -165,9 +236,6 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    // test
-    return 10;
-    //
     if (arrayPost) {
         return [arrayPost count];
     } else {
@@ -179,14 +247,14 @@
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PortfolioPostViewCellIdentifier" forIndexPath:indexPath];
     // parse dictionary to Post object
-//    Post *post = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
-//    // fill to cell
+    Post *post = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
+    // fill to cell
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
-//    if ([post.image_url rangeOfString:@"placeholder"].location != NSNotFound ) {
-//        [imageView setImageURL:[NSURL URLWithString:post.image_url]];
-//    } else {
-        [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-//    }
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageView];
+    [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
+    if (post.image_url && [post.image_url rangeOfString:@"placeholder"].location == NSNotFound ) {
+        [imageView setImageURL:[NSURL URLWithString:post.image_url]];
+    }
     return cell;
 }
 
@@ -203,7 +271,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return [arrayContest count];
 }
 
 // Customize the appearance of table view cells.
@@ -213,6 +281,20 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContestTableViewCellIdentifier"];
     }
+    // fill data
+    Contest *contest = arrayContest[indexPath.row];
+    UIImageView *imageViewContest = (UIImageView*)[cell viewWithTag:1];
+    UILabel *labelContestName = (UILabel*)[cell viewWithTag:2];
+    UILabel *labelContestDescription = (UILabel*)[cell viewWithTag:3];
+    //
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewContest];
+    [imageViewContest setImage:[UIImage imageNamed:@"placeholder.png"]];
+    if (contest.picture_url && [contest.picture_url rangeOfString:@"placeholder.png"].location == NSNotFound) {
+        [imageViewContest setImageURL:[NSURL URLWithString:contest.picture_url]];
+    }
+    //
+    labelContestName.text = contest.title;
+    labelContestDescription.text = contest.description;
     return cell;
 }
 
@@ -228,7 +310,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // This code is commented out in order to allow users to click on the collection view cells.
+    // go to contest
+//    Contest *contest = arrayContest[indexPath.row];
+//    EXPContestDetailViewController *contestVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPContestDetailViewControllerIdentifier"];
+//    contestVC.contestId = contest.contestId;
+//    [self.navigationController pushViewController:contestVC animated:YES];
 }
 
 @end

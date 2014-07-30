@@ -12,6 +12,8 @@
 #import "Submission.h"
 #import "UILabel+DynamicSizeMe.h"
 #import "EXPBrandViewController.h"
+#import "Post.h"
+#import "EXPImageDetailViewController.h"
 
 #define kDetailHeightMin 33
 #define kDetailHeightMax 172
@@ -89,10 +91,10 @@
 -(void) updateScrollView {
     // for update tableview
     if (isSubmissionOpen) {
-        self.constraintSubmissionHeight.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1)*kCollectionCellSize;
+        self.constraintSubmissionHeight.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]%3 + 1)*kCollectionCellSize;
     }
     // for main scroll view
-    int newHeight = self.viewDetailContainer.frame.origin.y + self.constraintDetailHeight.constant + self.constraintSubmissionHeight.constant;
+    int newHeight = self.viewDetailContainer.frame.origin.y + self.constraintDetailHeight.constant + self.constraintSubmissionHeight.constant + kTabBarHeight;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
 }
 
@@ -139,9 +141,6 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    // test
-    return 10;
-    //
     if (arraySubmission) {
         return [arraySubmission count];
     } else {
@@ -152,21 +151,25 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SubmissionCollectionViewCellIdentifier" forIndexPath:indexPath];
-//    // parse dictionary to Post object
-//    Submission *submission = [arraySubmission objectAtIndex:indexPath.row];
-//    // fill to cell
+    // parse dictionary to Post object
+    Submission *submission = [arraySubmission objectAtIndex:indexPath.row];
+    // fill to cell
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
-//    if (submission.image_file_name) {
-//        [imageView setImageURL:[NSURL URLWithString:submission.image_file_name]];
-//    } else {
+    if (submission.image_file_name) {
+        [imageView setImageURL:[NSURL URLWithString:submission.image_file_name]];
+    } else {
         [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-//    }
+    }
     
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    Submission *selectedPost = [Post objectFromDictionary:[arraySubmission objectAtIndex:indexPath.row]];
+    EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
+    postVC.postId = selectedPost.submissionId;
+    [self.navigationController pushViewController:postVC animated:YES];
 }
 
 #pragma mark - Segue Delegate

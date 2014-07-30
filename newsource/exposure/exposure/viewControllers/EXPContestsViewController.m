@@ -86,13 +86,13 @@
     UIImageView *imageViewRight = (UIImageView*)[cell viewWithTag:4];
     // fill data
     Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:indexPath.row]];
-    if ([contest.picture_file_name rangeOfString:@"http"].location != NSNotFound ) {
+    if ([contest.picture_file_name rangeOfString:@"http"].location == NSNotFound ) {
         [imageViewLeft setImageURL:[NSURL URLWithString:contest.picture_file_name]];
     } else {
         [imageViewLeft setImage:[UIImage imageNamed:@"placeholder.png"]];
     }
     //
-    if ([contest.picture_file_name rangeOfString:@"http"].location != NSNotFound ) {
+    if ([contest.picture_file_name rangeOfString:@"http"].location == NSNotFound ) {
         [imageViewRight setImageURL:[NSURL URLWithString:contest.picture_file_name]];
     } else {
         [imageViewRight setImage:[UIImage imageNamed:@"placeholder.png"]];

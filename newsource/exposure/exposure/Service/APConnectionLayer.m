@@ -86,7 +86,7 @@
 }
 
 // find user - checked
-- (void)getUserWithId:(NSString*)userId
+- (void)getUserWithId:(NSNumber*)userId
                 email:(NSString*)userEmail
                 token:(NSString*)token
               success:(void (^)(id responseObject))successHandler
@@ -420,6 +420,31 @@
     NSString *path = [NSString stringWithFormat:GET_CONTEST_WITH_BRANDID];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 brandId, PARAM_BRAND_ID,
+                                userEmail, PARAM_USER_EMAIL,
+                                userToken, PARAM_USER_TOKEN,
+                                nil];
+    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return list of contest with Contest type
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
+// get followed contest by user
+- (void)getContestByFollowingUserId:(NSNumber*)userId
+                          userEmail:(NSString*)userEmail
+                          userToken:(NSString*)userToken
+                            success:(void (^)(id responseObject))success
+                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:GET_CONTEST_BY_FOLLOWING];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userId, PARAM_USER_ID,
                                 userEmail, PARAM_USER_EMAIL,
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
@@ -852,7 +877,7 @@
 
 #pragma mark - Follow
 // following - checked
-- (void)getFollowingWithUserId:(NSString*)userId
+- (void)getFollowingWithUserId:(NSNumber*)userId
                      userEmail:(NSString*)userEmail
                          token:(NSString*)userToken
                      success:(void (^)(id responseObject))success
@@ -876,7 +901,7 @@
 
 
 // follower - checked
-- (void)getFollowerWithUserId:(NSString*)userId
+- (void)getFollowerWithUserId:(NSNumber*)userId
                     userEmail:(NSString*)userEmail
                         token:(NSString*)userToken
                     success:(void (^)(id responseObject))success
@@ -929,7 +954,7 @@
 }
 
 // follow an user - not OK
-- (void)followUser:(NSString*)userId
+- (void)followUser:(NSNumber*)userId
      userEmail:(NSString*)userEmail
          token:(NSString*)userToken
        success:(void (^)(id responseObject))success
@@ -952,7 +977,7 @@
 }
 
 // unfollow an user - not OK
-- (void)unfollowUser:(NSString*)userId
+- (void)unfollowUser:(NSNumber*)userId
        userEmail:(NSString*)userEmail
            token:(NSString*)userToken
          success:(void (^)(id responseObject))success

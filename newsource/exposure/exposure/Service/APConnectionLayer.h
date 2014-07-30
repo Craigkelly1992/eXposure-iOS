@@ -36,6 +36,7 @@
 #define GET_ALL_CONTEST @"contests"
 #define GET_CONTEST_WITH_ID @"contests/%@" // contests/<contestID>
 #define GET_CONTEST_WITH_BRANDID @"contests/by_brand"
+#define GET_CONTEST_BY_FOLLOWING @"contests/by_following"
 #define CREATE_POST @"posts"
 #define GET_ALL_POST @"posts"
 #define GET_POST_BY_ID @"posts/%@" // posts/<postID>
@@ -127,7 +128,7 @@
                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // find user
-- (void)getUserWithId:(NSString*)userId
+- (void)getUserWithId:(NSNumber*)userId
                 email:(NSString*)email
                 token:(NSString*)token
               success:(void (^)(id responseObject))success
@@ -224,6 +225,12 @@
                     success:(void (^)(id responseObject))success
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+// get followed contest by user
+- (void)getContestByFollowingUserId:(NSNumber*)userId
+                          userEmail:(NSString*)userEmail
+                          userToken:(NSString*)userToken
+                            success:(void (^)(id responseObject))success
+                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark - Post
 // create post
 - (void)createPost:(NSString*)contestId
@@ -337,7 +344,7 @@
 
 #pragma mark - Follow
 // following
-- (void)getFollowingWithUserId:(NSString*)userId
+- (void)getFollowingWithUserId:(NSNumber*)userId
                      userEmail:(NSString*)userEmail
                          token:(NSString*)userToken
                        success:(void (^)(id responseObject))success
@@ -345,7 +352,7 @@
 
 
 // follower
-- (void)getFollowerWithUserId:(NSString*)userId
+- (void)getFollowerWithUserId:(NSNumber*)userId
                     userEmail:(NSString*)userEmail
                         token:(NSString*)userToken
                       success:(void (^)(id responseObject))success
@@ -359,14 +366,14 @@
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // follow an user
-- (void)followUser:(NSString*)userId
+- (void)followUser:(NSNumber*)userId
           userEmail:(NSString*)userEmail
               token:(NSString*)userToken
             success:(void (^)(id responseObject))success
             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // unfollow an user
-- (void)unfollowUser:(NSString*)userId
+- (void)unfollowUser:(NSNumber*)userId
      userEmail:(NSString*)userEmail
          token:(NSString*)userToken
        success:(void (^)(id responseObject))success

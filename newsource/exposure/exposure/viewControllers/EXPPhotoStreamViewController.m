@@ -8,6 +8,8 @@
 
 #import "EXPPhotoStreamViewController.h"
 #import "Post.h"
+#import "EXPImageDetailViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface EXPPhotoStreamViewController ()
 
@@ -15,6 +17,7 @@
 
 @implementation EXPPhotoStreamViewController {
     NSMutableArray *arrayPost;
+    Post *currentPost;
 }
 
 #pragma mark - life cycle
@@ -74,13 +77,31 @@
     Post *post = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
     // fill to cell
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
-    [imageView setImageURL:[NSURL URLWithString:post.image_url]];
+    //cancel loading previous image for cell
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageView];
+    // default image, waiting for loading from url
+    [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
+    if ([post.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
+        [imageView setImageURL:[NSURL URLWithString:post.image_url]];
+    }
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+-(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    return YES;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    currentPost = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
+    EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
+    postVC.postId = currentPost.postId;
+    [self.navigationController pushViewController:postVC animated:YES];
+}
+
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+    return YES;
 }
 
 @end

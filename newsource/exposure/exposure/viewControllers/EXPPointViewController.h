@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPPointViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface EXPPointViewController : EXPBaseViewController <UITableViewDataSource, UITableViewDelegate>
 
+//
+@property (strong, nonatomic) NSNumber *userId;
+//
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewUser;
+// Actions
+- (IBAction)segmentValueChanged:(id)sender;
 @end

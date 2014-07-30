@@ -35,6 +35,8 @@
 @property (strong, nonatomic) IBOutlet UIView *viewFollowContainer;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintHeightFollowContainer;
 @property (strong, nonatomic) IBOutlet UIView *viewContestContainer;
+@property (strong, nonatomic) IBOutlet UIView *viewFollower;
+@property (strong, nonatomic) IBOutlet UIView *viewFollowing;
 
 #pragma mark - Actions
 - (IBAction)buttonXPTap:(id)sender;

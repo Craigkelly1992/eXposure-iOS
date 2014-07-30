@@ -15,6 +15,8 @@
 #define USERDEFAULT_KEY_TOKEN @"userdefault_key_token"
 #define USERDEFAULT_KEY_PASSWORD @"userdefault_key_password"
 
+#define kTabBarHeight 50
+
 @interface Infrastructure : NSObject
 
 #pragma mark - Singleton

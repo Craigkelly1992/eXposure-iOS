@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPFollowViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface EXPFollowViewController : EXPBaseViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
+//
+@property (strong, nonatomic) NSNumber *userId;
+@property (nonatomic) BOOL isFollowing;
+//
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewUser;
+
+// Actions
+- (IBAction)segmentValueChanged:(id)sender;
 @end

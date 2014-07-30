@@ -9,6 +9,10 @@
 #import "EXPBrandViewController.h"
 #import "Brand.h"
 #import "UIImage+Utility.h"
+#import "Submission.h"
+#import "EXPImageDetailViewController.h"
+#import "Contest.h"
+#import "EXPContestDetailViewController.h"
 
 #define kContestHeightMin 33
 #define kContestHeightMax 142
@@ -21,6 +25,7 @@
 
 @implementation EXPBrandViewController {
     Brand *currentBrand;
+    NSMutableArray *arrayContest;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,11 +42,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"";
+    arrayContest = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // get info of brand
+    [self getBrandInfo];
+    // get contests of brand
+    [self getContestsFromBrand];
+}
+
+-(void) getBrandInfo {
     User *currentUser = [[Infrastructure sharedClient] currentUser];
-    [SVProgressHUD show];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getBrandWithId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
@@ -63,6 +76,28 @@
         }
         //
         self.labelSubmission.text = [NSString stringWithFormat:@"%@", currentBrand.submissions_count];
+        //
+        [self.collectionViewPost reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+    }];
+}
+
+-(void) getContestsFromBrand {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    User *currentUser = [[Infrastructure sharedClient] currentUser];
+    [self.serviceAPI getContestByBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        arrayContest = [[NSMutableArray alloc] init];
+        NSArray *array = responseObject;
+        Contest *contest = nil;
+        for (int i = 0; i < array.count; i++) {
+            contest = [Contest objectFromDictionary:array[i]];
+            [arrayContest addObject:contest];
+        }
+        [self.tableViewContest reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -77,9 +112,9 @@
 
 -(void) updateScrollView {
     // for update tableview
-    self.constraintFollowViewHeight.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1)*kCollectionCellSize;
+    self.constraintFollowViewHeight.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]%3 + 1)*kCollectionCellSize;
     // for main scroll view
-    int newHeight = self.viewContestContainer.frame.origin.y + self.constraintContestListHeight.constant + kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]/3 + 1) * kCollectionCellSize;
+    int newHeight = self.viewContestContainer.frame.origin.y + self.constraintContestListHeight.constant + self.constraintFollowViewHeight.constant;
     self.scrollviewContainer.contentSize = CGSizeMake(self.scrollviewContainer.frame.size.width, newHeight);
 }
 
@@ -125,7 +160,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return arrayContest.count;
 }
 
 // Customize the appearance of table view cells.
@@ -135,6 +170,20 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContestTableViewCellIdentifier"];
     }
+    // fill data
+    Contest *contest = arrayContest[indexPath.row];
+    UIImageView *imageViewContest = (UIImageView*)[cell viewWithTag:1];
+    UILabel *labelContestName = (UILabel*)[cell viewWithTag:2];
+    UILabel *labelContestDescription = (UILabel*)[cell viewWithTag:3];
+    //
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewContest];
+    [imageViewContest setImage:[UIImage imageNamed:@"placeholder.png"]];
+    if (contest.picture_url && [contest.picture_url rangeOfString:@"placeholder.png"].location == NSNotFound) {
+        [imageViewContest setImageURL:[NSURL URLWithString:contest.picture_url]];
+    }
+    //
+    labelContestName.text = contest.title;
+    labelContestDescription.text = contest.description;
     return cell;
 }
 
@@ -150,7 +199,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // This code is commented out in order to allow users to click on the collection view cells.
+    // go to contest
+    Contest *contest = arrayContest[indexPath.row];
+    EXPContestDetailViewController *contestVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPContestDetailViewControllerIdentifier"];
+    contestVC.contestId = contest.contestId;
+    [self.navigationController pushViewController:contestVC animated:YES];
 }
 
 #pragma mark - CollectionView Delegate
@@ -160,19 +213,30 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return 10;
+    return [currentBrand.submissions_count integerValue];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionViewCellIdentifier" forIndexPath:indexPath];
     UIImageView *imagePost = (UIImageView*)[cell viewWithTag:1];
+    //
+    Submission *submission = currentBrand.submissions[indexPath.row];
+    //
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imagePost];
     imagePost.image = [UIImage imageNamed:@"placeholder.png"];
+    if (submission.image_file_name && [submission.image_file_name rangeOfString:@"placeholder.png"].location == NSNotFound) {
+        [imagePost setImageURL:[NSURL URLWithString:submission.image_file_name]];
+    }
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    Submission *selectedPost = [Submission objectFromDictionary:[currentBrand.submissions objectAtIndex:indexPath.row]];
+    EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
+    postVC.postId = selectedPost.submissionId;
+    [self.navigationController pushViewController:postVC animated:YES];
 }
 
 #pragma mark - scrollview delegate
