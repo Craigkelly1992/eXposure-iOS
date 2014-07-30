@@ -8,6 +8,7 @@
 
 #import "EXPFollowViewController.h"
 #import "User.h"
+#import "EXPPortfolioViewController.h"
 
 @interface EXPFollowViewController ()
 
@@ -39,6 +40,12 @@
     arrayFollower = [[NSMutableArray alloc] init];
     //
     currentUser = [Infrastructure sharedClient].currentUser;
+    //
+    if (self.isFollowing) {
+        self.segmentOption.selectedSegmentIndex = 0;
+    } else {
+        self.segmentOption.selectedSegmentIndex = 1;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -130,6 +137,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     // fill data
     User *user = [arrayData objectAtIndex:indexPath.row];
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewUserProfile];
     [imageViewUserProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
     if (user.profile_picture_url && [user.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound) {
         [imageViewUserProfile setImageURL:[NSURL URLWithString:user.profile_picture_url]];
@@ -163,6 +171,10 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    User *user = [arrayData objectAtIndex:indexPath.row];
+    EXPPortfolioViewController *portfolioVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPortfolioViewControllerIdentifier"];
+    portfolioVC.profileId = user.userId;
+    [self.navigationController pushViewController:portfolioVC animated:YES];
 }
 
 #pragma mark - Actions

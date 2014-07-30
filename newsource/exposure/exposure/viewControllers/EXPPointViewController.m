@@ -8,6 +8,7 @@
 
 #import "EXPPointViewController.h"
 #import "User.h"
+#import "EXPPortfolioViewController.h"
 
 @interface EXPPointViewController ()
 
@@ -52,6 +53,9 @@
         [SVProgressHUD dismiss];
         if ([responseObject isKindOfClass:[NSDictionary class]] && [responseObject objectForKey:@"status"]) {
             // There's no ranking
+            arrayFollowing = [[NSMutableArray alloc] init];
+            arrayData = arrayFollowing;
+            [self.tableViewUser reloadData];
         } else {
             NSArray *array = responseObject;
             arrayFollowing = [[NSMutableArray alloc] init];
@@ -76,6 +80,9 @@
         [SVProgressHUD dismiss];
         if ([responseObject isKindOfClass:[NSDictionary class]] && [responseObject objectForKey:@"status"]) {
             // There's no ranking
+            arrayGlobal = [[NSMutableArray alloc] init];
+            arrayData = arrayGlobal;
+            [self.tableViewUser reloadData];
         } else {
             NSArray *array = responseObject;
             arrayGlobal = [[NSMutableArray alloc] init];
@@ -135,67 +142,72 @@
         
         [imageViewProfile setImageURL:[NSURL URLWithString:user.profile_picture_url]];
     }
-    buttonFollow.tag = indexPath.row;
+    //
+    if ([user.userId isEqual:currentUser.userId]) {
+        buttonFollow.hidden = YES;
+    } else {
+        buttonFollow.hidden = NO;
+    }
     if ([user.current_user_following intValue] == 1) { // true
         [buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
         [buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_blue_small"] forState:UIControlStateNormal];
-        [buttonFollow addTarget:self
-                         action:@selector(unfollowTap:)
-               forControlEvents:UIControlEventTouchUpInside];
+        
         
     } else if ([user.current_user_following intValue] == 0) { // false
         [buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
         [buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
-        [buttonFollow addTarget:self
-                         action:@selector(followTap:)
-               forControlEvents:UIControlEventTouchUpInside];
+        
     }
+
+    [buttonFollow addTarget:self
+                     action:@selector(changeFollow:)
+           forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
 
--(void)followTap:(id)sender {
+-(void) changeFollow:(id)sender {
     UIButton *buttonFollow = sender;
-    int index = buttonFollow.tag;
-    User *user = [arrayData objectAtIndex:index];
+    id view = buttonFollow;
+    while (![view isKindOfClass:[UITableViewCell class]]) {
+        view = [view superview];
+    }
+    UITableViewCell *tableViewCell = view;
+    NSIndexPath* indexPath = [self.tableViewUser indexPathForCell:tableViewCell];
+    User *user = [arrayData objectAtIndex:indexPath.row];
     //
     [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI followUser:user.userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Success"];
-        [buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
-        [buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_blue_small"] forState:UIControlStateNormal];
-        [buttonFollow addTarget:self
-                         action:@selector(unfollowTap:)
-               forControlEvents:UIControlEventTouchUpInside];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Fail"];
-    }];
-}
-
--(void)unfollowTap:(id)sender {
-    UIButton *buttonFollow = sender;
-    int index = buttonFollow.tag;
-    User *user = [arrayData objectAtIndex:index];
-    //
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI unfollowUser:user.userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Success"];
-        [buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
-        [buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
-        [buttonFollow addTarget:self
-                         action:@selector(followTap:)
-               forControlEvents:UIControlEventTouchUpInside];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Fail"];
-    }];
+    if ([user.current_user_following integerValue] == 0) { // is unfollow
+        [self.serviceAPI followUser:user.userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
+            [buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
+            [buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_blue_small"] forState:UIControlStateNormal];
+            user.current_user_following = @1;
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"Fail"];
+        }];
+    } else {
+        [self.serviceAPI unfollowUser:user.userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+            
+            if (self.segmentOption.selectedSegmentIndex == 1) {
+                [SVProgressHUD showSuccessWithStatus:@"Success"];
+                [buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
+                [buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+                user.current_user_following = @0;
+            } else {
+                [self getFollowingRanking:self.userId];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"Fail"];
+        }];
+    }
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -210,7 +222,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // This code is commented out in order to allow users to click on the collection view cells.
+    User *user = [arrayData objectAtIndex:indexPath.row];
+    EXPPortfolioViewController *portfolioVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPortfolioViewControllerIdentifier"];
+    portfolioVC.profileId = user.userId;
+    [self.navigationController pushViewController:portfolioVC animated:YES];
 }
 
 - (IBAction)segmentValueChanged:(id)sender {

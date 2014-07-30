@@ -17,6 +17,7 @@
 @implementation EXPContestsViewController {
     NSArray *arrayContest;
     NSNumber *contestId;
+    User *currentUser;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,7 +35,15 @@
     // Do any additional setup after loading the view.
     self.title = @"Contests";
     // get all contest
-    User *currentUser = [Infrastructure sharedClient].currentUser;
+    currentUser = [Infrastructure sharedClient].currentUser;
+    arrayContest = [[NSArray alloc] init];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self loadFollowingContest];
+}
+
+- (void) loadAllContest {
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getAllContestWithUserEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
@@ -42,8 +51,21 @@
         arrayContest = responseObject;
         [self.tableViewContest reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD dismiss];
         
+        [SVProgressHUD dismiss];
+    }];
+}
+
+- (void) loadFollowingContest {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getContestByFollowingUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        arrayContest = responseObject;
+        [self.tableViewContest reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
     }];
 }
 
@@ -55,6 +77,11 @@
 
 #pragma mark - Segment Delegate
 - (IBAction)segmentValueChanged:(id)sender {
+    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+        [self loadFollowingContest];
+    } else if (self.segmentOption.selectedSegmentIndex == 1) { // All
+        [self loadAllContest];
+    }
 }
 
 #pragma mark - Table View
@@ -69,7 +96,7 @@
     if (arrayContest) {
         return [arrayContest count];
     }
-    return 0;
+    return [arrayContest count];
 }
 
 // Customize the appearance of table view cells.
@@ -86,16 +113,17 @@
     UIImageView *imageViewRight = (UIImageView*)[cell viewWithTag:4];
     // fill data
     Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:indexPath.row]];
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewLeft];
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewRight];
+    //
+    [imageViewLeft setImage:[UIImage imageNamed:@"placeholder.png"]];
     if ([contest.picture_file_name rangeOfString:@"http"].location == NSNotFound ) {
         [imageViewLeft setImageURL:[NSURL URLWithString:contest.picture_file_name]];
-    } else {
-        [imageViewLeft setImage:[UIImage imageNamed:@"placeholder.png"]];
     }
     //
+    [imageViewRight setImage:[UIImage imageNamed:@"placeholder.png"]];
     if ([contest.picture_file_name rangeOfString:@"http"].location == NSNotFound ) {
         [imageViewRight setImageURL:[NSURL URLWithString:contest.picture_file_name]];
-    } else {
-        [imageViewRight setImage:[UIImage imageNamed:@"placeholder.png"]];
     }
     //
     labelContestName.text = contest.title;

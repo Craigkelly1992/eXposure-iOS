@@ -221,7 +221,7 @@
                                 </connections>
                             </segmentedControl>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wpU-8u-OC8">
-                                <rect key="frame" x="0.0" y="126" width="320" height="392"/>
+                                <rect key="frame" x="0.0" y="126" width="320" height="442"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="8UL-np-W7V">
@@ -238,8 +238,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sample.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="5Bp-Ov-9RU">
-                                                    <rect key="frame" x="2" y="2" width="150" height="150"/>
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="5Bp-Ov-9RU">
+                                                    <rect key="frame" x="2" y="2" width="146" height="150"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="binh nguyen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBp-Ed-O72">
@@ -255,6 +255,7 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                     <state key="normal" title="Unfollow">
                                                         <color key="titleColor" red="1" green="0.67007869529999997" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                             </subviews>
@@ -272,7 +273,7 @@
                         <color key="backgroundColor" red="0.58431372550000005" green="0.81960784310000001" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="wpU-8u-OC8" firstAttribute="top" secondItem="Vw2-re-UXH" secondAttribute="top" constant="126" id="EDm-cl-gY4"/>
-                            <constraint firstAttribute="bottom" secondItem="wpU-8u-OC8" secondAttribute="bottom" constant="50" id="fTC-a6-LW5"/>
+                            <constraint firstAttribute="bottom" secondItem="wpU-8u-OC8" secondAttribute="bottom" id="viZ-CV-Ou3"/>
                             <constraint firstItem="Ohw-H4-3Vd" firstAttribute="top" secondItem="Vw2-re-UXH" secondAttribute="top" constant="90" id="xhA-cH-Wa5"/>
                         </constraints>
                     </view>
@@ -353,7 +354,7 @@
                                                 <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K2u-g7-bEM">
                                                     <rect key="frame" x="229" y="8" width="80" height="33"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Unfollow" backgroundImage="btn_blue_small">
+                                                    <state key="normal" title="Unfollow">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -564,9 +565,6 @@
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
-                                                        <connections>
-                                                            <action selector="buttonSettingTap:" destination="vNO-6S-46Z" eventType="touchUpInside" id="ReB-cg-8Us"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.1764705882" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -2116,7 +2114,7 @@ Team eXposure</string>
         <image name="icon_open" width="40" height="40"/>
         <image name="logo_exposure" width="197" height="58"/>
         <image name="placeholder.png" width="256" height="256"/>
-        <image name="sample.jpg" width="620" height="350"/>
+        <image name="sample.jpg" width="640" height="480"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

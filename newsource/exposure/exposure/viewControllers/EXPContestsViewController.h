@@ -11,8 +11,10 @@
 
 @interface EXPContestsViewController : EXPBaseViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
+// Outlets
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBarContest;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewContest;
+// Actions
 - (IBAction)segmentValueChanged:(id)sender;
 @end

@@ -924,7 +924,7 @@
 }
 
 // checks if the user is being followed by current_user - checked
-- (void)checkFollowUser:(NSString*)userId
+- (void)checkFollowUser:(NSNumber*)userId
           userEmail:(NSString*)userEmail
               token:(NSString*)userToken
             success:(void (^)(id responseObject))success

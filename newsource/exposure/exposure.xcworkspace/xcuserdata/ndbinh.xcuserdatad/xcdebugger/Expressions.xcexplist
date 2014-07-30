@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[EXPContestDetailViewController viewWillAppear:]:EXPContestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPointViewController tableView:cellForRowAtIndexPath:]:EXPPointViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "buttonFollow.tag">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPortfolioViewController unfollowTap:]:EXPPortfolioViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPointViewController changeFollow:]:EXPPointViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__43-[EXPImageDetailViewController viewDidLoad]_block_invoke:EXPImageDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPhotoStreamViewController collectionView:didDeselectItemAtIndexPath:]:EXPPhotoStreamViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPContestDetailViewController updateScrollView]:EXPContestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPBrandViewController collectionView:cellForItemAtIndexPath:]:EXPBrandViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__45-[EXPImageDetailViewController loadPostUser:]_block_invoke:EXPImageDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPImageDetailViewController viewDidLoad]:EXPImageDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPortfolioViewController viewDidLayoutSubviews]:EXPPortfolioViewController.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

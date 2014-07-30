@@ -27,6 +27,7 @@
     NSArray *arrayPost;
     NSMutableArray *arrayContest;
     User *currentUser;
+    User *profileUser;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -61,12 +62,82 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    // get current user info
-    [self getUserInfo:currentUser.userId];
-    // get user's info
-    [self getPostByUserId];
+    if (!self.profileId) {
+        // there's no profile id, so we're entering our home
+        self.profileId = currentUser.userId;
+        [self.buttonFollow setTitle:@"Setting" forState:UIControlStateNormal];
+        [self.buttonFollow addTarget:self
+                              action:@selector(buttonSettingTap:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [self.buttonFollow setTitle:@"" forState:UIControlStateNormal];
+        // check if follow/ unfollow
+        [SVProgressHUD showWithStatus:@"Loading"];
+        [self.serviceAPI checkFollowUser:self.profileId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+            
+            [SVProgressHUD dismiss];
+            if ([[responseObject objectForKey:@"following"] boolValue] == YES) {
+                [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
+                [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+                [self.buttonFollow addTarget:self
+                                 action:@selector(unfollowTap:)
+                       forControlEvents:UIControlEventTouchUpInside];
+            } else {
+                [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
+                [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+                [self.buttonFollow addTarget:self
+                                 action:@selector(followTap:)
+                       forControlEvents:UIControlEventTouchUpInside];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            
+        }];
+    }
     //
-    [self getContestByUserId];
+    [self getUserInfo:self.profileId];
+    // get user's info
+    [self getPostByUserId:self.profileId];
+    //
+    [self getContestByUserId:self.profileId];
+}
+
+-(void)followTap:(id)sender {
+    //
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI followUser:self.profileId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
+        [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+        [self.buttonFollow addTarget:self
+                         action:@selector(unfollowTap:)
+               forControlEvents:UIControlEventTouchUpInside];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Fail"];
+    }];
+}
+
+-(void)unfollowTap:(id)sender {
+
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI unfollowUser:self.profileId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
+        [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+        [self.buttonFollow addTarget:self
+                         action:@selector(followTap:)
+               forControlEvents:UIControlEventTouchUpInside];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Fail"];
+    }];
 }
 
 -(void) getUserInfo:(NSNumber*)userId {
@@ -75,28 +146,28 @@
     [self.serviceAPI getUserWithId:userId email:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
-        currentUser = [User objectFromDictionary:responseObject];
+        profileUser = [User objectFromDictionary:responseObject];
         // fill user's data
-        if (currentUser) {
+        if (profileUser) {
             // has login yet
-            self.labelUsername.text = currentUser.username;
+            self.labelUsername.text = profileUser.username;
             // profile image
-            if ([currentUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-                [self.imageViewProfile setImageURL:[NSURL URLWithString:currentUser.profile_picture_url]];
+            if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
+                [self.imageViewProfile setImageURL:[NSURL URLWithString:profileUser.profile_picture_url]];
             } else {
                 [self.imageViewProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
             }
             // background image
-            if ([currentUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-                [self.imageViewBackground setImageURL:[NSURL URLWithString:currentUser.background_picture_url]];
+            if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
+                [self.imageViewBackground setImageURL:[NSURL URLWithString:profileUser.background_picture_url]];
             } else {
                 [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
             }
             // description
-            self.textViewDescription.text = currentUser.description;
+            self.textViewDescription.text = profileUser.description;
             // following, follower, submission count
-            self.labelFollowerCount.text = [currentUser.followers_count stringValue];
-            self.labelFollowingCount.text = [currentUser.follow_count stringValue];
+            self.labelFollowerCount.text = [profileUser.followers_count stringValue];
+            self.labelFollowingCount.text = [profileUser.follow_count stringValue];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -104,43 +175,46 @@
     }];
 }
 
--(void) getPostByUserId {
-    if (currentUser) {
-        [SVProgressHUD showWithStatus:@"Loading"];
-        [self.serviceAPI getPostByUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
-            
-            NSLog(@"%@", responseObject);
-            arrayPost = responseObject;
-            [self.collectionViewPost reloadData];
-            [self updateScrollView];
-            [SVProgressHUD dismiss];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            NSLog(@"%@", error);
-            [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Can\'t retrieve data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
-            [SVProgressHUD dismiss];
-        }];
-    }
+-(void) getPostByUserId:(NSNumber*)userId {
+
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getPostByUserId:userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        arrayPost = responseObject;
+        [self.collectionViewPost reloadData];
+        [self updateScrollView];
+        [SVProgressHUD dismiss];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"%@", error);
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Can\'t retrieve data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+        [SVProgressHUD dismiss];
+    }];
 }
 
--(void) getContestByUserId {
-    if ([Infrastructure sharedClient].currentUser) {
-        [SVProgressHUD showWithStatus:@"Loading"];
-        [self.serviceAPI getContestByFollowingUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
-           
-            [SVProgressHUD dismiss];
-            NSArray *array = responseObject;
-            Contest *contest = nil;
-            for (int i = 0; i < array.count; i++) {
-                contest = [Contest objectFromDictionary:array[i]];
-                [arrayContest addObject:contest];
-            }
-            [self.tableViewContest reloadData];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            [SVProgressHUD dismiss];
-        }];
-    }
+-(void) getContestByUserId:(NSNumber*)userId {
+    
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getContestByFollowingUserId:userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+       
+        [SVProgressHUD dismiss];
+        NSArray *array = responseObject;
+        Contest *contest = nil;
+        for (int i = 0; i < array.count; i++) {
+            contest = [Contest objectFromDictionary:array[i]];
+            [arrayContest addObject:contest];
+        }
+        [self.tableViewContest reloadData];
+        if (arrayContest.count <= 0) {
+            // hide contest
+            self.constraintHeightContest.constant = kContestHeightMin;
+            [self.buttonIndicatorContest setImage:[UIImage imageNamed:@"arrow_down"] forState:UIControlStateNormal];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+    }];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -169,11 +243,11 @@
 #pragma mark - Actions
 - (IBAction)buttonXPTap:(id)sender {
     EXPPointViewController *pointVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPointViewControllerIdentifier"];
-    pointVC.userId = currentUser.userId;
+    pointVC.userId = self.profileId;
     [self.navigationController pushViewController:pointVC animated:YES];
 }
 
-- (IBAction)buttonSettingTap:(id)sender {
+- (void)buttonSettingTap:(id)sender {
     EXPPortFolioSettingsViewController *portfolioSettingVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPortFolioSettingsViewControllerIdentifier"];
     [self.navigationController pushViewController:portfolioSettingVC animated:YES];
 }
@@ -207,14 +281,14 @@
 -(void)viewFollowerTap {
     EXPFollowViewController *followVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPFollowViewControllerIdentifier"];
     followVC.isFollowing = NO;
-    followVC.userId = [Infrastructure sharedClient].currentUser.userId;
+    followVC.userId = self.profileId;
     [self.navigationController pushViewController:followVC animated:YES];
 }
 
 -(void)viewFollowTap {
     EXPFollowViewController *followVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPFollowViewControllerIdentifier"];
     followVC.isFollowing = YES;
-    followVC.userId = [Infrastructure sharedClient].currentUser.userId;
+    followVC.userId = self.profileId;
     [self.navigationController pushViewController:followVC animated:YES];
 }
 

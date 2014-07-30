@@ -13,6 +13,9 @@
                             UICollectionViewDataSource, UICollectionViewDelegate,
                             UITableViewDataSource, UITableViewDelegate>
 
+//
+@property (weak, nonatomic) NSNumber *profileId;
+// Outlets
 @property (weak, nonatomic) IBOutlet UITextView *textViewDescription;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewBackground;
 @property (weak, nonatomic) IBOutlet UILabel *labelUsername;
@@ -40,7 +43,6 @@
 
 #pragma mark - Actions
 - (IBAction)buttonXPTap:(id)sender;
-- (IBAction)buttonSettingTap:(id)sender;
 - (IBAction)buttonFacebookTap:(id)sender;
 - (IBAction)buttonInstagramTap:(id)sender;
 - (IBAction)buttonContestTap:(id)sender;

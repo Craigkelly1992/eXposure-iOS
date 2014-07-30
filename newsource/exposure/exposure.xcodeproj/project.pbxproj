@@ -106,6 +106,8 @@
 		B3DB55811987C39100402BA8 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55791987C39100402BA8 /* UIImageView+WebCache.m */; };
 		B3DB55831987C3C500402BA8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3DB55821987C3C500402BA8 /* ImageIO.framework */; };
 		B3DB55851987C3D300402BA8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3DB55841987C3D300402BA8 /* MapKit.framework */; };
+		B3DB558719890C9B00402BA8 /* PointTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3DB558619890C9B00402BA8 /* PointTableViewCell.xib */; };
+		B3DB558B19890D0700402BA8 /* PointTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB558A19890D0700402BA8 /* PointTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +310,9 @@
 		B3DB55791987C39100402BA8 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "Library/SDWebImage/UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		B3DB55821987C3C500402BA8 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B3DB55841987C3D300402BA8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B3DB558619890C9B00402BA8 /* PointTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		B3DB558919890D0700402BA8 /* PointTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointTableViewCell.h; path = CustomView/PointTableViewCell.h; sourceTree = "<group>"; };
+		B3DB558A19890D0700402BA8 /* PointTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PointTableViewCell.m; path = CustomView/PointTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -581,6 +586,7 @@
 		B3CD73A8196E879800CBE2C6 /* exposure */ = {
 			isa = PBXGroup;
 			children = (
+				B3DB558819890CE500402BA8 /* Custom View */,
 				B3A4D507197EB0150070185E /* constant */,
 				B3CD74C01977937E00CBE2C6 /* library */,
 				B3CD742F196E98E200CBE2C6 /* service */,
@@ -674,6 +680,7 @@
 			children = (
 				B3CD73B4196E879800CBE2C6 /* Main.storyboard */,
 				B3CD73BA196E879800CBE2C6 /* Images.xcassets */,
+				B3DB558619890C9B00402BA8 /* PointTableViewCell.xib */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -788,6 +795,15 @@
 			name = "UIImage+Resize";
 			sourceTree = "<group>";
 		};
+		B3DB558819890CE500402BA8 /* Custom View */ = {
+			isa = PBXGroup;
+			children = (
+				B3DB558919890D0700402BA8 /* PointTableViewCell.h */,
+				B3DB558A19890D0700402BA8 /* PointTableViewCell.m */,
+			);
+			name = "Custom View";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -872,6 +888,7 @@
 				B3CD73BB196E879800CBE2C6 /* Images.xcassets in Resources */,
 				B3DB55561986385A00402BA8 /* sample.jpg in Resources */,
 				B3A4D519197FB0B50070185E /* placeholder.png in Resources */,
+				B3DB558719890C9B00402BA8 /* PointTableViewCell.xib in Resources */,
 				B3A4D534197FB4590070185E /* CLImageEditor.bundle in Resources */,
 				B3CD73AD196E879800CBE2C6 /* InfoPlist.strings in Resources */,
 				B3CD73B6196E879800CBE2C6 /* Main.storyboard in Resources */,
@@ -993,6 +1010,7 @@
 				B3A4D563197FB5100070185E /* CLEffectTool.m in Sources */,
 				B3A4D573197FB5230070185E /* CLBloomEffect.m in Sources */,
 				B3A4D579197FB5230070185E /* CLSpotEffect.m in Sources */,
+				B3DB558B19890D0700402BA8 /* PointTableViewCell.m in Sources */,
 				B3A4D55D197FB5040070185E /* CLClippingTool.m in Sources */,
 				B3A4D55A197FB4FC0070185E /* CLBlurTool.m in Sources */,
 				B3A4D59C197FB5C30070185E /* CLImageToolBase.m in Sources */,
