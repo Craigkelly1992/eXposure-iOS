@@ -14,9 +14,17 @@
 #import "Post.h"
 #import "EXPLoginViewController.h"
 #import "Contest.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "InstagramKit.h"
+#import "IKLoginViewController.h"
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
+
 @interface EXPPortFolioSettingsViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLImageEditorDelegate> {
     int pictureType;
 }
+
+@property (nonatomic) ACAccountStore *accountStore;
 
 @end
 
@@ -45,6 +53,17 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tapGesture.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tapGesture];
+    // Facebook
+    self.viewFBLogin.readPermissions = @[@"public_profile", @"email", @"user_friends", @"user_photos"];
+    // Instagram
+    // check if logged in
+    if ([InstagramEngine sharedEngine].accessToken) {
+        [self.buttonInstagram setTitle:@"Logout Instagram" forState:UIControlStateNormal];
+    } else {
+        [self.buttonInstagram setTitle:@"Login Instagram" forState:UIControlStateNormal];
+    }
+    // Twitter
+    self.accountStore = [[ACAccountStore alloc] init];
 }
 
 -(void) dismissKeyboard {
@@ -58,7 +77,7 @@
 }
 
 - (void)viewDidLayoutSubviews {
-    [self.scrollViewContainer setContentSize:CGSizeMake(self.view.frame.size.width, 586)];
+    [self.scrollViewContainer setContentSize:CGSizeMake(self.view.frame.size.width, self.viewContainer.frame.size.height)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,6 +107,22 @@
 - (IBAction)uploadBackground:(id)sender {
     pictureType = 2;
     [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", nil]showInView:self.view];
+}
+
+- (IBAction)buttonInstagramTap:(id)sender {
+    if (![InstagramEngine sharedEngine].accessToken) {
+        // log in
+        IKLoginViewController *loginVc = [self.storyboard instantiateViewControllerWithIdentifier:@"IKLoginViewControllerIdentifier"];
+        loginVc.delegate = self;
+        [self.navigationController pushViewController:loginVc animated:YES];
+    } else {
+        // log out
+        
+    }
+}
+
+- (IBAction)buttonTwitterTap:(id)sender {
+    [self fetchTimelineForUser:@"marvellouslove"];
 }
 
 - (IBAction)changePassword:(id)sender {
@@ -202,4 +237,129 @@
 - (IBAction)signOut:(id)sender {
     // TODO: signout here
 }
+
+#pragma mark - Facebook Login Delegate
+-(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
+    
+}
+
+-(void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+    
+}
+
+-(void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
+    
+}
+
+-(void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
+    
+}
+
+#pragma mark - Instagram Delegate
+-(void)instagramLoginSuccessWithToken:(NSString*)accessToken {
+    [SVProgressHUD showSuccessWithStatus:@"Success"];
+    [self.buttonInstagram setTitle:@"Logout Instagram" forState:UIControlStateNormal];
+}
+
+-(void)instagramLoginFail:(NSError*)error {
+    [SVProgressHUD showErrorWithStatus:@"Fail"];
+}
+
+#pragma mark - Twitter
+- (BOOL)userHasAccessToTwitter
+{
+    return [SLComposeViewController
+            isAvailableForServiceType:SLServiceTypeTwitter];
+}
+
+- (void)fetchTimelineForUser:(NSString *)username
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType =
+        [self.accountStore accountTypeWithAccountTypeIdentifier:
+         ACAccountTypeIdentifierTwitter];
+        
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 ACAccount *account = [twitterAccounts lastObject];
+                 if (!account) {
+                     [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please singin with an twitter account on Settings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+                 }
+                 
+                 NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"
+                               @"/1.1/statuses/user_timeline.json"];
+                 NSDictionary *params = @{@"screen_name" : account.username,
+                                          @"include_rts" : @"0",
+                                          @"trim_user" : @"1",
+                                          @"count" : @"100"};
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:account];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:
+                  ^(NSData *responseData,
+                    NSHTTPURLResponse *urlResponse,
+                    NSError *error) {
+                      
+                      if (error) {
+                          NSLog(@"Error: %@", error);
+                      } else {
+                          NSLog(@"Response Data: %@", [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil]);
+                          if (responseData) {
+                              if (urlResponse.statusCode >= 200 &&
+                                  urlResponse.statusCode < 300) {
+                                  
+                                  NSError *jsonError;
+                                  NSDictionary *timelineData =
+                                  [NSJSONSerialization
+                                   JSONObjectWithData:responseData
+                                   options:NSJSONReadingAllowFragments error:&jsonError];
+                                  if (timelineData) {
+                                      // get image url
+                                      NSArray *arrayImage = [timelineData valueForKeyPath:@"extended_entities.media.media_url"];
+                                      NSMutableArray *filterImages = [[NSMutableArray alloc] init];
+                                      for (int i = 0; i < arrayImage.count; i++) {
+                                          if (arrayImage[i] != [NSNull null]) {
+                                              [filterImages addObject:arrayImage[i]];
+                                          }
+                                      }
+                                      NSLog(@"Image url: %@", filterImages);
+                                  }
+                                  else {
+                                      // Our JSON deserialization went awry
+                                      NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                                  }
+                              }
+                              else {
+                                  // The server did not respond ... were we rate-limited?
+                                  NSLog(@"The response status code is %ld",
+                                        (long)urlResponse.statusCode);
+                              }
+                          }
+                      }
+                  }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
 @end

@@ -108,6 +108,18 @@
 		B3DB55851987C3D300402BA8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3DB55841987C3D300402BA8 /* MapKit.framework */; };
 		B3DB558719890C9B00402BA8 /* PointTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3DB558619890C9B00402BA8 /* PointTableViewCell.xib */; };
 		B3DB558B19890D0700402BA8 /* PointTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB558A19890D0700402BA8 /* PointTableViewCell.m */; };
+		B3DB558D1989F16A00402BA8 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3DB558C1989F16A00402BA8 /* FacebookSDK.framework */; };
+		B3DB5590198A296400402BA8 /* IKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB558F198A296400402BA8 /* IKLoginViewController.m */; };
+		B3DB559A198A2F3000402BA8 /* InstagramEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB5599198A2F3000402BA8 /* InstagramEngine.m */; };
+		B3DB55A9198A2F3700402BA8 /* IKUserInPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB559C198A2F3700402BA8 /* IKUserInPhoto.m */; };
+		B3DB55AA198A2F3700402BA8 /* InstagramComment.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB559E198A2F3700402BA8 /* InstagramComment.m */; };
+		B3DB55AB198A2F3700402BA8 /* InstagramMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55A0198A2F3700402BA8 /* InstagramMedia.m */; };
+		B3DB55AC198A2F3700402BA8 /* InstagramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55A2198A2F3700402BA8 /* InstagramModel.m */; };
+		B3DB55AD198A2F3700402BA8 /* InstagramPaginationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55A4198A2F3700402BA8 /* InstagramPaginationInfo.m */; };
+		B3DB55AE198A2F3700402BA8 /* InstagramTag.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55A6198A2F3700402BA8 /* InstagramTag.m */; };
+		B3DB55AF198A2F3700402BA8 /* InstagramUser.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55A8198A2F3700402BA8 /* InstagramUser.m */; };
+		B3DB55B2198A2F7300402BA8 /* InstagramKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3DB55B1198A2F7300402BA8 /* InstagramKit.plist */; };
+		B3DB55B5198B8B3700402BA8 /* EXPGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -313,6 +325,29 @@
 		B3DB558619890C9B00402BA8 /* PointTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		B3DB558919890D0700402BA8 /* PointTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointTableViewCell.h; path = CustomView/PointTableViewCell.h; sourceTree = "<group>"; };
 		B3DB558A19890D0700402BA8 /* PointTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PointTableViewCell.m; path = CustomView/PointTableViewCell.m; sourceTree = "<group>"; };
+		B3DB558C1989F16A00402BA8 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		B3DB558E198A296400402BA8 /* IKLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IKLoginViewController.h; path = viewControllers/IKLoginViewController.h; sourceTree = "<group>"; };
+		B3DB558F198A296400402BA8 /* IKLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IKLoginViewController.m; path = viewControllers/IKLoginViewController.m; sourceTree = "<group>"; };
+		B3DB5598198A2F3000402BA8 /* InstagramEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstagramEngine.h; path = Library/InstagramKit/Engine/InstagramEngine.h; sourceTree = "<group>"; };
+		B3DB5599198A2F3000402BA8 /* InstagramEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstagramEngine.m; path = Library/InstagramKit/Engine/InstagramEngine.m; sourceTree = "<group>"; };
+		B3DB559B198A2F3700402BA8 /* IKUserInPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IKUserInPhoto.h; path = Library/InstagramKit/Models/IKUserInPhoto.h; sourceTree = "<group>"; };
+		B3DB559C198A2F3700402BA8 /* IKUserInPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IKUserInPhoto.m; path = Library/InstagramKit/Models/IKUserInPhoto.m; sourceTree = "<group>"; };
+		B3DB559D198A2F3700402BA8 /* InstagramComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstagramComment.h; path = Library/InstagramKit/Models/InstagramComment.h; sourceTree = "<group>"; };
+		B3DB559E198A2F3700402BA8 /* InstagramComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstagramComment.m; path = Library/InstagramKit/Models/InstagramComment.m; sourceTree = "<group>"; };
+		B3DB559F198A2F3700402BA8 /* InstagramMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstagramMedia.h; path = Library/InstagramKit/Models/InstagramMedia.h; sourceTree = "<group>"; };
+		B3DB55A0198A2F3700402BA8 /* InstagramMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstagramMedia.m; path = Library/InstagramKit/Models/InstagramMedia.m; sourceTree = "<group>"; };
+		B3DB55A1198A2F3700402BA8 /* InstagramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstagramModel.h; path = Library/InstagramKit/Models/InstagramModel.h; sourceTree = "<group>"; };
+		B3DB55A2198A2F3700402BA8 /* InstagramModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstagramModel.m; path = Library/InstagramKit/Models/InstagramModel.m; sourceTree = "<group>"; };
+		B3DB55A3198A2F3700402BA8 /* InstagramPaginationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstagramPaginationInfo.h; path = Library/InstagramKit/Models/InstagramPaginationInfo.h; sourceTree = "<group>"; };
+		B3DB55A4198A2F3700402BA8 /* InstagramPaginationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstagramPaginationInfo.m; path = Library/InstagramKit/Models/InstagramPaginationInfo.m; sourceTree = "<group>"; };
+		B3DB55A5198A2F3700402BA8 /* InstagramTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstagramTag.h; path = Library/InstagramKit/Models/InstagramTag.h; sourceTree = "<group>"; };
+		B3DB55A6198A2F3700402BA8 /* InstagramTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstagramTag.m; path = Library/InstagramKit/Models/InstagramTag.m; sourceTree = "<group>"; };
+		B3DB55A7198A2F3700402BA8 /* InstagramUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstagramUser.h; path = Library/InstagramKit/Models/InstagramUser.h; sourceTree = "<group>"; };
+		B3DB55A8198A2F3700402BA8 /* InstagramUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstagramUser.m; path = Library/InstagramKit/Models/InstagramUser.m; sourceTree = "<group>"; };
+		B3DB55B0198A2F3F00402BA8 /* InstagramKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InstagramKit.h; path = Library/InstagramKit/InstagramKit.h; sourceTree = "<group>"; };
+		B3DB55B1198A2F7300402BA8 /* InstagramKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InstagramKit.plist; path = Library/InstagramKit/InstagramKit.plist; sourceTree = "<group>"; };
+		B3DB55B3198B8B3700402BA8 /* EXPGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXPGalleryViewController.h; path = viewControllers/EXPGalleryViewController.h; sourceTree = "<group>"; };
+		B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXPGalleryViewController.m; path = viewControllers/EXPGalleryViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +361,7 @@
 				B3CD73A7196E879800CBE2C6 /* UIKit.framework in Frameworks */,
 				B3CD73A3196E879800CBE2C6 /* Foundation.framework in Frameworks */,
 				047F3F1C5F2242689E515885 /* libPods.a in Frameworks */,
+				B3DB558D1989F16A00402BA8 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +608,7 @@
 		B3CD73A1196E879800CBE2C6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3DB558C1989F16A00402BA8 /* FacebookSDK.framework */,
 				B3DB55841987C3D300402BA8 /* MapKit.framework */,
 				B3DB55821987C3C500402BA8 /* ImageIO.framework */,
 				B3CD73A2196E879800CBE2C6 /* Foundation.framework */,
@@ -671,6 +708,10 @@
 				B3CD742C196E95E900CBE2C6 /* EXPSignUpViewController.m */,
 				B3CD74B1197786E400CBE2C6 /* EXPTabBarController.h */,
 				B3CD74B2197786E400CBE2C6 /* EXPTabBarController.m */,
+				B3DB558E198A296400402BA8 /* IKLoginViewController.h */,
+				B3DB558F198A296400402BA8 /* IKLoginViewController.m */,
+				B3DB55B3198B8B3700402BA8 /* EXPGalleryViewController.h */,
+				B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -732,6 +773,7 @@
 		B3CD74C01977937E00CBE2C6 /* library */ = {
 			isa = PBXGroup;
 			children = (
+				B3DB5594198A2B3D00402BA8 /* InstagramKit */,
 				B3DB55591987C36A00402BA8 /* UIImage+Resize */,
 				B3DB55581987C36300402BA8 /* SDWebImage */,
 				B3AE1E291980F59A003467D7 /* UILabel+DynamicSizeMe */,
@@ -802,6 +844,47 @@
 				B3DB558A19890D0700402BA8 /* PointTableViewCell.m */,
 			);
 			name = "Custom View";
+			sourceTree = "<group>";
+		};
+		B3DB5594198A2B3D00402BA8 /* InstagramKit */ = {
+			isa = PBXGroup;
+			children = (
+				B3DB55B0198A2F3F00402BA8 /* InstagramKit.h */,
+				B3DB55B1198A2F7300402BA8 /* InstagramKit.plist */,
+				B3DB5597198A2F2100402BA8 /* Models */,
+				B3DB5596198A2F1C00402BA8 /* Engine */,
+			);
+			name = InstagramKit;
+			sourceTree = "<group>";
+		};
+		B3DB5596198A2F1C00402BA8 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				B3DB5598198A2F3000402BA8 /* InstagramEngine.h */,
+				B3DB5599198A2F3000402BA8 /* InstagramEngine.m */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
+		B3DB5597198A2F2100402BA8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B3DB559B198A2F3700402BA8 /* IKUserInPhoto.h */,
+				B3DB559C198A2F3700402BA8 /* IKUserInPhoto.m */,
+				B3DB559D198A2F3700402BA8 /* InstagramComment.h */,
+				B3DB559E198A2F3700402BA8 /* InstagramComment.m */,
+				B3DB559F198A2F3700402BA8 /* InstagramMedia.h */,
+				B3DB55A0198A2F3700402BA8 /* InstagramMedia.m */,
+				B3DB55A1198A2F3700402BA8 /* InstagramModel.h */,
+				B3DB55A2198A2F3700402BA8 /* InstagramModel.m */,
+				B3DB55A3198A2F3700402BA8 /* InstagramPaginationInfo.h */,
+				B3DB55A4198A2F3700402BA8 /* InstagramPaginationInfo.m */,
+				B3DB55A5198A2F3700402BA8 /* InstagramTag.h */,
+				B3DB55A6198A2F3700402BA8 /* InstagramTag.m */,
+				B3DB55A7198A2F3700402BA8 /* InstagramUser.h */,
+				B3DB55A8198A2F3700402BA8 /* InstagramUser.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -887,6 +970,7 @@
 			files = (
 				B3CD73BB196E879800CBE2C6 /* Images.xcassets in Resources */,
 				B3DB55561986385A00402BA8 /* sample.jpg in Resources */,
+				B3DB55B2198A2F7300402BA8 /* InstagramKit.plist in Resources */,
 				B3A4D519197FB0B50070185E /* placeholder.png in Resources */,
 				B3DB558719890C9B00402BA8 /* PointTableViewCell.xib in Resources */,
 				B3A4D534197FB4590070185E /* CLImageEditor.bundle in Resources */,
@@ -944,7 +1028,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3CD749E1976E5E500CBE2C6 /* User.m in Sources */,
+				B3DB55AB198A2F3700402BA8 /* InstagramMedia.m in Sources */,
 				B3DB557F1987C39100402BA8 /* SDWebImagePrefetcher.m in Sources */,
+				B3DB559A198A2F3000402BA8 /* InstagramEngine.m in Sources */,
 				B3AE1E281980E051003467D7 /* EXPContestDetailViewController.m in Sources */,
 				B3CD743C196EB2D700CBE2C6 /* Notification.m in Sources */,
 				B3A4D562197FB5100070185E /* CLEffectBase.m in Sources */,
@@ -952,6 +1038,7 @@
 				B3CD7439196EB26B00CBE2C6 /* exposure.xcdatamodeld in Sources */,
 				B3A4D574197FB5230070185E /* CLGloomEffect.m in Sources */,
 				B3A4D595197FB5420070185E /* CLColorPickerView.m in Sources */,
+				B3DB55AA198A2F3700402BA8 /* InstagramComment.m in Sources */,
 				B3A4D582197FB5340070185E /* CLRotateTool.m in Sources */,
 				B3A4D575197FB5230070185E /* CLHighlightShadowEffect.m in Sources */,
 				B3CD74D01978378200CBE2C6 /* EXPPrizeClaimViewController.m in Sources */,
@@ -976,10 +1063,13 @@
 				B3CD74A11976E6DA00CBE2C6 /* Brand.m in Sources */,
 				B3A4D576197FB5230070185E /* CLHueEffect.m in Sources */,
 				B3A4D598197FB5420070185E /* CLToolbarMenuItem.m in Sources */,
+				B3DB55AD198A2F3700402BA8 /* InstagramPaginationInfo.m in Sources */,
 				B3CD749B1976E58400CBE2C6 /* Post.m in Sources */,
 				B3DB55651987C38400402BA8 /* UIImage+Scaling.m in Sources */,
+				B3DB55AF198A2F3700402BA8 /* InstagramUser.m in Sources */,
 				B3AE1E32198105D0003467D7 /* EXPBrandViewController.m in Sources */,
 				B3A4D585197FB53B0070185E /* CLToneCurveTool.m in Sources */,
+				B3DB55AC198A2F3700402BA8 /* InstagramModel.m in Sources */,
 				B3A4D57F197FB52D0070185E /* CLFilterTool.m in Sources */,
 				B3CD74E21979210B00CBE2C6 /* SubmissionList.m in Sources */,
 				B3A4D547197FB47A0070185E /* CLClassList.m in Sources */,
@@ -1001,6 +1091,7 @@
 				B3A4D548197FB47A0070185E /* CLSplineInterpolator.m in Sources */,
 				B3CD74D61978435F00CBE2C6 /* EXPNewPostViewController.m in Sources */,
 				B3A4D536197FB4590070185E /* CLImageEditorTheme.m in Sources */,
+				B3DB5590198A296400402BA8 /* IKLoginViewController.m in Sources */,
 				B3CD742D196E95E900CBE2C6 /* EXPSignUpViewController.m in Sources */,
 				B3A4D57E197FB52D0070185E /* CLFilterBase.m in Sources */,
 				B3CD7432196E990A00CBE2C6 /* APConnectionLayer.m in Sources */,
@@ -1015,6 +1106,7 @@
 				B3A4D55A197FB4FC0070185E /* CLBlurTool.m in Sources */,
 				B3A4D59C197FB5C30070185E /* CLImageToolBase.m in Sources */,
 				B3DB55811987C39100402BA8 /* UIImageView+WebCache.m in Sources */,
+				B3DB55A9198A2F3700402BA8 /* IKUserInPhoto.m in Sources */,
 				B3CD73AF196E879800CBE2C6 /* main.m in Sources */,
 				B3A4D54B197FB47A0070185E /* UIView+Frame.m in Sources */,
 				B3A4D549197FB47A0070185E /* UIDevice+SystemVersion.m in Sources */,
@@ -1023,8 +1115,10 @@
 				B3AE1E38198113CE003467D7 /* EXPFollowViewController.m in Sources */,
 				B3DB557B1987C39100402BA8 /* SDImageCache.m in Sources */,
 				B3CD74B61977873400CBE2C6 /* EXPContestsViewController.m in Sources */,
+				B3DB55AE198A2F3700402BA8 /* InstagramTag.m in Sources */,
 				B3CD74AA1977864900CBE2C6 /* EXPHowItWorksViewController.m in Sources */,
 				B3A4D537197FB4590070185E /* CLImageToolInfo.m in Sources */,
+				B3DB55B5198B8B3700402BA8 /* EXPGalleryViewController.m in Sources */,
 				B3CD74C71977938F00CBE2C6 /* JastorRuntimeHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1152,6 +1246,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "exposure/exposure-Prefix.pch";
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";
@@ -1167,6 +1265,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "exposure/exposure-Prefix.pch";
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";

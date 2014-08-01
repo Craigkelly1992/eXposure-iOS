@@ -19,6 +19,8 @@
 //#import "CLImageEditor.h"
 #import "EXPNewPostViewController.h"
 #import "EXPLoginViewController.h"
+#import "EXPGalleryViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 // View Controler Identifer
 #define VC_PHOTOSTREAM_ID @"EXPPhotoStreamViewControllerIdentifier"
@@ -50,6 +52,10 @@
     [self.navigationController.navigationBar setTranslucent:NO];
     self.tabBar.translucent = NO;
     self.tabBar.barTintColor = [UIColor colorWithRed:0.0f green:0.17647059f blue:0.4f alpha:1];
+}
+
+- (void)viewWillLayoutSubviews {
+    self.navigationController.navigationBarHidden = YES;
 }
 
 // Create ViewControllers for Tab Bar
@@ -90,6 +96,7 @@
     // create another tab
     UITabBarItem *tabPhotoStream = [self.tabBar.items objectAtIndex:0];
     UITabBarItem *tabContest = [self.tabBar.items objectAtIndex:1];
+    UITabBarItem *tabCamera = [self.tabBar.items objectAtIndex:2];
     UITabBarItem *tabNotification = [self.tabBar.items objectAtIndex:3];
     UITabBarItem *tabPortfolio = [self.tabBar.items objectAtIndex:4];
     
@@ -103,6 +110,7 @@
     
     // #3 : Camera
     [self addCenterButtonWithImage:[UIImage imageNamed:@"tab_camera_normal"] highlightImage:[UIImage imageNamed:@"tab_camera_active"]];
+    tabCamera.enabled = NO; // user can't click on tab item, because we need them click on Camera button
     
     // #4 : Notification
     tabNotification.image = [[UIImage imageNamed:@"tab_notifications_normal"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -150,7 +158,7 @@
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         // has login
-        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", nil]showInView:self.view];
+        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", @"Facebook", @"Instagram", @"Twitter", nil]showInView:self.view];
     }
 }
 
@@ -160,7 +168,7 @@
     controller.delegate = self;
     
     switch (buttonIndex) {
-        case 0:
+        case 0: // Camera
             if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
                 controller.sourceType = UIImagePickerControllerSourceTypeCamera;
             } else {
@@ -169,9 +177,21 @@
             [self presentViewController:controller animated:YES completion:nil];
             break;
             
-        case 1:
+        case 1: // Library
             controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             [self presentViewController:controller animated:YES completion:nil];
+            break;
+        
+        case 2: // Facebook
+            [self openFacebookGallery];
+            break;
+            
+        case 3: // Instagram
+            [self openInstagramGallery];
+            break;
+            
+        case 4: // Twitter
+            [self openTwitterGallery];
             break;
             
         default:
@@ -179,12 +199,71 @@
     }
 }
 
+- (void) openFacebookGallery {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
+    //
+    viewController.type = kGALLERY_FACEBOOK;
+    //
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void) openInstagramGallery {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
+    //
+    viewController.type = kGALLERY_INSTAGRAM;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (void) openTwitterGallery {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
+    //
+    viewController.type = kGALLERY_TWITTER;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
 #pragma mark - image picker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:image];
+    editor.delegate = self;
+    CLImageToolInfo *tonalTool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
+    tonalTool.available = NO;
+    
+    CLImageToolInfo *adjustmentTool = [editor.toolInfo subToolInfoWithToolName:@"CLAdjustmentTool" recursive:NO];
+    adjustmentTool.available = NO;
+    
+    CLImageToolInfo *effectTool = [editor.toolInfo subToolInfoWithToolName:@"CLEffectTool" recursive:NO];
+    effectTool.available = NO;
+    
+    CLImageToolInfo *blurTool = [editor.toolInfo subToolInfoWithToolName:@"CLBlurTool" recursive:NO];
+    blurTool.available = NO;
+    
+    NSArray *array = [editor.toolInfo subtools];
+    for (CLImageToolInfo *tool in array) {
+        NSLog(@"%@",tool.toolName);
+    }
+    [picker pushViewController:editor animated:YES];
     
 }
 
 #pragma mark - image editor delegate
+- (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
+{
+    NSLog(@"oh hey sup there");
+    //   EXPNewPostViewController *vc = [[EXPNewPostViewController alloc]initWithImage:image attributes:@{@"contest_id": @""}];
+    NSDictionary *dict = @{@"image": image};
+    [self setSelectedIndex:0];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"kNewPost" object:nil userInfo:dict];
+    [editor dismissViewControllerAnimated:YES completion:nil];
+    
+}
 
 
 #pragma mark - life cycle

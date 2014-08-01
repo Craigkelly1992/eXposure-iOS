@@ -18,4 +18,5 @@
     #import "Infrastructure.h"
     #import "AsyncImageView.h"
     #import "SVProgressHUD.h"
+    #import <FacebookSDK/FacebookSDK.h>
 #endif
