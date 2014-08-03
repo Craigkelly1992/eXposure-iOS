@@ -54,10 +54,6 @@
     self.tabBar.barTintColor = [UIColor colorWithRed:0.0f green:0.17647059f blue:0.4f alpha:1];
 }
 
-- (void)viewWillLayoutSubviews {
-    self.navigationController.navigationBarHidden = YES;
-}
-
 // Create ViewControllers for Tab Bar
 -(NSArray *)createTabBarViewControllers {
     
