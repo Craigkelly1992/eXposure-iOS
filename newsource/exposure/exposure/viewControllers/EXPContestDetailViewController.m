@@ -167,9 +167,9 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    Submission *selectedPost = [Post objectFromDictionary:[arraySubmission objectAtIndex:indexPath.row]];
+    Submission *submission = [arraySubmission objectAtIndex:indexPath.row];
     EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
-    postVC.postId = selectedPost.submissionId;
+    postVC.postId = submission.submissionId;
     [self.navigationController pushViewController:postVC animated:YES];
 }
 
