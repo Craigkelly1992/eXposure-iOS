@@ -57,8 +57,6 @@
         
         [SVProgressHUD dismiss];
         currentContest = [ContestDetail objectFromDictionary:responseObject];
-        arraySubmission = currentContest.submissions.submissions;
-        [self.collectionViewPost reloadData];
         // fill data
         self.labelBrandName.text = currentContest.brand.name;
         self.labelContestName.text = currentContest.contest.info.title;
@@ -70,8 +68,11 @@
         } else {
             [self.imageViewContest setImage:[UIImage imageNamed:@"sample.jpg"]];
         }
-        //
         self.textViewDetail.text = currentContest.contest.info.description;
+        //
+        arraySubmission = currentContest.submissions.submissions;
+        [self.collectionViewPost reloadData];
+        [self updateScrollView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -91,7 +92,7 @@
 -(void) updateScrollView {
     // for update tableview
     if (isSubmissionOpen) {
-        self.constraintSubmissionHeight.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]%3 + 1)*kCollectionCellSize;
+        self.constraintSubmissionHeight.constant = kFollowHeaderHeight + (arraySubmission.count / 3 + arraySubmission.count % 3)*kCollectionCellSize;
     }
     // for main scroll view
     int newHeight = self.viewDetailContainer.frame.origin.y + self.constraintDetailHeight.constant + self.constraintSubmissionHeight.constant + kTabBarHeight;

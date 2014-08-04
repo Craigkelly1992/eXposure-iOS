@@ -9,7 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
 
-@interface EXPPhotoStreamViewController : EXPBaseViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface EXPPhotoStreamViewController : EXPBaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewPost;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
+@property (strong, nonatomic) IBOutlet UILabel *labelNoItem;
+
+// Actions
+- (IBAction)segmentOptionValueChanged:(id)sender;
+
 @end

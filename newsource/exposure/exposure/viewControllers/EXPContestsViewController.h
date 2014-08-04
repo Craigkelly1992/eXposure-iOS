@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBarContest;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewContest;
+@property (strong, nonatomic) IBOutlet UILabel *labelNoItem;
 // Actions
 - (IBAction)segmentValueChanged:(id)sender;
 @end

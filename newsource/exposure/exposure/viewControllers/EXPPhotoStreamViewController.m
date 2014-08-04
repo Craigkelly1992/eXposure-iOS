@@ -18,6 +18,7 @@
 @implementation EXPPhotoStreamViewController {
     NSMutableArray *arrayPost;
     Post *currentPost;
+    User *currentUser;
 }
 
 #pragma mark - life cycle
@@ -35,18 +36,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     arrayPost = [[NSMutableArray alloc] init];
-    // get array of posts from server
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI getAllPostWithSuccess:^(id responseObject) {
-        NSLog(@"%@", responseObject);
-        arrayPost = responseObject;
-        [self.collectionViewPost reloadData];
-        [SVProgressHUD dismiss];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Can\'t retrieve data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
-        [SVProgressHUD dismiss];
-    }];
+    // get current user
+    currentUser = [Infrastructure sharedClient].currentUser;
+    //
+    self.labelNoItem.hidden = YES;
+    // add gesture for removing keyboard
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    tapGesture.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.segmentOption.selectedSegmentIndex == 0) { // All user
+        [self getAllPhotoStream];
+    } else if (self.segmentOption.selectedSegmentIndex == 1) {
+        [self getFollowingPhotoStream];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,6 +108,83 @@
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
     return YES;
+}
+
+#pragma mark - Actions
+- (IBAction)segmentOptionValueChanged:(id)sender {
+    if (self.segmentOption.selectedSegmentIndex == 0) { // All user
+        [self getAllPhotoStream];
+    } else if (self.segmentOption.selectedSegmentIndex == 1) {
+        [self getFollowingPhotoStream];
+    }
+}
+
+#pragma mark - Helper
+/**
+ * Get PhotoStream : By Following
+ */
+- (void) getFollowingPhotoStream {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getPostStreamWithUserEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        arrayPost = responseObject;
+        [self.collectionViewPost reloadData];
+        if (arrayPost.count <= 0) {
+            self.labelNoItem.hidden = NO;
+            self.collectionViewPost.hidden = YES;
+        } else {
+            self.labelNoItem.hidden = YES;
+            self.collectionViewPost.hidden = NO;
+        }
+        [SVProgressHUD dismiss];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+        NSLog(@"%@", error);
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Can\'t retrieve data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }];
+}
+
+/**
+ * Get PhotoStream : By All User
+ */
+- (void) getAllPhotoStream {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getAllPostWithSuccess:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        NSLog(@"%@", responseObject);
+        arrayPost = responseObject;
+        [self.collectionViewPost reloadData];
+        if (arrayPost.count <= 0) {
+            self.labelNoItem.hidden = NO;
+            self.collectionViewPost.hidden = YES;
+        } else {
+            self.labelNoItem.hidden = YES;
+            self.collectionViewPost.hidden = NO;
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+        NSLog(@"%@", error);
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Can\'t retrieve data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }];
+}
+
+/**
+ * dismiss keyboard
+ */
+- (void) dismissKeyboard {
+    [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - SearchBar Delegate
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSLog(@"SearchBar:textDidChange with text [%@]", searchBar.text);
+    [self.searchBar resignFirstResponder];
+    // TODO
 }
 
 @end

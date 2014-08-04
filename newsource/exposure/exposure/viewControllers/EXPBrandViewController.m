@@ -78,6 +78,7 @@
         self.labelSubmission.text = [NSString stringWithFormat:@"%@", currentBrand.submissions_count];
         //
         [self.collectionViewPost reloadData];
+        [self updateScrollView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -98,6 +99,7 @@
             [arrayContest addObject:contest];
         }
         [self.tableViewContest reloadData];
+        [self updateScrollView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -112,7 +114,8 @@
 
 -(void) updateScrollView {
     // for update tableview
-    self.constraintFollowViewHeight.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]%3 + 1)*kCollectionCellSize;
+    int numberOfPost = [currentBrand.submissions_count integerValue];
+    self.constraintFollowViewHeight.constant = kFollowHeaderHeight + (numberOfPost / 3 + numberOfPost % 3)*kCollectionCellSize;
     // for main scroll view
     int newHeight = self.viewContestContainer.frame.origin.y + self.constraintContestListHeight.constant + self.constraintFollowViewHeight.constant;
     self.scrollviewContainer.contentSize = CGSizeMake(self.scrollviewContainer.frame.size.width, newHeight);

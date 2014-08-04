@@ -40,33 +40,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self loadFollowingContest];
-}
-
-- (void) loadAllContest {
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI getAllContestWithUserEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+    self.labelNoItem.hidden = YES;
+    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
         
-        [SVProgressHUD dismiss];
-        arrayContest = responseObject;
-        [self.tableViewContest reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD dismiss];
-    }];
-}
-
-- (void) loadFollowingContest {
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI getContestByFollowingUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
-        
-        [SVProgressHUD dismiss];
-        arrayContest = responseObject;
-        [self.tableViewContest reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD dismiss];
-    }];
+        [self loadFollowingContest];
+    } else if (self.segmentOption.selectedSegmentIndex == 1) { // All
+        [self loadAllContest];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -150,6 +130,47 @@
     Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:indexPath.row]];
     contestId = contest.contestId;
     return indexPath;
+}
+
+#pragma mark - Load Data
+- (void) loadAllContest {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getAllContestWithUserEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        arrayContest = responseObject;
+        if (arrayContest.count <= 0) {
+            self.labelNoItem.hidden = NO;
+            self.tableViewContest.hidden = YES;
+        } else {
+            self.labelNoItem.hidden = YES;
+            self.tableViewContest.hidden = NO;
+        }
+        [self.tableViewContest reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+    }];
+}
+
+- (void) loadFollowingContest {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getContestByFollowingUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        arrayContest = responseObject;
+        if (arrayContest.count <= 0) {
+            self.labelNoItem.hidden = NO;
+            self.tableViewContest.hidden = YES;
+        } else {
+            self.labelNoItem.hidden = YES;
+            self.tableViewContest.hidden = NO;
+        }
+        [self.tableViewContest reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+    }];
 }
 
 #pragma mark - Segue

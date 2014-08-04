@@ -28,6 +28,7 @@
     NSMutableArray *arrayContest;
     User *currentUser;
     User *profileUser;
+    NSNumber *userId;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,16 +65,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     if (!self.profileId) {
         // there's no profile id, so we're entering our home
-        self.profileId = currentUser.userId;
+        userId = currentUser.userId;
         [self.buttonFollow setTitle:@"Setting" forState:UIControlStateNormal];
         [self.buttonFollow addTarget:self
                               action:@selector(buttonSettingTap:)
                     forControlEvents:UIControlEventTouchUpInside];
     } else {
+        userId = self.profileId;
         [self.buttonFollow setTitle:@"" forState:UIControlStateNormal];
         // check if follow/ unfollow
         [SVProgressHUD showWithStatus:@"Loading"];
-        [self.serviceAPI checkFollowUser:self.profileId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+        [self.serviceAPI checkFollowUser:userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
             
             [SVProgressHUD dismiss];
             if ([[responseObject objectForKey:@"following"] boolValue] == YES) {
@@ -97,17 +99,17 @@
         }];
     }
     //
-    [self getUserInfo:self.profileId];
+    [self getUserInfo];
     // get user's info
-    [self getPostByUserId:self.profileId];
+    [self getPostByUserId];
     //
-    [self getContestByUserId:self.profileId];
+    [self getContestByUserId];
 }
 
 -(void)followTap:(id)sender {
     //
     [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI followUser:self.profileId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+    [self.serviceAPI followUser:userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD showSuccessWithStatus:@"Success"];
         [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
@@ -125,7 +127,7 @@
 -(void)unfollowTap:(id)sender {
 
     [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI unfollowUser:self.profileId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+    [self.serviceAPI unfollowUser:userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD showSuccessWithStatus:@"Success"];
         [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
@@ -140,7 +142,7 @@
     }];
 }
 
--(void) getUserInfo:(NSNumber*)userId {
+-(void) getUserInfo {
     // load user
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getUserWithId:userId email:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
@@ -175,9 +177,10 @@
     }];
 }
 
--(void) getPostByUserId:(NSNumber*)userId {
+-(void) getPostByUserId {
 
     [SVProgressHUD showWithStatus:@"Loading"];
+    arrayPost = [[NSArray alloc] init];
     [self.serviceAPI getPostByUserId:userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
         NSLog(@"%@", responseObject);
@@ -193,7 +196,7 @@
     }];
 }
 
--(void) getContestByUserId:(NSNumber*)userId {
+-(void) getContestByUserId {
     
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getContestByFollowingUserId:userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
@@ -211,14 +214,11 @@
             self.constraintHeightContest.constant = kContestHeightMin;
             [self.buttonIndicatorContest setImage:[UIImage imageNamed:@"arrow_down"] forState:UIControlStateNormal];
         }
+        [self updateScrollView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
     }];
-}
-
-- (void)viewWillLayoutSubviews {
-    
 }
 
 -(void)viewDidLayoutSubviews {
@@ -228,7 +228,7 @@
 
 -(void) updateScrollView {
     // for update tableview
-    self.constraintHeightFollowContainer.constant = kFollowHeaderHeight + ([self.collectionViewPost numberOfItemsInSection:0]%3 + 1)*kCollectionCellSize;
+    self.constraintHeightFollowContainer.constant = kFollowHeaderHeight + (arrayPost.count / 3 + arrayPost.count % 3)*kCollectionCellSize;
     // for main scroll view
     int newHeight = self.viewContestContainer.frame.origin.y + self.constraintHeightContest.constant + self.constraintHeightFollowContainer.constant;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
@@ -243,7 +243,7 @@
 #pragma mark - Actions
 - (IBAction)buttonXPTap:(id)sender {
     EXPPointViewController *pointVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPointViewControllerIdentifier"];
-    pointVC.userId = self.profileId;
+    pointVC.userId = userId;
     [self.navigationController pushViewController:pointVC animated:YES];
 }
 
@@ -281,14 +281,14 @@
 -(void)viewFollowerTap {
     EXPFollowViewController *followVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPFollowViewControllerIdentifier"];
     followVC.isFollowing = NO;
-    followVC.userId = self.profileId;
+    followVC.userId = userId;
     [self.navigationController pushViewController:followVC animated:YES];
 }
 
 -(void)viewFollowTap {
     EXPFollowViewController *followVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPFollowViewControllerIdentifier"];
     followVC.isFollowing = YES;
-    followVC.userId = self.profileId;
+    followVC.userId = userId;
     [self.navigationController pushViewController:followVC animated:YES];
 }
 
@@ -385,10 +385,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // go to contest
-//    Contest *contest = arrayContest[indexPath.row];
-//    EXPContestDetailViewController *contestVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPContestDetailViewControllerIdentifier"];
-//    contestVC.contestId = contest.contestId;
-//    [self.navigationController pushViewController:contestVC animated:YES];
+    Contest *contest = arrayContest[indexPath.row];
+    EXPContestDetailViewController *contestVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPContestDetailViewControllerIdentifier"];
+    contestVC.contestId = contest.contestId;
+    [self.navigationController pushViewController:contestVC animated:YES];
 }
 
 @end
