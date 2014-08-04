@@ -256,7 +256,9 @@
     //   EXPNewPostViewController *vc = [[EXPNewPostViewController alloc]initWithImage:image attributes:@{@"contest_id": @""}];
     NSDictionary *dict = @{@"image": image};
     [self setSelectedIndex:0];
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"kNewPost" object:nil userInfo:dict];
+    // new post
+    
+    //
     [editor dismissViewControllerAnimated:YES completion:nil];
     
 }

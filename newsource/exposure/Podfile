@@ -3,6 +3,7 @@ platform :ios, '7.0'
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
+pod 'CLImageEditor/AllTools'
 pod 'AFNetworking'
 pod 'PonyDebugger'
 pod 'SVPullToRefresh', '~> 0.4.1'

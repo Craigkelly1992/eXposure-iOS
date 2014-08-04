@@ -20,6 +20,24 @@ PODS:
   - AFNetworking/UIKit (2.3.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CLImageEditor/AllTools (0.1.0):
+    - CLImageEditor/Core
+    - CLImageEditor/EmoticonTool
+    - CLImageEditor/ResizeTool
+    - CLImageEditor/SplashTool
+    - CLImageEditor/StickerTool
+    - CLImageEditor/TextTool
+  - CLImageEditor/Core (0.1.0)
+  - CLImageEditor/EmoticonTool (0.1.0):
+    - CLImageEditor/Core
+  - CLImageEditor/ResizeTool (0.1.0):
+    - CLImageEditor/Core
+  - CLImageEditor/SplashTool (0.1.0):
+    - CLImageEditor/Core
+  - CLImageEditor/StickerTool (0.1.0):
+    - CLImageEditor/Core
+  - CLImageEditor/TextTool (0.1.0):
+    - CLImageEditor/Core
   - DAKeyboardControl (2.3.1)
   - PonyDebugger (0.3.1):
     - SocketRocket
@@ -30,6 +48,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - CLImageEditor/AllTools
   - DAKeyboardControl (~> 2.3)
   - PonyDebugger
   - SVProgressHUD (HEAD)
@@ -39,6 +58,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
+  CLImageEditor: 187eb7269efd1e46be007029dbaadf2a19a5bcec
   DAKeyboardControl: b17935d41242e094f96ec22696405c620ffb088b
   PonyDebugger: 256e19c15c093e15f950f92b1a5017f3feb3c87e
   SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304

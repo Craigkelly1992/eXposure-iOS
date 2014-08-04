@@ -8,7 +8,6 @@
 
 #import "EXPBrandViewController.h"
 #import "Brand.h"
-#import "UIImage+Utility.h"
 #import "Submission.h"
 #import "EXPImageDetailViewController.h"
 #import "Contest.h"

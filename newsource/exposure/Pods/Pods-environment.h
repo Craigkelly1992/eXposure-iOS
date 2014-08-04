@@ -48,6 +48,48 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// CLImageEditor/AllTools
+#define COCOAPODS_POD_AVAILABLE_CLImageEditor_AllTools
+#define COCOAPODS_VERSION_MAJOR_CLImageEditor_AllTools 0
+#define COCOAPODS_VERSION_MINOR_CLImageEditor_AllTools 1
+#define COCOAPODS_VERSION_PATCH_CLImageEditor_AllTools 0
+
+// CLImageEditor/Core
+#define COCOAPODS_POD_AVAILABLE_CLImageEditor_Core
+#define COCOAPODS_VERSION_MAJOR_CLImageEditor_Core 0
+#define COCOAPODS_VERSION_MINOR_CLImageEditor_Core 1
+#define COCOAPODS_VERSION_PATCH_CLImageEditor_Core 0
+
+// CLImageEditor/EmoticonTool
+#define COCOAPODS_POD_AVAILABLE_CLImageEditor_EmoticonTool
+#define COCOAPODS_VERSION_MAJOR_CLImageEditor_EmoticonTool 0
+#define COCOAPODS_VERSION_MINOR_CLImageEditor_EmoticonTool 1
+#define COCOAPODS_VERSION_PATCH_CLImageEditor_EmoticonTool 0
+
+// CLImageEditor/ResizeTool
+#define COCOAPODS_POD_AVAILABLE_CLImageEditor_ResizeTool
+#define COCOAPODS_VERSION_MAJOR_CLImageEditor_ResizeTool 0
+#define COCOAPODS_VERSION_MINOR_CLImageEditor_ResizeTool 1
+#define COCOAPODS_VERSION_PATCH_CLImageEditor_ResizeTool 0
+
+// CLImageEditor/SplashTool
+#define COCOAPODS_POD_AVAILABLE_CLImageEditor_SplashTool
+#define COCOAPODS_VERSION_MAJOR_CLImageEditor_SplashTool 0
+#define COCOAPODS_VERSION_MINOR_CLImageEditor_SplashTool 1
+#define COCOAPODS_VERSION_PATCH_CLImageEditor_SplashTool 0
+
+// CLImageEditor/StickerTool
+#define COCOAPODS_POD_AVAILABLE_CLImageEditor_StickerTool
+#define COCOAPODS_VERSION_MAJOR_CLImageEditor_StickerTool 0
+#define COCOAPODS_VERSION_MINOR_CLImageEditor_StickerTool 1
+#define COCOAPODS_VERSION_PATCH_CLImageEditor_StickerTool 0
+
+// CLImageEditor/TextTool
+#define COCOAPODS_POD_AVAILABLE_CLImageEditor_TextTool
+#define COCOAPODS_VERSION_MAJOR_CLImageEditor_TextTool 0
+#define COCOAPODS_VERSION_MINOR_CLImageEditor_TextTool 1
+#define COCOAPODS_VERSION_PATCH_CLImageEditor_TextTool 0
+
 // DAKeyboardControl
 #define COCOAPODS_POD_AVAILABLE_DAKeyboardControl
 #define COCOAPODS_VERSION_MAJOR_DAKeyboardControl 2

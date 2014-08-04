@@ -21,6 +21,7 @@
 @implementation EXPGalleryViewController {
     NSMutableArray *arrayThumbnail;
     NSMutableArray *arrayOrigin;
+    BOOL gotoEditMode;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,6 +37,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if (self.type == kGALLERY_FACEBOOK) {
+        self.title = @"Facebook";
+    } else if (self.type == kGALLERY_INSTAGRAM) {
+        self.title = @"Instagram";
+    } else if (self.type == kGALLERY_TWITTER) {
+        self.title = @"Twitter";
+    }
     // Twitter
     self.accountStore = [[ACAccountStore alloc] init];
 }
@@ -44,6 +52,8 @@
     //
     arrayOrigin = [[NSMutableArray alloc] init];
     arrayThumbnail = [[NSMutableArray alloc] init];
+    // reset
+    gotoEditMode = NO;
     //
     if (self.type == kGALLERY_FACEBOOK) {
         [self loadFromFacebook];
@@ -63,7 +73,11 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = YES;
+    if (gotoEditMode) {
+        self.navigationController.navigationBarHidden = NO;
+    } else {
+        self.navigationController.navigationBarHidden = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -299,6 +313,8 @@
             }
             self.navigationController.navigationBarHidden = NO;
             [self.navigationController pushViewController:editor animated:YES];
+            // show navigation bar again
+            gotoEditMode = YES;
         });
     });
 }

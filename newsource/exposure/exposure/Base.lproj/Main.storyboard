@@ -2010,7 +2010,7 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nxq-id-fiK">
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nxq-id-fiK">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2044,6 +2044,12 @@ Team eXposure</string>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.58431372550000005" green="0.81960784310000001" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="nxq-id-fiK" secondAttribute="bottom" id="8ER-bH-P2z"/>
+                            <constraint firstItem="nxq-id-fiK" firstAttribute="leading" secondItem="TmM-LI-cFU" secondAttribute="leading" id="FVX-fN-xwN"/>
+                            <constraint firstItem="nxq-id-fiK" firstAttribute="top" secondItem="TmM-LI-cFU" secondAttribute="top" id="VWq-cZ-Cuv"/>
+                            <constraint firstAttribute="trailing" secondItem="nxq-id-fiK" secondAttribute="trailing" id="gKI-9G-Em5"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionViewGallery" destination="nxq-id-fiK" id="b2K-3r-MFs"/>
