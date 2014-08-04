@@ -37,6 +37,11 @@
     // get all contest
     currentUser = [Infrastructure sharedClient].currentUser;
     arrayContest = [[NSArray alloc] init];
+    // add gesture for removing keyboard
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    tapGesture.numberOfTapsRequired = 1;
+    [self.viewBelow setUserInteractionEnabled:YES];
+    [self.viewBelow addGestureRecognizer:tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -177,6 +182,20 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     EXPContestDetailViewController *contestDetailVC = segue.destinationViewController;
     contestDetailVC.contestId = contestId;
+}
+
+#pragma mark - SearchBar Delegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    NSString *searchText = searchBar.text;
+    NSLog(@"Search for contests by brand [%@]", searchText);
+}
+
+#pragma mark - Helper
+/**
+ * dismiss keyboard
+ */
+- (void) dismissKeyboard {
+    [self.searchBarContest resignFirstResponder];
 }
 
 @end

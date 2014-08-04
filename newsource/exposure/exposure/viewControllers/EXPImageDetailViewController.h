@@ -27,5 +27,6 @@
 // Actions
 - (IBAction)buttonExposureTap:(id)sender;
 - (IBAction)buttonCommentTap:(id)sender;
+- (IBAction)buttonShareTap:(id)sender;
 
 @end

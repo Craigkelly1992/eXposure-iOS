@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
 @property (strong, nonatomic) IBOutlet UILabel *labelNoItem;
+@property (strong, nonatomic) IBOutlet UIView *viewBelow;
 
 // Actions
 - (IBAction)segmentOptionValueChanged:(id)sender;

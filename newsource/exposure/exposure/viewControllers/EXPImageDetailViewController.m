@@ -130,4 +130,23 @@
 
 - (IBAction)buttonCommentTap:(id)sender {
 }
+
+- (IBAction)buttonShareTap:(id)sender {
+    NSURL *imageURL = [NSURL URLWithString:currentPost.image_url];
+    [SVProgressHUD showWithStatus:@"Loading"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+            
+            UIImage *image = [UIImage imageWithData:imageData];
+            NSArray *objectsToShare = [[NSArray alloc] initWithObjects:currentPost.text, image, nil];
+            UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+            [self presentViewController:controller animated:YES completion:nil];
+        });
+    });
+    
+    
+}
 @end

@@ -13,6 +13,7 @@
 #import "Contest.h"
 #import "EXPContestDetailViewController.h"
 #import "EXPPointViewController.h"
+#import "EXPImageDetailViewController.h"
 
 #define kContestHeightMin 33
 #define kContestHeightMax 142
@@ -332,8 +333,12 @@
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    Post *post = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
+    EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
+    postVC.postId = post.postId;
+    [self.navigationController pushViewController:postVC animated:YES];
 }
 
 #pragma mark - Table View

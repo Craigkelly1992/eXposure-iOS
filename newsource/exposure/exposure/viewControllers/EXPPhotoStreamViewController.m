@@ -43,7 +43,8 @@
     // add gesture for removing keyboard
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tapGesture.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:tapGesture];
+    [self.viewBelow setUserInteractionEnabled:YES];
+    [self.viewBelow addGestureRecognizer:tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,21 +94,12 @@
     return cell;
 }
 
--(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return YES;
-}
-
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+ 
     currentPost = [Post objectFromDictionary:[arrayPost objectAtIndex:indexPath.row]];
     EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
     postVC.postId = currentPost.postId;
     [self.navigationController pushViewController:postVC animated:YES];
-}
-
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
-    return YES;
 }
 
 #pragma mark - Actions

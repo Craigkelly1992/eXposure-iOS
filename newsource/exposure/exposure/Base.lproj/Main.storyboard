@@ -119,6 +119,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fT8-Zl-nzP" userLabel="View For DismissKeyboard">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search for user" translatesAutoresizingMaskIntoConstraints="NO" id="ro8-c2-22r">
                                 <rect key="frame" x="0.0" y="65" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -179,7 +184,7 @@
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="aVC-BT-Jzy" id="7dZ-Yh-ae2"/>
-                                    <outlet property="delegate" destination="aVC-BT-Jzy" id="L0u-RF-f2M"/>
+                                    <outlet property="delegate" destination="aVC-BT-Jzy" id="CbH-2j-lAR"/>
                                 </connections>
                             </collectionView>
                             <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s4f-AH-wJj">
@@ -193,6 +198,12 @@
                             </tabBar>
                         </subviews>
                         <color key="backgroundColor" red="0.58431372550000005" green="0.81960784310000001" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="fT8-Zl-nzP" secondAttribute="trailing" id="1N4-nF-G8s"/>
+                            <constraint firstItem="fT8-Zl-nzP" firstAttribute="leading" secondItem="fx6-0b-RmN" secondAttribute="leading" id="GIw-In-nM3"/>
+                            <constraint firstItem="fT8-Zl-nzP" firstAttribute="top" secondItem="fx6-0b-RmN" secondAttribute="top" id="WdL-aO-7wi"/>
+                            <constraint firstAttribute="bottom" secondItem="fT8-Zl-nzP" secondAttribute="bottom" id="vSF-El-NGe"/>
+                        </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -202,6 +213,7 @@
                         <outlet property="searchBar" destination="ro8-c2-22r" id="mIv-jw-um8"/>
                         <outlet property="searchDisplayController" destination="f5o-J3-ar3" id="a38-MQ-v6O"/>
                         <outlet property="segmentOption" destination="y6x-B5-1zQ" id="6lb-23-HtQ"/>
+                        <outlet property="viewBelow" destination="fT8-Zl-nzP" id="jJ3-Hj-ZYF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="67Y-wL-83j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -839,6 +851,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5AO-Kg-J7o" userLabel="View for dismiss keyboard">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="There's no item" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qj-8Y-lQY">
                                 <rect key="frame" x="0.0" y="262" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -846,7 +863,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c1q-Dg-f1e">
+                            <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search for contests by brand" translatesAutoresizingMaskIntoConstraints="NO" id="c1q-Dg-f1e">
                                 <rect key="frame" x="0.0" y="65" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.034977924440000002" green="0.27746234669999997" blue="0.53478558389999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -917,6 +934,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.58431372550000005" green="0.81960784310000001" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="5AO-Kg-J7o" firstAttribute="leading" secondItem="JOo-AL-cJB" secondAttribute="leading" id="1wf-Lx-iGA"/>
+                            <constraint firstAttribute="bottom" secondItem="5AO-Kg-J7o" secondAttribute="bottom" id="kr7-cG-xQO"/>
+                            <constraint firstAttribute="trailing" secondItem="5AO-Kg-J7o" secondAttribute="trailing" id="s1q-vF-f6D"/>
+                            <constraint firstItem="5AO-Kg-J7o" firstAttribute="top" secondItem="JOo-AL-cJB" secondAttribute="top" id="vix-Vn-86N"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vlV-Nh-A9I"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -926,6 +949,7 @@
                         <outlet property="searchBarContest" destination="c1q-Dg-f1e" id="7nG-Hg-0Zp"/>
                         <outlet property="segmentOption" destination="mxt-gs-v2D" id="q2F-oZ-tfE"/>
                         <outlet property="tableViewContest" destination="td1-fS-Xib" id="wYb-Oz-Lzp"/>
+                        <outlet property="viewBelow" destination="5AO-Kg-J7o" id="vMb-Wg-CVs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="el5-hY-H2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2064,6 +2088,9 @@ Team eXposure</string>
                                             <color key="titleColor" red="0.0" green="0.17254901959999999" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="buttonShareTap:" destination="HJd-Je-v7n" eventType="touchUpInside" id="03K-0E-e2Q"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is a caption" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBj-FD-FQP">
                                         <rect key="frame" x="16" y="265" width="200" height="21"/>
