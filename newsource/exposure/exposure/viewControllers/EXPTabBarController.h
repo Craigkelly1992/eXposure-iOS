@@ -11,6 +11,7 @@
 
 @interface EXPTabBarController : UITabBarController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLImageEditorDelegate>
 
+//
 -(NSArray *)createTabBarViewControllers;
-    
+-(void)creatPostWithContest:(NSNumber*) contestId; // for creating a new post to contest
 @end

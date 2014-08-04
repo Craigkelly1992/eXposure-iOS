@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
+#import "EXPTabBarController.h"
 
 @interface EXPNewPostViewController : EXPBaseViewController
 

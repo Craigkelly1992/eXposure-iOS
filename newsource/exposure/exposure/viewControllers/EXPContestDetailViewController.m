@@ -101,7 +101,8 @@
 
 #pragma mark - Actions
 - (IBAction)buttonEnterContestTap:(id)sender {
-    
+    EXPTabBarController *tabVC = (EXPTabBarController*)self.tabBarController;
+    [tabVC creatPostWithContest:currentContest.contest.info.contestId];
 }
 
 - (IBAction)buttonRuleTap:(id)sender {
@@ -186,5 +187,7 @@
     EXPBrandViewController *brandVC = (EXPBrandViewController*) segue.destinationViewController;
     brandVC.brandId = currentContest.contest.info.brand_id;
 }
+
+
 
 @end

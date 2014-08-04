@@ -33,7 +33,9 @@
 
 @end
 
-@implementation EXPTabBarController
+@implementation EXPTabBarController {
+    NSNumber *contestId;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -155,6 +157,18 @@
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         // has login
+        contestId = nil;
+        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", @"Facebook", @"Instagram", @"Twitter", nil]showInView:self.view];
+    }
+}
+
+-(void)creatPostWithContest:(NSNumber*) _contestId {
+    if(![[Infrastructure sharedClient] currentUser]){
+        // anonymous
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        // has login
+        contestId = _contestId;
         [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", @"Facebook", @"Instagram", @"Twitter", nil]showInView:self.view];
     }
 }
@@ -260,6 +274,7 @@
     EXPNewPostViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPNewPostViewControllerIdentifier"];
     //
     viewController.imagePost = image;
+    viewController.contestId = contestId;
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController pushViewController:viewController animated:YES];
 }

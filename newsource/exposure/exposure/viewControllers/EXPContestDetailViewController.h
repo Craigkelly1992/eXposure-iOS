@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
 #import "Contest.h"
+#import "EXPTabBarController.h"
 
-@interface EXPContestDetailViewController : EXPBaseViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface EXPContestDetailViewController : EXPBaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, UIActionSheetDelegate>
 
+//
 @property(nonatomic, strong) NSNumber *contestId;
 
+//
 @property (weak, nonatomic) IBOutlet UILabel *labelBrandName;
 @property (weak, nonatomic) IBOutlet UILabel *labelContestName;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewContest;
