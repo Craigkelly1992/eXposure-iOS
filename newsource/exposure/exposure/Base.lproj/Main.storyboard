@@ -419,6 +419,73 @@
             </objects>
             <point key="canvasLocation" x="2472" y="1490"/>
         </scene>
+        <!--New Post View Controller-->
+        <scene sceneID="2ob-ZN-DAT">
+            <objects>
+                <viewController storyboardIdentifier="EXPNewPostViewControllerIdentifier" id="qq9-ve-PUZ" customClass="EXPNewPostViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mgq-cd-fOh"/>
+                        <viewControllerLayoutGuide type="bottom" id="uGM-3R-yHo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Eap-Ed-eAs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UhK-ft-cCt">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="518"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AUk-JL-Ehw">
+                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Say something" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7qm-26-Xrj" userLabel="Textfield - Post Detail">
+                                        <rect key="frame" x="8" y="10" width="246" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsY-8F-aW0">
+                                        <rect key="frame" x="252" y="10" width="68" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Send">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonSendTap:" destination="qq9-ve-PUZ" eventType="touchUpInside" id="mgR-ee-idh"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.25098039220000001" green="0.36470588240000001" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="h9o-YH-AIy"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.58431372550000005" green="0.81960784310000001" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="AUk-JL-Ehw" secondAttribute="bottom" id="NPj-fn-i7P"/>
+                            <constraint firstItem="UhK-ft-cCt" firstAttribute="leading" secondItem="Eap-Ed-eAs" secondAttribute="leading" id="RuP-3P-Wos"/>
+                            <constraint firstAttribute="bottom" secondItem="UhK-ft-cCt" secondAttribute="bottom" constant="50" id="Yay-4S-kEz"/>
+                            <constraint firstItem="UhK-ft-cCt" firstAttribute="top" secondItem="Eap-Ed-eAs" secondAttribute="top" id="jpu-wA-lCN"/>
+                            <constraint firstAttribute="trailing" secondItem="UhK-ft-cCt" secondAttribute="trailing" id="tJX-d0-yle"/>
+                            <constraint firstAttribute="trailing" secondItem="AUk-JL-Ehw" secondAttribute="trailing" id="tjl-J7-ESJ"/>
+                            <constraint firstItem="AUk-JL-Ehw" firstAttribute="leading" secondItem="Eap-Ed-eAs" secondAttribute="leading" id="yov-ka-ful"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="constraintViewDescriptionBottom" destination="NPj-fn-i7P" id="b2R-jZ-Ndc"/>
+                        <outlet property="imageViewPost" destination="UhK-ft-cCt" id="RtB-cJ-ghH"/>
+                        <outlet property="textFieldPostDescription" destination="7qm-26-Xrj" id="Naj-qi-c6w"/>
+                        <outlet property="viewDescription" destination="AUk-JL-Ehw" id="uau-3m-ow7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c4C-us-BQb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2919" y="1490"/>
+        </scene>
         <!--Notifications View Controller-->
         <scene sceneID="z9u-Vs-63i">
             <objects>
@@ -644,7 +711,7 @@
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="gWC-bw-TO5">
+                                                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="gWC-bw-TO5">
                                                                             <rect key="frame" x="8" y="4" width="46" height="46"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         </imageView>
@@ -897,7 +964,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fkj-Mg-Xoq">
+                                                <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fkj-Mg-Xoq">
                                                     <rect key="frame" x="9" y="6" width="46" height="46"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>

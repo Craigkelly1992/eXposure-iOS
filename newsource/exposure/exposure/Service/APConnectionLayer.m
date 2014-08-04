@@ -462,18 +462,23 @@
 
 #pragma mark - Post
 // create post - checked
-- (void)createPost:(NSString*)contestId
-        uploaderId:(NSString*)uploaderId
-              text:(NSString*)text
-         imageData:(NSData*)imageData
-         userEmail:(NSString*)userEmail
-         userToken:(NSString*)userToken
-           success:(void (^)(id responseObject))success
-           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+- (void)createPostWithContestId:(NSNumber*)contestId
+                     uploaderId:(NSNumber*)uploaderId
+                           text:(NSString*)text
+                      imageData:(NSString*)imageData
+                      userEmail:(NSString*)userEmail
+                      userToken:(NSString*)userToken
+                        success:(void (^)(id responseObject))success
+                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
     NSString *path = [NSString stringWithFormat:CREATE_POST];
+    // check
+    NSString *contestIdString = @"";
+    if (contestId) {
+        contestIdString = [contestId stringValue];
+    }
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                contestId, PARAM_POST_CONTEST_ID,
+                                contestIdString, PARAM_POST_CONTEST_ID,
                                 uploaderId, PARAM_POST_UPLOADER_ID,
                                 text, PARAM_POST_TEXT,
                                 imageData, PARAM_POST_IMAGE_DATA,

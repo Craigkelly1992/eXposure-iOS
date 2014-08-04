@@ -39,10 +39,24 @@
          contextName = "-[EXPPortfolioViewController unfollowTap:]:EXPPortfolioViewController.m">
       </ContextState>
       <ContextState
+         contextName = "-[EXPGalleryViewController collectionView:cellForItemAtIndexPath:]:EXPGalleryViewController.m">
+      </ContextState>
+      <ContextState
          contextName = "-[EXPPhotoStreamViewController collectionView:didDeselectItemAtIndexPath:]:EXPPhotoStreamViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[EXPContestDetailViewController viewWillAppear:]:EXPContestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__45-[EXPGalleryViewController loadFromInstagram]_block_invoke:EXPGalleryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPNewPostViewController buttonSendTap:]:EXPNewPostViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.contestId">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[EXPContestDetailViewController updateScrollView]:EXPContestDetailViewController.m">
@@ -52,6 +66,9 @@
       </ContextState>
       <ContextState
          contextName = "-[EXPImageDetailViewController viewDidLoad]:EXPImageDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPortfolioViewController updateScrollView]:EXPPortfolioViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[EXPPointViewController tableView:cellForRowAtIndexPath:]:EXPPointViewController.m">

@@ -233,14 +233,14 @@
                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark - Post
 // create post
-- (void)createPost:(NSString*)contestId
-        uploaderId:(NSString*)uploaderId
-              text:(NSString*)text
-         imageData:(NSData*)imageData
-         userEmail:(NSString*)userEmail
-         userToken:(NSString*)userToken
-           success:(void (^)(id responseObject))success
-           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)createPostWithContestId:(NSNumber*)contestId
+                     uploaderId:(NSNumber*)uploaderId
+                           text:(NSString*)text
+                      imageData:(NSString*)imageData
+                      userEmail:(NSString*)userEmail
+                      userToken:(NSString*)userToken
+                        success:(void (^)(id responseObject))success
+                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // get post by post id
 - (void)getPostByPostId:(NSNumber*)postId

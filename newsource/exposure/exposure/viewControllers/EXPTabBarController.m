@@ -21,6 +21,7 @@
 #import "EXPLoginViewController.h"
 #import "EXPGalleryViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "EXPNewPostViewController.h"
 
 // View Controler Identifer
 #define VC_PHOTOSTREAM_ID @"EXPPhotoStreamViewControllerIdentifier"
@@ -252,15 +253,15 @@
 #pragma mark - image editor delegate
 - (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
 {
-    NSLog(@"oh hey sup there");
-    //   EXPNewPostViewController *vc = [[EXPNewPostViewController alloc]initWithImage:image attributes:@{@"contest_id": @""}];
-    NSDictionary *dict = @{@"image": image};
-    [self setSelectedIndex:0];
-    // new post
-    
     //
     [editor dismissViewControllerAnimated:YES completion:nil];
-    
+    //
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EXPNewPostViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPNewPostViewControllerIdentifier"];
+    //
+    viewController.imagePost = image;
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 
