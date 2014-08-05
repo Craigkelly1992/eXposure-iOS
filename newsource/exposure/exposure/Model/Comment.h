@@ -11,10 +11,11 @@
 
 @interface Comment : Jastor
 
-@property (nonatomic, retain) NSString *commentPicture;
-@property (nonatomic, retain) NSString *commentText;
-@property (nonatomic, retain) NSString *comment_id;
-@property (nonatomic, retain) NSString *commenter_id;
-@property (nonatomic, retain) NSString *commenter_name;
+@property (nonatomic, retain) NSString *commentId;
+@property (nonatomic, retain) NSString *post_id;
+@property (nonatomic, retain) NSString *user_id;
+@property (nonatomic, retain) NSString *text;
+@property (nonatomic, retain) NSString *createdAt;
+@property (nonatomic, retain) NSString *updated_at;
 
 @end

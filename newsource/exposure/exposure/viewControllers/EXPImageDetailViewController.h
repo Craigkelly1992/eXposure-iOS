@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
 
-@interface EXPImageDetailViewController : EXPBaseViewController
+@interface EXPImageDetailViewController : EXPBaseViewController <UITableViewDataSource, UITableViewDelegate>
 
 //
 @property (strong, nonatomic) NSNumber *postId;
@@ -23,6 +23,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *labelContestName;
 @property (strong, nonatomic) IBOutlet UILabel *labelXpCount;
 @property (strong, nonatomic) IBOutlet UILabel *labelCommentCount;
+@property (strong, nonatomic) IBOutlet UITableView *tableViewComment;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentListHeight;
 
 // Actions
 - (IBAction)buttonExposureTap:(id)sender;

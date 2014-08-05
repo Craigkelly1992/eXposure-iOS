@@ -10,4 +10,10 @@
 
 @implementation Comment
 
+- (NSDictionary *)map{
+    NSMutableDictionary *map = [NSMutableDictionary dictionaryWithDictionary:[super map]];
+    [map setObject:@"id" forKey:@"commentId"];
+    return [NSDictionary dictionaryWithDictionary:map];
+}
+
 @end
