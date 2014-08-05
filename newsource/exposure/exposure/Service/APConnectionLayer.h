@@ -23,6 +23,7 @@
 #define GET_USER_WITH_ID @"users/%@" // users/<userID>
 #define GET_USER_PROFILE @"profile"
 #define UPDATE_USER_PROFILE @"profile/update"
+#define CHANGE_PASSWORD @"profile/update"
 #define DELETE_USER_PROFILE @"users/%@"
 #define GET_USER_SEARCH @"users/search"
 #define GET_USER_GLOBAL_RANKING @"rankings/following"
@@ -146,6 +147,13 @@
               backgroundPicture:(NSData*)backgroundPicture
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+// update password
+- (void)updatePasswordWithNewPassword:(NSString*)newPassword
+                            userEmail:(NSString*)email
+                                token:(NSString*)token
+                              success:(void (^)(id responseObject))success
+                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // delete user profile
 - (void)deleteUserProfileWithUserId:(NSNumber*)userId

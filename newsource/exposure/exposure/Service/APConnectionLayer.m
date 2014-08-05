@@ -170,6 +170,30 @@
     }];
 }
 
+// update password
+- (void)updatePasswordWithNewPassword:(NSString*)newPassword
+                            userEmail:(NSString*)email
+                                token:(NSString*)token
+                              success:(void (^)(id responseObject))success
+                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:CHANGE_PASSWORD];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                newPassword, PARAM_SIGNUP_PASSWORD,
+                                email, PARAM_USER_EMAIL,
+                                token, PARAM_USER_TOKEN,
+                                nil];
+    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
 // delete user profile - checked
 - (void)deleteUserProfileWithUserId:(NSNumber*)userId
                               email:(NSString*)email

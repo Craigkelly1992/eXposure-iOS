@@ -12,7 +12,9 @@
 
 @end
 
-@implementation EXPChangePasswordViewController
+@implementation EXPChangePasswordViewController {
+    User *user;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,6 +38,8 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tapGesture.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tapGesture];
+    //
+    user = [Infrastructure sharedClient].currentUser;
 }
 
 - (void) dismissKeyboard {
@@ -45,7 +49,34 @@
 }
 
 - (void)doneEditing {
+    // check current password
+    NSString *currentPassword = [[NSUserDefaults standardUserDefaults] valueForKey:USERDEFAULT_KEY_PASSWORD];
     
+    NSString *newPassword = [self.textFieldNewPassword.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
+    if (!currentPassword
+        || ![currentPassword isEqualToString:self.textFieldCurrentPassword.text]) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Old password is not correct. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+        return;
+    } else if (newPassword.length < 8) {
+         [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"The length of your password must be greater than 7 characters" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    
+        return;
+    } else if (![self.textFieldNewPassword.text isEqualToString:self.textFieldConfirmPassword.text]) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"The confirmation password is not correct" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+        return;
+    }
+    //
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI updatePasswordWithNewPassword:newPassword userEmail:user.email token:user.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Fail: %@", error.description]];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
