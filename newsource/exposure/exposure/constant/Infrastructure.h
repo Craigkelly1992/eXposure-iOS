@@ -14,7 +14,9 @@
 #define USERDEFAULT_KEY_EMAIL @"userdefault_key_email"
 #define USERDEFAULT_KEY_TOKEN @"userdefault_key_token"
 #define USERDEFAULT_KEY_PASSWORD @"userdefault_key_password"
-
+//
+#define USERDEFAULT_KEY_INSTAGRAM_TOKEN @"userdefault_key_instagram_accesstoken"
+//
 #define kTabBarHeight 50
 
 @interface Infrastructure : NSObject

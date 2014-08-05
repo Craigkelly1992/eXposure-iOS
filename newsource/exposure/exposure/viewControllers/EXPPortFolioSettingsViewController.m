@@ -117,7 +117,9 @@
         [self.navigationController pushViewController:loginVc animated:YES];
     } else {
         // log out
-        
+        [[InstagramEngine sharedEngine] logout];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:USERDEFAULT_KEY_INSTAGRAM_TOKEN];
+        [self.buttonInstagram setTitle:@"Login Instagram" forState:UIControlStateNormal];
     }
 }
 
@@ -259,6 +261,9 @@
 
 #pragma mark - Instagram Delegate
 -(void)instagramLoginSuccessWithToken:(NSString*)accessToken {
+    // save token
+    [[NSUserDefaults standardUserDefaults] setObject:accessToken forKey:USERDEFAULT_KEY_INSTAGRAM_TOKEN];
+    //
     [SVProgressHUD showSuccessWithStatus:@"Success"];
     [self.buttonInstagram setTitle:@"Logout Instagram" forState:UIControlStateNormal];
 }

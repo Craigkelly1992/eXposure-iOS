@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "InstagramKit.h"
 
 @implementation AppDelegate
 
@@ -17,6 +18,11 @@
     // Override point for customization after application launch.
     [FBLoginView class];
     [self setupUI];
+    // Load Instagram Access Token
+    NSString *instagramToken = [[NSUserDefaults standardUserDefaults] objectForKey:USERDEFAULT_KEY_INSTAGRAM_TOKEN];
+    if (instagramToken) {
+        [[InstagramEngine sharedEngine] setAccessToken:instagramToken];
+    }
     
     return YES;
 }
