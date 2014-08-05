@@ -83,6 +83,14 @@
 
 #pragma mark - IB Actions
 - (IBAction)buttonSignInTap:(id)sender {
+    
+    // checking
+    NSString *emailTrimString = [self.textFieldEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@""]];
+    if (emailTrimString.length <= 0 || self.textFieldPassword.text.length <= 0) {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please fill both username & password" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+        return;
+    }
+    // signin with service api
     [SVProgressHUD showWithStatus:@"Logging In"];
     [self.serviceAPI loginWithUserEmail:self.textFieldEmail.text password:self.textFieldPassword.text success:^(id responseObject) {
         //

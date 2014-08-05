@@ -53,6 +53,10 @@
      (UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
     
     NSString *token = [[_deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];

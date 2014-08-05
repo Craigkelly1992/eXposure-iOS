@@ -151,10 +151,10 @@
         user.username = self.textFieldUsername.text;
     }
     if(self.imageViewProfile.image != nil){
-        profilePicture = UIImagePNGRepresentation(self.imageViewProfile.image);
+        profilePicture = UIImageJPEGRepresentation(self.imageViewProfile.image, 0.6f);
     }
     if(self.imageViewBackground.image != nil){
-        backgroundPicture = UIImagePNGRepresentation(self.imageViewBackground.image);
+        backgroundPicture = UIImageJPEGRepresentation(self.imageViewBackground.image, 0.6f);
     }
     
     // call service here
@@ -166,8 +166,10 @@
         
          [SVProgressHUD showSuccessWithStatus:@"Success"];
          [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
+         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"Failed"];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Failed: %@", error.description]];
+        NSLog(@"Failed: %@", error.description);
     }];
 }
 #pragma mark - actionsheet delegate
