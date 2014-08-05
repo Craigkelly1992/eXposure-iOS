@@ -323,7 +323,7 @@
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // create comment
-- (void)createComment:(NSString*)postId
+- (void)createComment:(NSNumber*)postId
                  text:(NSString*)text
             userEmail:(NSString*)userEmail
             userToken:(NSString*)userToken

@@ -26,10 +26,12 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableViewComment;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentListHeight;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldComment;
 
 // Actions
 - (IBAction)buttonExposureTap:(id)sender;
 - (IBAction)buttonCommentTap:(id)sender;
 - (IBAction)buttonShareTap:(id)sender;
+- (IBAction)buttonSendTap:(id)sender;
 
 @end

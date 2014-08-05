@@ -21,6 +21,7 @@
     User *postUser;
     ContestDetail *postContest;
     NSMutableArray *arrayComment;
+    CGPoint textFieldCommentOrigin;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -62,9 +63,25 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
     }];
+    //
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    tapGesture.numberOfTapsRequired = 1;
+    [self.view setUserInteractionEnabled:YES];
+    [self.view addGestureRecognizer:tapGesture];
 }
 
--(void) loadPostUser:(NSNumber*)userId {
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+
+- (void) loadPostUser:(NSNumber*)userId {
     [SVProgressHUD showWithStatus:@"Loading User"];
     [self.serviceAPI getUserWithId:userId email:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
         
@@ -140,6 +157,7 @@
 }
 
 - (IBAction)buttonCommentTap:(id)sender {
+    
 }
 
 - (IBAction)buttonShareTap:(id)sender {
@@ -157,6 +175,27 @@
             [self presentViewController:controller animated:YES completion:nil];
         });
     });
+}
+
+- (IBAction)buttonSendTap:(id)sender {
+    [self dismissKeyboard];
+    NSString *commentText = [self.textFieldComment.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
+    if (commentText.length <= 0) {
+        
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please input comment first" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+        return;
+    }
+    //
+    [SVProgressHUD showWithStatus:@"Sending"];
+    [self.serviceAPI createComment:self.postId text:commentText userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [self.textFieldComment setText:@""];
+        [self loadPostComment:self.postId];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD showErrorWithStatus:@"Fail. Please try again later"];
+    }];
 }
 
 #pragma mark - Table View
@@ -198,6 +237,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // This code is commented out in order to allow users to click on the collection view cells.
+}
+
+#pragma mark - Helper
+- (void)keyboardWasShown:(NSNotification *)notification
+{
+    // Get the size of the keyboard.
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    float keyboardHeight = keyboardSize.height;
+    //NSLog(@"%f", );
+    //
+    textFieldCommentOrigin = self.scrollViewContainer.contentOffset;
+    //
+    [UIView animateWithDuration:0.5 animations:^{
+        float minY = self.scrollViewContainer.contentOffset.y + self.scrollViewContainer.frame.size.height - keyboardHeight - self.textFieldComment.frame.size.height;
+        float deltaY = self.textFieldComment.frame.origin.y - minY;
+        NSLog(@"%f",keyboardHeight);
+        self.scrollViewContainer.contentOffset = CGPointMake(self.scrollViewContainer.contentOffset.x, self.scrollViewContainer.contentOffset.y + deltaY);
+    }];
+}
+
+- (void) dismissKeyboard {
+    [self.textFieldComment resignFirstResponder];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.scrollViewContainer.contentOffset = textFieldCommentOrigin;
+    }];
 }
 
 @end
