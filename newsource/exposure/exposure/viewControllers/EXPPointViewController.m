@@ -43,7 +43,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self getFollowingRanking:self.userId];
+    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+        [self getFollowingRanking:self.userId];
+    } else if (self.segmentOption.selectedSegmentIndex == 1) { // All
+         [self getGlobalRanking:self.userId];
+    }
 }
 
 -(void) getFollowingRanking:(NSNumber*)userId {
