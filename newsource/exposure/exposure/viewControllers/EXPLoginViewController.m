@@ -40,25 +40,30 @@
 {
     [super viewDidLoad];
     [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController setNavigationBarHidden:YES];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
     // load username if existing
     NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:USERDEFAULT_KEY_EMAIL];
     if (email) {
         self.textFieldEmail.text = email;
     }
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = TRUE;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
+    // clear password
+    self.textFieldPassword.text = @"";
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    // dismiss keyboard
+    [self.textFieldEmail resignFirstResponder];
+    [self.textFieldPassword resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,8 +113,6 @@
 }
 
 - (IBAction)buttonHowitWorksTap:(id)sender {
-    self.navigationController.navigationBarHidden = NO;
-    [self.navigationController pushViewController:[[EXPHowItWorksViewController alloc]init] animated:YES];
     
 }
 
@@ -151,6 +154,13 @@
                 weakself.view.frame = CGRectMake(0, difference, weakself.view.frame.size.width, weakself.view.frame.size.height);
             }
         }];
+    }
+}
+
+#pragma mark - Segue Delegate
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.destinationViewController class] == [EXPHowItWorksViewController class]) {
+        self.navigationController.navigationBarHidden = NO;
     }
 }
 

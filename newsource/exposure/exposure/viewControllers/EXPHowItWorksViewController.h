@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EXPHowItWorksViewController : UIViewController
+@interface EXPHowItWorksViewController : UIViewController <UITextViewDelegate>
 
+// IBOutlet
+@property (strong, nonatomic) IBOutlet UITextView *textViewHow;
 @end

@@ -60,6 +60,7 @@
                                 </state>
                                 <connections>
                                     <action selector="buttonHowitWorksTap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="nWq-ob-QQh"/>
+                                    <segue destination="Zqd-Pq-PSR" kind="push" id="gak-4i-wLi"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWo-Wf-fvj">
@@ -96,6 +97,7 @@
                         <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     </view>
                     <navigationItem key="navigationItem" id="TCz-2l-n7f"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="buttonSignin" destination="vY8-9a-cJc" id="aKG-Ra-zYH"/>
                         <outlet property="buttonSignup" destination="jch-mz-AMB" id="gyE-02-T9g"/>
@@ -1692,11 +1694,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wws-7x-x66">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h47-qa-kbO">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <string key="text">Welcome to eXposure!
+                                <mutableString key="text">Welcome to eXposure!
 
 How it works:
 
@@ -1720,14 +1722,27 @@ We hope you enjoy.
 
 Sincerely,
 
-Team eXposure</string>
+Team eXposure</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Zqd-Pq-PSR" id="wMb-3l-eat"/>
+                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.58431372550000005" green="0.81960784310000001" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="h47-qa-kbO" firstAttribute="leading" secondItem="edW-fX-IfO" secondAttribute="leading" id="Ajh-Jj-7ac"/>
+                            <constraint firstItem="h47-qa-kbO" firstAttribute="top" secondItem="edW-fX-IfO" secondAttribute="top" id="bps-YN-7fQ"/>
+                            <constraint firstAttribute="bottom" secondItem="h47-qa-kbO" secondAttribute="bottom" id="s9n-0j-Qfs"/>
+                            <constraint firstAttribute="trailing" secondItem="h47-qa-kbO" secondAttribute="trailing" id="tDb-va-sSR"/>
+                        </constraints>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Dmm-3C-U4X"/>
+                    <connections>
+                        <outlet property="textViewHow" destination="h47-qa-kbO" id="meJ-L9-vzb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HJa-O9-FbS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

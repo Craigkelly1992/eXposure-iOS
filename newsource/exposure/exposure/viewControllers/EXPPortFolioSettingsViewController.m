@@ -235,7 +235,7 @@
 }
 
 - (IBAction)signOut:(id)sender {
-    // TODO: signout here
+    [self.tabBarController.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Facebook Login Delegate
