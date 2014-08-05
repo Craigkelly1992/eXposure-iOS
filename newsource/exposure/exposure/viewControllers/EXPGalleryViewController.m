@@ -254,6 +254,8 @@
                  [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please allow this app access twitter account on Setting application" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
              }
          }];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"You didn\'t set up any Twitter account, please sign in at least 1 on device Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }
 }
 

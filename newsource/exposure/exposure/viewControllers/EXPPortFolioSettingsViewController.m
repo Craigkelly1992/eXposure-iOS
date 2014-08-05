@@ -124,7 +124,7 @@
 }
 
 - (IBAction)buttonTwitterTap:(id)sender {
-    [self fetchTimelineForUser:@"marvellouslove"];
+    [self fetchTimelineForUser];
 }
 
 - (IBAction)changePassword:(id)sender {
@@ -279,7 +279,7 @@
             isAvailableForServiceType:SLServiceTypeTwitter];
 }
 
-- (void)fetchTimelineForUser:(NSString *)username
+- (void)fetchTimelineForUser
 {
     //  Step 0: Check that the user has local Twitter accounts
     if ([self userHasAccessToTwitter]) {
@@ -289,83 +289,91 @@
         [self.accountStore accountTypeWithAccountTypeIdentifier:
          ACAccountTypeIdentifierTwitter];
         
+        [SVProgressHUD showWithStatus:@"Loading"];
         [self.accountStore
          requestAccessToAccountsWithType:twitterAccountType
          options:NULL
          completion:^(BOOL granted, NSError *error) {
+             [SVProgressHUD dismiss];
              if (granted) {
                  //  Step 2:  Create a request
                  NSArray *twitterAccounts =
                  [self.accountStore accountsWithAccountType:twitterAccountType];
-                 ACAccount *account = [twitterAccounts lastObject];
-                 if (!account) {
-                     [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please singin with an twitter account on Settings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
-                 }
+                 [[[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"You\'re having %d Twitter account, app will automatically use the last account", twitterAccounts.count] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
                  
-                 NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"
-                               @"/1.1/statuses/user_timeline.json"];
-                 NSDictionary *params = @{@"screen_name" : account.username,
-                                          @"include_rts" : @"0",
-                                          @"trim_user" : @"1",
-                                          @"count" : @"100"};
-                 SLRequest *request =
-                 [SLRequest requestForServiceType:SLServiceTypeTwitter
-                                    requestMethod:SLRequestMethodGET
-                                              URL:url
-                                       parameters:params];
-                 
-                 //  Attach an account to the request
-                 [request setAccount:account];
-                 
-                 //  Step 3:  Execute the request
-                 [request performRequestWithHandler:
-                  ^(NSData *responseData,
-                    NSHTTPURLResponse *urlResponse,
-                    NSError *error) {
-                      
-                      if (error) {
-                          NSLog(@"Error: %@", error);
-                      } else {
-                          NSLog(@"Response Data: %@", [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil]);
-                          if (responseData) {
-                              if (urlResponse.statusCode >= 200 &&
-                                  urlResponse.statusCode < 300) {
-                                  
-                                  NSError *jsonError;
-                                  NSDictionary *timelineData =
-                                  [NSJSONSerialization
-                                   JSONObjectWithData:responseData
-                                   options:NSJSONReadingAllowFragments error:&jsonError];
-                                  if (timelineData) {
-                                      // get image url
-                                      NSArray *arrayImage = [timelineData valueForKeyPath:@"extended_entities.media.media_url"];
-                                      NSMutableArray *filterImages = [[NSMutableArray alloc] init];
-                                      for (int i = 0; i < arrayImage.count; i++) {
-                                          if (arrayImage[i] != [NSNull null]) {
-                                              [filterImages addObject:arrayImage[i]];
-                                          }
-                                      }
-                                      NSLog(@"Image url: %@", filterImages);
-                                  }
-                                  else {
-                                      // Our JSON deserialization went awry
-                                      NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
-                                  }
-                              }
-                              else {
-                                  // The server did not respond ... were we rate-limited?
-                                  NSLog(@"The response status code is %ld",
-                                        (long)urlResponse.statusCode);
-                              }
-                          }
-                      }
-                  }];
+                 // This code below is used for testing
+//                 ACAccount *account = [twitterAccounts lastObject];
+//                 if (!account) {
+//                     [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please singin with an twitter account on Settings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+//                 }
+//                 
+//                 NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"
+//                               @"/1.1/statuses/user_timeline.json"];
+//                 NSDictionary *params = @{@"screen_name" : account.username,
+//                                          @"include_rts" : @"0",
+//                                          @"trim_user" : @"1",
+//                                          @"count" : @"100"};
+//                 SLRequest *request =
+//                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+//                                    requestMethod:SLRequestMethodGET
+//                                              URL:url
+//                                       parameters:params];
+//                 
+//                 //  Attach an account to the request
+//                 [request setAccount:account];
+//                 
+//                 //  Step 3:  Execute the request
+//                 [request performRequestWithHandler:
+//                  ^(NSData *responseData,
+//                    NSHTTPURLResponse *urlResponse,
+//                    NSError *error) {
+//                      
+//                      if (error) {
+//                          NSLog(@"Error: %@", error);
+//                      } else {
+//                          NSLog(@"Response Data: %@", [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil]);
+//                          if (responseData) {
+//                              if (urlResponse.statusCode >= 200 &&
+//                                  urlResponse.statusCode < 300) {
+//                                  
+//                                  NSError *jsonError;
+//                                  NSDictionary *timelineData =
+//                                  [NSJSONSerialization
+//                                   JSONObjectWithData:responseData
+//                                   options:NSJSONReadingAllowFragments error:&jsonError];
+//                                  if (timelineData) {
+//                                      // get image url
+//                                      NSArray *arrayImage = [timelineData valueForKeyPath:@"extended_entities.media.media_url"];
+//                                      NSMutableArray *filterImages = [[NSMutableArray alloc] init];
+//                                      for (int i = 0; i < arrayImage.count; i++) {
+//                                          if (arrayImage[i] != [NSNull null]) {
+//                                              [filterImages addObject:arrayImage[i]];
+//                                          }
+//                                      }
+//                                      NSLog(@"Image url: %@", filterImages);
+//                                  }
+//                                  else {
+//                                      // Our JSON deserialization went awry
+//                                      NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+//                                  }
+//                              }
+//                              else {
+//                                  // The server did not respond ... were we rate-limited?
+//                                  NSLog(@"The response status code is %ld",
+//                                        (long)urlResponse.statusCode);
+//                              }
+//                          }
+//                      }
+//                  }];
              }
              else {
                  // Access was not granted, or an error occurred
                  NSLog(@"%@", [error localizedDescription]);
+                 [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please allow application use Twitter account in device Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
              }
          }];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"You didn\'t set up any Twitter account, please sign in at least 1 on device Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }
 }
 

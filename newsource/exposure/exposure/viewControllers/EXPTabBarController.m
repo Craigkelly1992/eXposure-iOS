@@ -22,6 +22,7 @@
 #import "EXPGalleryViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "EXPNewPostViewController.h"
+#import <Social/Social.h>
 
 // View Controler Identifer
 #define VC_PHOTOSTREAM_ID @"EXPPhotoStreamViewControllerIdentifier"
@@ -230,11 +231,34 @@
 }
 
 - (void) openTwitterGallery {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
-    //
-    viewController.type = kGALLERY_TWITTER;
-    [self.navigationController pushViewController:viewController animated:YES];
+    if ([SLComposeViewController
+         isAvailableForServiceType:SLServiceTypeTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+        ACAccountType *twitterAccountType =
+        [accountStore accountTypeWithAccountTypeIdentifier:
+         ACAccountTypeIdentifierTwitter];
+        
+        [accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                 EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
+                 //
+                 viewController.type = kGALLERY_TWITTER;
+                 [self.navigationController pushViewController:viewController animated:YES];
+             } else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+                 [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please allow this app access twitter account on Setting application" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+             }
+         }];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"You didn\'t set up any Twitter account, please sign in at least 1 on device Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }
 }
 
 #pragma mark - image picker delegate
