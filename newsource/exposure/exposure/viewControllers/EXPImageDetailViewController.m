@@ -22,6 +22,7 @@
     ContestDetail *postContest;
     NSMutableArray *arrayComment;
     CGPoint textFieldCommentOrigin;
+    int currentLikeNumber;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -55,6 +56,7 @@
         self.title = currentPost.text;
         self.labelTime.text = @"----";
         self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
+        currentLikeNumber = [currentPost.cached_votes_up integerValue];
         if ([currentPost.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
             [self.imageviewPost setImageURL:[NSURL URLWithString:currentPost.image_url]];
         } else {
@@ -154,6 +156,39 @@
 
 #pragma mark - Actions
 - (IBAction)buttonExposureTap:(id)sender {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI likePostWithPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        // load post info again
+        [SVProgressHUD showWithStatus:@"Loading Post"];
+        [self.serviceAPI getPostByPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+            
+            [SVProgressHUD dismiss];
+            NSLog(@"Current Post: %@", responseObject);
+            currentPost = [Post objectFromDictionary:responseObject];
+            self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        // Currently, server works but return wrong
+//        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", error.description]];
+        
+        //
+        // load post info again
+        [SVProgressHUD showWithStatus:@"Loading Post"];
+        [self.serviceAPI getPostByPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+            
+            [SVProgressHUD dismiss];
+            NSLog(@"Current Post: %@", responseObject);
+            currentPost = [Post objectFromDictionary:responseObject];
+            self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+        }];
+    }];
 }
 
 - (IBAction)buttonCommentTap:(id)sender {
