@@ -129,7 +129,7 @@
     navController = [[UINavigationController alloc] initWithRootViewController:vc];
     vc.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelForgotPassword)];
     NSLog(@"%@",navController.navigationItem.rightBarButtonItem.title);
-    [wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:3000/agencies/password/new"]]];
+    [wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://exposuretechnologies.com/agencies/password/new"]]];
     [self presentViewController:navController animated:YES completion:nil];
     
 }
