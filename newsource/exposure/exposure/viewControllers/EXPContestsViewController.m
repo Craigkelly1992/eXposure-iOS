@@ -15,9 +15,12 @@
 @end
 
 @implementation EXPContestsViewController {
+    NSMutableArray *arrayAll;
+    NSMutableArray *arrayFollowing;
     NSArray *arrayContest;
     NSIndexPath *selectedIndexPath;
     User *currentUser;
+    NSString *textBeforeSearch;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,6 +45,8 @@
     tapGesture.numberOfTapsRequired = 1;
     [self.viewBelow setUserInteractionEnabled:YES];
     [self.viewBelow addGestureRecognizer:tapGesture];
+    //
+    textBeforeSearch = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -140,10 +145,12 @@
 #pragma mark - Load Data
 - (void) loadAllContest {
     [SVProgressHUD showWithStatus:@"Loading"];
+    arrayAll = [[NSMutableArray alloc] init];
     [self.serviceAPI getAllContestWithUserEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
-        arrayContest = responseObject;
+        arrayAll = responseObject;
+        arrayContest = arrayAll;
         if (arrayContest.count <= 0) {
             self.labelNoItem.hidden = NO;
             self.tableViewContest.hidden = YES;
@@ -160,10 +167,12 @@
 
 - (void) loadFollowingContest {
     [SVProgressHUD showWithStatus:@"Loading"];
+    arrayFollowing = [[NSMutableArray alloc] init];
     [self.serviceAPI getContestByFollowingUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
-        arrayContest = responseObject;
+        arrayFollowing = responseObject;
+        arrayContest = arrayFollowing;
         if (arrayContest.count <= 0) {
             self.labelNoItem.hidden = NO;
             self.tableViewContest.hidden = YES;
@@ -192,8 +201,37 @@
 
 #pragma mark - SearchBar Delegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSString *searchText = searchBar.text;
-    NSLog(@"Search for contests by brand [%@]", searchText);
+    NSLog(@"SearchBar:textDidChange with text [%@]", searchBar.text);
+    [self.searchBarContest resignFirstResponder];
+    //
+    NSMutableArray *searchResult = [[NSMutableArray alloc] init];
+    for (int i = 0; i < arrayContest.count; i++) {
+        Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:i]];
+        if ([contest.title rangeOfString:self.searchBarContest.text options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            [searchResult addObject:arrayContest[i]];
+        }
+    }
+    arrayContest = searchResult;
+    [self.tableViewContest reloadData];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    // for cancel button, not for X clear button
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length - textBeforeSearch.length >= 2) {
+        if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+            
+            arrayContest = arrayFollowing;
+            [self.tableViewContest reloadData];
+        } else { // All
+            
+            arrayContest = arrayAll;
+            [self.tableViewContest reloadData];
+        }
+    }
+    textBeforeSearch = searchText;
 }
 
 #pragma mark - Helper
@@ -202,6 +240,18 @@
  */
 - (void) dismissKeyboard {
     [self.searchBarContest resignFirstResponder];
+    NSLog(@"SearchBar:textDidChange with text [%@]", self.searchBarContest.text);
+    [self.searchBarContest resignFirstResponder];
+    //
+    NSMutableArray *searchResult = [[NSMutableArray alloc] init];
+    for (int i = 0; i < arrayContest.count; i++) {
+        Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:i]];
+        if ([contest.title rangeOfString:self.searchBarContest.text options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            [searchResult addObject:arrayContest[i]];
+        }
+    }
+    arrayContest = searchResult;
+    [self.tableViewContest reloadData];
 }
 
 @end
