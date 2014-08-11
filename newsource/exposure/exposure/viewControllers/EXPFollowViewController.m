@@ -21,7 +21,6 @@
     User *currentUser; // user login
     User *userProfile; // user's profile we are watching
     int mode;
-    NSString *textBeforeSearch;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,8 +51,6 @@
     tapGesture.numberOfTapsRequired = 1;
     [self.viewContainer setUserInteractionEnabled:YES];
     [self.viewContainer addGestureRecognizer:tapGesture];
-    //
-    textBeforeSearch = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,6 +87,7 @@
         }
         arrayData = arrayFollowing;
         [self.collectionViewUser reloadData];
+        [self filterUser];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -110,6 +108,7 @@
         }
         arrayData = arrayFollower;
         [self.collectionViewUser reloadData];
+        [self filterUser];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -129,7 +128,14 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return arrayData.count;
+    if (arrayData && arrayData.count > 0) {
+        self.labelNoItem.hidden = YES;
+        self.collectionViewUser.hidden = NO;
+        return arrayData.count;
+    }
+    self.labelNoItem.hidden = NO;
+    self.collectionViewUser.hidden = YES;
+    return 0;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -198,7 +204,14 @@
 
 #pragma mark - SearchBar Delegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"SearchBar:textDidChange with text [%@]", searchBar.text);
+    [self filterUser];
+}
+
+- (void) filterUser {
+    if ([self.searchBar.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]].length <= 0) {
+        return;
+    }
+    NSLog(@"SearchBar:textDidChange with text [%@]", self.searchBar.text);
     [self.searchBar resignFirstResponder];
     //
     NSMutableArray *searchResult = [[NSMutableArray alloc] init];
@@ -217,7 +230,7 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length - textBeforeSearch.length >= 2) {
+    if (searchText.length <= 0) {
         if (self.segmentOption.selectedSegmentIndex == 0) { // Following
             
             arrayData = arrayFollowing;
@@ -228,7 +241,6 @@
             [self.collectionViewUser reloadData];
         }
     }
-    textBeforeSearch = searchText;
 }
 
 #pragma mark - Miscellaneous
@@ -237,16 +249,7 @@
  */
 - (void) dismissKeyboard {
     [self.searchBar resignFirstResponder];
-    //
-    NSMutableArray *searchResult = [[NSMutableArray alloc] init];
-    for (int i = 0; i < arrayData.count; i++) {
-        User *user = [arrayData objectAtIndex:i];
-        if ([user.username rangeOfString:self.searchBar.text].location != NSNotFound) {
-            [searchResult addObject:user];
-        }
-    }
-    arrayData = searchResult;
-    [self.collectionViewUser reloadData];
+    [self filterUser];
 }
 
 @end

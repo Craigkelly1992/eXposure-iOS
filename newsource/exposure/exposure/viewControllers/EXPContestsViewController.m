@@ -20,7 +20,6 @@
     NSArray *arrayContest;
     NSIndexPath *selectedIndexPath;
     User *currentUser;
-    NSString *textBeforeSearch;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -45,8 +44,6 @@
     tapGesture.numberOfTapsRequired = 1;
     [self.viewBelow setUserInteractionEnabled:YES];
     [self.viewBelow addGestureRecognizer:tapGesture];
-    //
-    textBeforeSearch = @"";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,10 +80,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (arrayContest) {
+    if (arrayContest && arrayContest.count > 0) {
+        self.labelNoItem.hidden = YES;
+        self.tableViewContest.hidden = NO;
         return [arrayContest count];
     }
-    return [arrayContest count];
+    self.labelNoItem.hidden = NO;
+    self.tableViewContest.hidden = YES;
+    return 0;
 }
 
 // Customize the appearance of table view cells.
@@ -159,6 +160,7 @@
             self.tableViewContest.hidden = NO;
         }
         [self.tableViewContest reloadData];
+        [self filterContest];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -181,6 +183,7 @@
             self.tableViewContest.hidden = NO;
         }
         [self.tableViewContest reloadData];
+        [self filterContest];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
@@ -201,7 +204,14 @@
 
 #pragma mark - SearchBar Delegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"SearchBar:textDidChange with text [%@]", searchBar.text);
+    [self filterContest];
+}
+
+- (void)filterContest {
+    if ([self.searchBarContest.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]].length <= 0) {
+        return;
+    }
+    NSLog(@"SearchBar:textDidChange with text [%@]", self.searchBarContest.text);
     [self.searchBarContest resignFirstResponder];
     //
     NSMutableArray *searchResult = [[NSMutableArray alloc] init];
@@ -220,7 +230,7 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length - textBeforeSearch.length >= 2) {
+    if (searchText.length <= 0) {
         if (self.segmentOption.selectedSegmentIndex == 0) { // Following
             
             arrayContest = arrayFollowing;
@@ -231,7 +241,6 @@
             [self.tableViewContest reloadData];
         }
     }
-    textBeforeSearch = searchText;
 }
 
 #pragma mark - Helper
@@ -240,18 +249,7 @@
  */
 - (void) dismissKeyboard {
     [self.searchBarContest resignFirstResponder];
-    NSLog(@"SearchBar:textDidChange with text [%@]", self.searchBarContest.text);
-    [self.searchBarContest resignFirstResponder];
-    //
-    NSMutableArray *searchResult = [[NSMutableArray alloc] init];
-    for (int i = 0; i < arrayContest.count; i++) {
-        Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:i]];
-        if ([contest.title rangeOfString:self.searchBarContest.text options:NSCaseInsensitiveSearch].location != NSNotFound) {
-            [searchResult addObject:arrayContest[i]];
-        }
-    }
-    arrayContest = searchResult;
-    [self.tableViewContest reloadData];
+    [self filterContest];
 }
 
 @end
