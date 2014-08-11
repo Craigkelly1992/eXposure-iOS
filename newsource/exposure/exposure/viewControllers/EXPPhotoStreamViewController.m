@@ -40,11 +40,6 @@
     currentUser = [Infrastructure sharedClient].currentUser;
     //
     self.labelNoItem.hidden = YES;
-    // add gesture for removing keyboard
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
-    tapGesture.numberOfTapsRequired = 1;
-    [self.viewBelow setUserInteractionEnabled:YES];
-    [self.viewBelow addGestureRecognizer:tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -162,21 +157,6 @@
         NSLog(@"%@", error);
         [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Can\'t retrieve data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }];
-}
-
-/**
- * dismiss keyboard
- */
-- (void) dismissKeyboard {
-    [self.searchBar resignFirstResponder];
-}
-
-#pragma mark - SearchBar Delegate
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"SearchBar:textDidChange with text [%@]", searchBar.text);
-    [self.searchBar resignFirstResponder];
-    // TODO
 }
 
 @end

@@ -173,21 +173,7 @@
         }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        // Currently, server works but return wrong
-//        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", error.description]];
-        
-        //
-        // load post info again
-        [SVProgressHUD showWithStatus:@"Loading Post"];
-        [self.serviceAPI getPostByPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
-            
-            [SVProgressHUD dismiss];
-            NSLog(@"Current Post: %@", responseObject);
-            currentPost = [Post objectFromDictionary:responseObject];
-            self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD dismiss];
-        }];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error: %@", error]];
     }];
 }
 

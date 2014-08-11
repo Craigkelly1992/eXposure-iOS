@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
 
-@interface EXPFollowViewController : EXPBaseViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface EXPFollowViewController : EXPBaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
 
 //
 @property (strong, nonatomic) NSNumber *userId;
@@ -17,6 +17,8 @@
 //
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewUser;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UIView *viewContainer;
 
 // Actions
 - (IBAction)segmentValueChanged:(id)sender;
