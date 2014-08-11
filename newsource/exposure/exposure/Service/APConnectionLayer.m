@@ -129,41 +129,90 @@
 }
 
 // edit user profile - not OK
-- (void)editUserProfileWithUser:(User*)user
+- (void)editUserProfileWithFirstname:(NSString*)firstName
+                            lastName:(NSString*)lastName
+                               newEmail:(NSString*)newEmail
+                               phone:(NSString*)phone
+                            userName:(NSString*)username
+                         deviceToken:(NSString*)deviceToken
+                         description:(NSString*)description
+                             website:(NSString*)website
                  profilePicture:(NSData*)profilePicture
               backgroundPicture:(NSData*)backgroundPicture
+                           userEmail:(NSString*)userEmail // old email for verification
+                           userToken:(NSString*)userToken
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     // Neither a key nor a value can be nil; if you need to represent a null value in a dictionary, you should use NSNull
-    // check device token
-    NSString *deviceToken;
-    if (!user.device_token) {
-        deviceToken = (NSString*)[NSNull null];
+    NSString *profilePictureString = (NSString*)[NSNull null];
+    if (profilePicture) {
+        profilePictureString = [profilePicture base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     }
-    if (!profilePicture) {
-        profilePicture = (NSData*)[NSNull null];
-    }
-    if (!backgroundPicture) {
-        backgroundPicture = (NSData*)[NSNull null];
+    NSString *backgroundPictureString = (NSString*)[NSNull null];
+    if (backgroundPicture) {
+        backgroundPictureString = [backgroundPicture base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     }
     NSString *path = [NSString stringWithFormat:UPDATE_USER_PROFILE];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                user.first_name, PARAM_SIGNUP_FIRSTNAME,
-                                user.last_name, PARAM_SIGNUP_LASTNAME,
-                                user.email, PARAM_SIGNUP_EMAIL,
-                                user.phone, PARAM_SIGNUP_PHONE,
-                                user.username, PARAM_SIGNUP_USERNAME,
-                                deviceToken, PARAM_SIGNUP_DEVICE_TOKEN,
-                                [profilePicture base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength], PARAM_SIGNUP_PROFILE_PICTURE,
-                                [backgroundPicture base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength], PARAM_SIGNUP_BACKGROUND_PICTURE,
-                                user.email, PARAM_USER_EMAIL,
-                                user.authentication_token, PARAM_USER_TOKEN,
-                                nil];
-    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+        if (profilePicture) {
+            [formData appendPartWithFileData:profilePicture
+                                    name:PARAM_SIGNUP_PROFILE_PICTURE
+                                fileName:@"profile" mimeType:@"image/jpeg"];
+        }
+        if (backgroundPicture) {
+            [formData appendPartWithFileData:backgroundPicture
+                                    name:PARAM_SIGNUP_BACKGROUND_PICTURE
+                                fileName:@"profile" mimeType:@"image/jpeg"];
+        }
+        if (firstName) {
+            [formData appendPartWithFormData:[firstName dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_SIGNUP_FIRSTNAME];
+        }
+        if (lastName) {
+            [formData appendPartWithFormData:[lastName dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_SIGNUP_LASTNAME];
+        }
+        if (newEmail) {
+            [formData appendPartWithFormData:[newEmail dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_SIGNUP_EMAIL];
+        }
+        if (phone) {
+            [formData appendPartWithFormData:[phone dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_SIGNUP_PHONE];
+        }
+        if (username) {
+            [formData appendPartWithFormData:[username dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_SIGNUP_USERNAME];
+        }
+        if (deviceToken) {
+            [formData appendPartWithFormData:[deviceToken dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_SIGNUP_DEVICE_TOKEN];
+        }
+        if (description) {
+            [formData appendPartWithFormData:[description dataUsingEncoding:NSUTF8StringEncoding]
+                                        name:PARAM_SIGNUP_DESCRIPTION];
+        }
+        if (website) {
+            [formData appendPartWithFormData:[website dataUsingEncoding:NSUTF8StringEncoding]
+                                        name:PARAM_SIGNUP_WEBSITE];
+        }
+        if (userEmail) {
+            [formData appendPartWithFormData:[userEmail dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_USER_EMAIL];
+        }
+        if (userToken) {
+            [formData appendPartWithFormData:[userToken dataUsingEncoding:NSUTF8StringEncoding]
+                                    name:PARAM_USER_TOKEN];
+        }
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         if (success) {
             success(responseObject);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
         if (failure) {
             failure(operation, error);
         }

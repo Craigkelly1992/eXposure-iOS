@@ -46,6 +46,12 @@
     [super viewDidLoad];
     isDetailOpen = NO;
     isSubmissionOpen = YES;
+    // load image
+    if (self.image_url_thumb) {
+        [self.imageViewContest setImageURL:[NSURL URLWithString:self.image_url_thumb]];
+    } else {
+        [self.imageViewContest setImage:[UIImage imageNamed:@"sample.jpg"]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,11 +69,6 @@
         [self.labelContestName resizeToFit];
         self.title = currentContest.contest.info.title;
         //
-        if ([currentContest.contest.info.picture_file_name rangeOfString:@"http"].location != NSNotFound ) {
-            [self.imageViewContest setImageURL:[NSURL URLWithString:currentContest.contest.info.picture_file_name]];
-        } else {
-            [self.imageViewContest setImage:[UIImage imageNamed:@"sample.jpg"]];
-        }
         self.textViewDetail.text = currentContest.contest.info.description;
         //
         arraySubmission = currentContest.submissions.submissions;

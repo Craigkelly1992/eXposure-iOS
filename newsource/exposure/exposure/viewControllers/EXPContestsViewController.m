@@ -16,7 +16,7 @@
 
 @implementation EXPContestsViewController {
     NSArray *arrayContest;
-    NSNumber *contestId;
+    NSIndexPath *selectedIndexPath;
     User *currentUser;
 }
 
@@ -102,13 +102,13 @@
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewRight];
     //
     [imageViewLeft setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if ([contest.picture_file_name rangeOfString:@"http"].location == NSNotFound ) {
-        [imageViewLeft setImageURL:[NSURL URLWithString:contest.picture_file_name]];
+    if ([contest.picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound ) {
+        [imageViewLeft setImageURL:[NSURL URLWithString:contest.picture_url_thumb]];
     }
     //
     [imageViewRight setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if ([contest.picture_file_name rangeOfString:@"http"].location == NSNotFound ) {
-        [imageViewRight setImageURL:[NSURL URLWithString:contest.picture_file_name]];
+    if ([contest.picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound ) {
+        [imageViewRight setImageURL:[NSURL URLWithString:contest.picture_url_thumb]];
     }
     //
     labelContestName.text = contest.title;
@@ -132,8 +132,8 @@
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:indexPath.row]];
-    contestId = contest.contestId;
+    
+    selectedIndexPath = indexPath;
     return indexPath;
 }
 
@@ -180,8 +180,14 @@
 
 #pragma mark - Segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     EXPContestDetailViewController *contestDetailVC = segue.destinationViewController;
-    contestDetailVC.contestId = contestId;
+    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:selectedIndexPath.row]];
+    contestDetailVC.contestId = contest.contestId;
+    contestDetailVC.image_url = contest.picture_url;
+    contestDetailVC.image_url_thumb = contest.picture_url_thumb;
+    contestDetailVC.image_url_square = contest.picture_url_square;
+    contestDetailVC.image_url_preview = contest.picture_url_preview;
 }
 
 #pragma mark - SearchBar Delegate

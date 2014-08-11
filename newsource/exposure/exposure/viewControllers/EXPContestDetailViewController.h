@@ -16,6 +16,12 @@
 //
 @property(nonatomic, strong) NSNumber *contestId;
 
+// 2014-08-11, transfer image url to this screen, because can't get with get contest by id
+@property (nonatomic, copy) NSString * image_url;
+@property (nonatomic, copy) NSString * image_url_square;
+@property (nonatomic, copy) NSString * image_url_preview;
+@property (nonatomic, copy) NSString * image_url_thumb;
+
 //
 @property (weak, nonatomic) IBOutlet UILabel *labelBrandName;
 @property (weak, nonatomic) IBOutlet UILabel *labelContestName;

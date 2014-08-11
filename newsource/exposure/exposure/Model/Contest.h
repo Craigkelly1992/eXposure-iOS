@@ -37,4 +37,9 @@
 /// get contest from brand id
 @property (nonatomic, copy) NSString *picture_url;
 
+// updated 2014/08/11 - add more type of image:thumb, square, preview
+@property (nonatomic, copy) NSString * picture_url_square;
+@property (nonatomic, copy) NSString * picture_url_preview;
+@property (nonatomic, copy) NSString * picture_url_thumb;
+
 @end

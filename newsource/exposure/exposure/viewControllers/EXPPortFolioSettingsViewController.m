@@ -29,6 +29,9 @@
 @end
 
 @implementation EXPPortFolioSettingsViewController {
+    User *currentUser;
+    BOOL isProfileChanged;
+    BOOL isBackgroundChanged;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,6 +67,13 @@
     }
     // Twitter
     self.accountStore = [[ACAccountStore alloc] init];
+    // just load imageview from url here, because if we place it on viewWillAppear, the problem when we return back from DoneEditing will be strange
+    currentUser = [Infrastructure sharedClient].currentUser;
+    [self.imageViewProfile setImageURL:[NSURL URLWithString:currentUser.profile_picture_url_thumb]];
+    [self.imageViewBackground setImageURL:[NSURL URLWithString:currentUser.background_picture_url_preview]];
+    //
+    isProfileChanged = NO;
+    isBackgroundChanged = NO;
 }
 
 -(void) dismissKeyboard {
@@ -81,7 +91,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    User *currentUser = [Infrastructure sharedClient].currentUser;
     // fill data
     self.textFieldFirstname.text = currentUser.first_name;
     self.textFieldLastname.text = currentUser.last_name;
@@ -90,8 +99,6 @@
     self.textFieldUsername.text = currentUser.username;
     self.textFieldDescription.text = currentUser.description;
     self.textFieldWebsite.text = @"";
-    [self.imageViewProfile setImageURL:[NSURL URLWithString:currentUser.profile_picture_url]];
-    [self.imageViewBackground setImageURL:[NSURL URLWithString:currentUser.background_picture_url]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,41 +142,78 @@
 
 -(void)doneEditing{
     User *user = [Infrastructure sharedClient].currentUser;
-    NSData *profilePicture;
-    NSData *backgroundPicture;
-    if (![self.textFieldFirstname.text isEqualToString:@""]) {
-        user.first_name = self.textFieldFirstname.text;
+    NSData *profilePicture = nil;
+    NSData *backgroundPicture = nil;
+    NSString *firstName = nil;
+    NSString *lastName = nil;
+    NSString *newEmail = nil;
+    NSString *phone = nil;
+    NSString *userName = nil;
+    NSString *deviceToken = nil;
+    NSString *description = nil;
+    NSString *website = nil;
+    if (![self.textFieldFirstname.text isEqualToString:@""]
+        && ![self.textFieldFirstname.text isEqualToString:user.first_name]) {
+        firstName = self.textFieldFirstname.text;
     }
-    if(![self.textFieldLastname.text isEqualToString:@""]){
-        user.last_name = self.textFieldLastname.text;
+    if(![self.textFieldLastname.text isEqualToString:@""]
+       && ![self.textFieldLastname.text isEqualToString:user.last_name]){
+        lastName = self.textFieldLastname.text;
     }
-    if(![self.textFieldEmail.text isEqualToString:@""]){
-        user.email = self.textFieldEmail.text;
+    if(![self.textFieldEmail.text isEqualToString:@""]
+       && ![self.textFieldEmail.text isEqualToString:user.email]){
+        newEmail = self.textFieldEmail.text;
     }
-    if(![self.textFieldPhone.text isEqualToString:@""]){
-        user.phone = self.textFieldPhone.text;
+    if(![self.textFieldPhone.text isEqualToString:@""]
+       && ![self.textFieldPhone.text isEqualToString:user.phone]){
+        phone = self.textFieldPhone.text;
     }
-    if(![self.textFieldUsername.text isEqualToString:@""]){
-        user.username = self.textFieldUsername.text;
+    if(![self.textFieldUsername.text isEqualToString:@""]
+       && ![self.textFieldUsername.text isEqualToString:user.username]){
+        userName = self.textFieldUsername.text;
     }
-    if(self.imageViewProfile.image != nil){
-        profilePicture = UIImageJPEGRepresentation(self.imageViewProfile.image, 0.6f);
+    if(![self.textFieldDescription.text isEqualToString:@""]
+       && ![self.textFieldDescription.text isEqualToString:user.description]){
+        description = self.textFieldDescription.text;
     }
-    if(self.imageViewBackground.image != nil){
-        backgroundPicture = UIImageJPEGRepresentation(self.imageViewBackground.image, 0.6f);
+    if(![self.textFieldWebsite.text isEqualToString:@""]
+       && ![self.textFieldWebsite.text isEqualToString:user.website]){
+        website = self.textFieldWebsite.text;
+    }
+    if(self.imageViewProfile.image != nil && isProfileChanged) {
+        profilePicture = UIImageJPEGRepresentation(self.imageViewProfile.image, 0.6f); // JPEG
+        if (!profilePicture) {
+            profilePicture = UIImagePNGRepresentation(self.imageViewProfile.image); // PNG
+        }
+    }
+    if(self.imageViewBackground.image != nil && isBackgroundChanged){
+        backgroundPicture = UIImageJPEGRepresentation(self.imageViewBackground.image, 0.6f); // JPEG
+        if (!backgroundPicture) {
+            backgroundPicture = UIImagePNGRepresentation(self.imageViewBackground.image); // PNG
+        }
     }
     
     // call service here
     [SVProgressHUD showWithStatus:@"Updating"];
-    [self.serviceAPI editUserProfileWithUser:user
-                              profilePicture:profilePicture
-                           backgroundPicture:backgroundPicture
-                                     success:^(id responseObject) {
+    [self.serviceAPI editUserProfileWithFirstname:firstName
+                                         lastName:lastName
+                                         newEmail:newEmail
+                                            phone:phone
+                                         userName:userName
+                                      deviceToken: deviceToken
+                                      description:description
+                                          website:website
+                                   profilePicture:profilePicture
+                                backgroundPicture:backgroundPicture
+                                        userEmail:user.email
+                                        userToken:user.authentication_token
+                                          success:^(id responseObject) {
         
-         [SVProgressHUD showSuccessWithStatus:@"Success"];
-         [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
-         [self.navigationController popViewControllerAnimated:YES];
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
+        [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
         [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Failed: %@", error.description]];
         NSLog(@"Failed: %@", error.description);
     }];
@@ -230,10 +274,12 @@
 - (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
 {
     if (pictureType == 1) {
-        self.imageViewProfile.image = image;
+        [self.imageViewProfile setImage:image];
+        isProfileChanged = YES;
     }
     else if(pictureType == 2) {
-        self.imageViewBackground.image = image;
+        [self.imageViewBackground setImage:image];
+        isBackgroundChanged = YES;
     }
     [editor dismissViewControllerAnimated:YES completion:nil];
 }

@@ -20,7 +20,11 @@
 @property (nonatomic, copy) NSString *phone;
 @property (nonatomic, copy) NSString *authentication_token;
 @property (nonatomic, copy) NSString *profile_picture_url;
+@property (nonatomic, copy) NSString *profile_picture_url_thumb;
+@property (nonatomic, copy) NSString *profile_picture_url_preview;
+@property (nonatomic, copy) NSString *profile_picture_url_square;
 @property (nonatomic, copy) NSString *background_picture_url;
+@property (nonatomic, copy) NSString *background_picture_url_preview;
 @property (nonatomic, retain) NSArray *posts; // Post type
 @property (nonatomic, retain) NSNumber *followers_count;
 @property (nonatomic, retain) NSNumber *follow_count;
@@ -39,6 +43,7 @@
 @property (nonatomic, copy) NSString *device_token;
 @property (nonatomic, retain) NSNumber *cached_score;
 @property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *website;
 @property (nonatomic, retain) NSNumber *enabled;
 
 /// for signup || edit

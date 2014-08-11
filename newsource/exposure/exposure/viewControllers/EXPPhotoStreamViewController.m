@@ -88,8 +88,8 @@
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageView];
     // default image, waiting for loading from url
     [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if ([post.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
-        [imageView setImageURL:[NSURL URLWithString:post.image_url]];
+    if ([post.image_url_thumb rangeOfString:@"placeholder"].location == NSNotFound) {
+        [imageView setImageURL:[NSURL URLWithString:post.image_url_thumb]];
     }
     return cell;
 }

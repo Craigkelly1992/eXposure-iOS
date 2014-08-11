@@ -29,6 +29,10 @@
 @property (nonatomic, retain) NSNumber * cached_votes_up;
 @property (nonatomic, retain) NSNumber * cached_votes_down;
 @property (nonatomic, retain) NSNumber * cached_weighted_score;
+// updated 2014/08/11 - add more type of image:thumb, square, preview
+@property (nonatomic, copy) NSString * image_url_square;
+@property (nonatomic, copy) NSString * image_url_preview;
+@property (nonatomic, copy) NSString * image_url_thumb;
 
 ///
 

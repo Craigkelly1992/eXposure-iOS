@@ -180,8 +180,8 @@
     //
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewContest];
     [imageViewContest setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if (contest.picture_url && [contest.picture_url rangeOfString:@"placeholder.png"].location == NSNotFound) {
-        [imageViewContest setImageURL:[NSURL URLWithString:contest.picture_url]];
+    if (contest.picture_url_thumb && [contest.picture_url_thumb rangeOfString:@"placeholder.png"].location == NSNotFound) {
+        [imageViewContest setImageURL:[NSURL URLWithString:contest.picture_url_thumb]];
     }
     //
     labelContestName.text = contest.title;

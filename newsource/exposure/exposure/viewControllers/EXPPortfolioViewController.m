@@ -156,13 +156,13 @@
             self.labelUsername.text = profileUser.username;
             // profile image
             if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-                [self.imageViewProfile setImageURL:[NSURL URLWithString:profileUser.profile_picture_url]];
+                [self.imageViewProfile setImageURL:[NSURL URLWithString:profileUser.profile_picture_url_thumb]];
             } else {
                 [self.imageViewProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
             }
             // background image
             if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-                [self.imageViewBackground setImageURL:[NSURL URLWithString:profileUser.background_picture_url]];
+                [self.imageViewBackground setImageURL:[NSURL URLWithString:profileUser.background_picture_url_preview]];
             } else {
                 [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
             }
@@ -327,8 +327,8 @@
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageView];
     [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if (post.image_url && [post.image_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-        [imageView setImageURL:[NSURL URLWithString:post.image_url]];
+    if (post.image_url_thumb && [post.image_url_thumb rangeOfString:@"placeholder"].location == NSNotFound ) {
+        [imageView setImageURL:[NSURL URLWithString:post.image_url_thumb]];
     }
     return cell;
 }

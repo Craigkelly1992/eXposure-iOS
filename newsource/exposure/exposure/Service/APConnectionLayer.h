@@ -75,6 +75,8 @@
 #define PARAM_SIGNUP_USERNAME @"user[username]"
 #define PARAM_SIGNUP_PASSWORD @"user[password]"
 #define PARAM_SIGNUP_PHONE @"user[phone]"
+#define PARAM_SIGNUP_DESCRIPTION @"user[description]"
+#define PARAM_SIGNUP_WEBSITE @"user[website]"
 #define PARAM_SIGNUP_DEVICE_TOKEN @"user[device_token]"
 #define PARAM_SIGNUP_PROFILE_PICTURE @"user[profile_picture]"
 #define PARAM_SIGNUP_BACKGROUND_PICTURE @"user[background_picture]"
@@ -142,11 +144,20 @@
                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // edit user profile
-- (void)editUserProfileWithUser:(User*)user
-                 profilePicture:(NSData*)profilePicture
-              backgroundPicture:(NSData*)backgroundPicture
-                        success:(void (^)(id responseObject))success
-                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)editUserProfileWithFirstname:(NSString*)firstName
+                            lastName:(NSString*)lastName
+                            newEmail:(NSString*)newEmail
+                               phone:(NSString*)phone
+                            userName:(NSString*)username
+                         deviceToken:(NSString*)deviceToken
+                         description:(NSString*)description
+                             website:(NSString*)website
+                      profilePicture:(NSData*)profilePicture
+                   backgroundPicture:(NSData*)backgroundPicture
+                           userEmail:(NSString*)userEmail // old email for verification
+                           userToken:(NSString*)userToken
+                             success:(void (^)(id responseObject))success
+                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // update password
 - (void)updatePasswordWithNewPassword:(NSString*)newPassword
