@@ -200,11 +200,15 @@
 -(void) getContestByUserId {
     
     [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI getContestByFollowingUserId:userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+    [self.serviceAPI getContestOfUserId:userId
+                              userEmail:currentUser.email
+                              userToken:currentUser.authentication_token
+                                success:^(id responseObject) {
        
         [SVProgressHUD dismiss];
         NSArray *array = responseObject;
         Contest *contest = nil;
+        arrayContest = [[NSMutableArray alloc] init];
         for (int i = 0; i < array.count; i++) {
             contest = [Contest objectFromDictionary:array[i]];
             [arrayContest addObject:contest];

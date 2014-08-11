@@ -533,6 +533,29 @@
     }];
 }
 
+- (void)getContestOfUserId:(NSNumber*)userId
+                 userEmail:(NSString*)userEmail
+                 userToken:(NSString*)userToken
+                   success:(void (^)(id responseObject))success
+                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:GET_CONTEST_USER_ENTERED, userId];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userEmail, PARAM_USER_EMAIL,
+                                userToken, PARAM_USER_TOKEN,
+                                nil];
+    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return list of contest with Contest type
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
 #pragma mark - Post
 // create post - checked
 - (void)createPostWithContestId:(NSNumber*)contestId

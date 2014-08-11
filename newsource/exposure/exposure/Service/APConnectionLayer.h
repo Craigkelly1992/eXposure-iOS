@@ -38,6 +38,7 @@
 #define GET_CONTEST_WITH_ID @"contests/%@" // contests/<contestID>
 #define GET_CONTEST_WITH_BRANDID @"contests/by_brand"
 #define GET_CONTEST_BY_FOLLOWING @"contests/by_following"
+#define GET_CONTEST_USER_ENTERED @"users/%@/contests"
 #define CREATE_POST @"posts"
 #define GET_ALL_POST @"posts"
 #define GET_POST_BY_ID @"posts/%@" // posts/<postID>
@@ -250,6 +251,12 @@
                           userToken:(NSString*)userToken
                             success:(void (^)(id responseObject))success
                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+// get contests of user
+- (void)getContestOfUserId:(NSNumber*)userId
+                 userEmail:(NSString*)userEmail
+                 userToken:(NSString*)userToken
+                   success:(void (^)(id responseObject))success
+                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 #pragma mark - Post
 // create post
 - (void)createPostWithContestId:(NSNumber*)contestId
