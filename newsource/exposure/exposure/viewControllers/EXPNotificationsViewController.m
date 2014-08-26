@@ -132,17 +132,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Notification *notification = [Notification objectFromDictionary:arrayNotification[indexPath.row]];
-//    if ([notification.type rangeOfString:@"like"].location != NSNotFound) { // is like
-//        EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
-//        postVC.postId = notification.post_id;
-//        [self.navigationController pushViewController:postVC animated:YES];
-//    
-//    } else if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
+    if ([notification.type rangeOfString:@"like"].location != NSNotFound) { // is like
+        EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
+        postVC.postId = notification.post_id;
+        [self.navigationController pushViewController:postVC animated:YES];
+    
+    } else if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
     
         EXPPrizeClaimViewController *winnerVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPPrizeClaimViewControllerIdentifier"];
         
         [self.navigationController pushViewController:winnerVC animated:YES];
-//    }
+    }
 }
 
 @end
