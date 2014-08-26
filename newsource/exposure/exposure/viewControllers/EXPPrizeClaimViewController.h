@@ -7,7 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EXPBaseViewController.h"
 
-@interface EXPPrizeClaimViewController : UIViewController
+@interface EXPPrizeClaimViewController : EXPBaseViewController
+
+// Properties
+
+// IBOutlet
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldFirstName;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldLastName;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldEmail;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldPhone;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldStreet;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldCity;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldProvince;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldPostalCode;
+
 
 @end

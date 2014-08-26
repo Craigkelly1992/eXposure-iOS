@@ -99,9 +99,19 @@
         [[NSUserDefaults standardUserDefaults] setValue:self.textFieldEmail.text forKey:USERDEFAULT_KEY_EMAIL];
         [[NSUserDefaults standardUserDefaults] setValue:self.textFieldPassword.text forKey:USERDEFAULT_KEY_PASSWORD];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
         // save to global variables
         [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
         [SVProgressHUD dismiss];
+        
+        // register device token
+        User *currentUser = [Infrastructure sharedClient].currentUser;
+        [self.serviceAPI registerDeviceWithUserId:currentUser.userId email:currentUser.email userToken:currentUser.authentication_token deviceToken:[Infrastructure sharedClient].deviceToken success:^(id responseObject) {
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+        
         // go to home screen
         EXPTabBarController *tabBarVC = [[EXPTabBarController alloc]init];
         [self.navigationController pushViewController:tabBarVC animated:YES];

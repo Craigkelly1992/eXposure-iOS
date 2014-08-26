@@ -1126,7 +1126,7 @@
 
 #pragma mark - register device
 // register device token for notification - not OK
-- (void)registerDeviceWithUserId:(NSString*)userId
+- (void)registerDeviceWithUserId:(NSNumber*)userId
                            email:(NSString*)userEmail
                        userToken:(NSString*)userToken
                      deviceToken:(NSString*)deviceToken

@@ -413,7 +413,7 @@
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - register device
-- (void)registerDeviceWithUserId:(NSString*)userId
+- (void)registerDeviceWithUserId:(NSNumber*)userId
                            email:(NSString*)email
                        userToken:(NSString*)userToken
                      deviceToken:(NSString*)deviceToken

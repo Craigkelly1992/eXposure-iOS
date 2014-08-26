@@ -268,6 +268,13 @@
     UILabel *labelComment = (UILabel*)[cell viewWithTag:1];
     Comment *comment = [arrayComment objectAtIndex:indexPath.row];
     labelComment.text = comment.text;
+    // color for cell
+    if (indexPath.row % 2 == 0) {
+        [cell setBackgroundColor:Rgb2UIColor(255, 122, 98)];
+        
+    } else {
+        [cell setBackgroundColor:Rgb2UIColor(170, 170, 170)];
+    }
     return cell;
 }
 

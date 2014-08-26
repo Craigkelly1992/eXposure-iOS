@@ -8,6 +8,8 @@
 
 #import "EXPNotificationsViewController.h"
 #import "Notification.h"
+#import "EXPImageDetailViewController.h"
+#import "EXPPrizeClaimViewController.h"
 
 @interface EXPNotificationsViewController ()
 
@@ -86,21 +88,32 @@
     Notification *notification = [Notification objectFromDictionary:arrayNotification[indexPath.row]];
     //
     UIImageView *imageViewSender = (UIImageView*)[cell viewWithTag:1];
-    UILabel *labelSender = (UILabel*)[cell viewWithTag:2];
-    UILabel *labelDetail = (UILabel*)[cell viewWithTag:3];
+    UILabel *labelContest = (UILabel*)[cell viewWithTag:2];
+    UILabel *labelContestSlogan = (UILabel*)[cell viewWithTag:3];
+    UILabel *labelDetail = (UILabel*)[cell viewWithTag:5]; // for type user
     UIImageView *imageViewWinner = (UIImageView*)[cell viewWithTag:4];
     //
+    if ([notification.sender_type rangeOfString:@"user"].location != NSNotFound) { // is winner
+        labelContest.hidden = YES;
+        labelContestSlogan.hidden = YES;
+        labelDetail.hidden = NO;
+        imageViewWinner.hidden = YES;
+        labelDetail.text = notification.text;
+    } else { // Winner
+        labelContest.hidden = NO;
+        labelContestSlogan.hidden = NO;
+        labelDetail.hidden = YES;
+        imageViewWinner.hidden = NO;
+        labelContest.text = notification.sender_name;
+        labelContestSlogan.text = notification.text;
+        if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
+            imageViewWinner.image = [UIImage imageNamed:@"badge_winner"];
+        }
+    }
     if ([notification.sender_picture rangeOfString:@"placeholder"].location != NSNotFound ) {
         [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];
     } else {
         [imageViewSender setImageURL:[NSURL URLWithString:notification.sender_picture]];
-    }
-    labelSender.text = notification.sender_name;
-    labelDetail.text = notification.text;
-    if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
-        imageViewWinner.image = [UIImage imageNamed:@"badge_winner"];
-    } else {
-        imageViewWinner.image = nil;
     }
     
     return cell;
@@ -118,7 +131,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // This code is commented out in order to allow users to click on the collection view cells.
+    Notification *notification = [Notification objectFromDictionary:arrayNotification[indexPath.row]];
+//    if ([notification.type rangeOfString:@"like"].location != NSNotFound) { // is like
+//        EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
+//        postVC.postId = notification.post_id;
+//        [self.navigationController pushViewController:postVC animated:YES];
+//    
+//    } else if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
+    
+        EXPPrizeClaimViewController *winnerVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPPrizeClaimViewControllerIdentifier"];
+        
+        [self.navigationController pushViewController:winnerVC animated:YES];
+//    }
 }
 
 @end

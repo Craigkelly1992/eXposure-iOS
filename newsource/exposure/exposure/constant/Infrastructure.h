@@ -24,5 +24,6 @@
 #pragma mark - Singleton
 + (Infrastructure *)sharedClient;
 @property(nonatomic, strong) User *currentUser;
+@property(nonatomic, strong) NSString *deviceToken;
 
 @end

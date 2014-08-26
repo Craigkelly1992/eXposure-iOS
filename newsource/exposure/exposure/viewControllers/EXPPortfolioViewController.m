@@ -18,7 +18,7 @@
 #define kContestHeightMin 33
 #define kContestHeightMax 142
 #define kFollowHeaderHeight 44
-#define kCollectionCellSize 120
+#define kCollectionCellSize 100
 
 @interface EXPPortfolioViewController ()
 
@@ -233,7 +233,11 @@
 
 -(void) updateScrollView {
     // for update tableview
-    self.constraintHeightFollowContainer.constant = kFollowHeaderHeight + (arrayPost.count / 3 + arrayPost.count % 3)*kCollectionCellSize;
+    int numRow = arrayPost.count / 3;
+    if (arrayPost.count % 3 != 0) {
+        numRow++;
+    }
+    self.constraintHeightFollowContainer.constant = kFollowHeaderHeight +  numRow *(kCollectionCellSize + 10);
     // for main scroll view
     int newHeight = self.viewContestContainer.frame.origin.y + self.constraintHeightContest.constant + self.constraintHeightFollowContainer.constant;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);

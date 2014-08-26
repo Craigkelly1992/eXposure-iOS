@@ -15,6 +15,9 @@
 #pragma mark - Override methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    application.applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     // Override point for customization after application launch.
     [FBLoginView class];
     [self setupUI];
@@ -99,6 +102,24 @@
     
     // Set appearance for progress bar
     [SVProgressHUD setBackgroundColor:Rgb2UIColor(138, 199, 82)];
+}
+
+#pragma mark - Push Notification
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
+	NSLog(@"deviceToken: %@", deviceToken);
+    NSString *deviceTokenString = [[NSString alloc] initWithData:deviceToken encoding:NSUTF8StringEncoding];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [Infrastructure sharedClient].deviceToken = deviceTokenString;
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error{
+	NSLog(@"Failed to register with error : %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    application.applicationIconBadgeNumber = 0;
+    NSString *msg = [NSString stringWithFormat:@"%@", userInfo];
+    NSLog(@"%@",msg);
 }
 
 @end

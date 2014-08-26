@@ -16,7 +16,7 @@
 #define kContestHeightMin 33
 #define kContestHeightMax 142
 #define kFollowHeaderHeight 44
-#define kCollectionCellSize 120
+#define kCollectionCellSize 100
 
 @interface EXPBrandViewController ()
 
@@ -112,9 +112,14 @@
 }
 
 -(void) updateScrollView {
+    
     // for update tableview
     int numberOfPost = [currentBrand.submissions_count integerValue];
-    self.constraintFollowViewHeight.constant = kFollowHeaderHeight + (numberOfPost / 3 + numberOfPost % 3)*kCollectionCellSize;
+    int numRow = numberOfPost / 3;
+    if (numberOfPost % 3 != 0) {
+        numRow++;
+    }
+    self.constraintFollowViewHeight.constant = kFollowHeaderHeight + numRow * (kCollectionCellSize + 10); // 10: for spacing between cell
     // for main scroll view
     int newHeight = self.viewContestContainer.frame.origin.y + self.constraintContestListHeight.constant + self.constraintFollowViewHeight.constant;
     self.scrollviewContainer.contentSize = CGSizeMake(self.scrollviewContainer.frame.size.width, newHeight);
