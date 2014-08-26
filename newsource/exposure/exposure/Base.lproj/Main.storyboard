@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ugi-0Q-BOs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ugi-0Q-BOs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -125,9 +125,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-B5-1zQ">
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="y6x-B5-1zQ">
                                         <rect key="frame" x="99" y="20" width="123" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="123" id="9yz-6T-L8H"/>
+                                            <constraint firstAttribute="height" constant="28" id="egu-d5-pmo"/>
+                                        </constraints>
                                         <segments>
                                             <segment title="All Users"/>
                                             <segment title="Following"/>
@@ -142,7 +146,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X6p-sY-qXj">
+                                    <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="X6p-sY-qXj">
                                         <rect key="frame" x="0.0" y="73" width="320" height="495"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -178,9 +182,15 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="centerY" secondItem="Sdm-XO-Mvs" secondAttribute="centerY" id="2BT-Tj-Q9t"/>
+                                    <constraint firstAttribute="bottom" secondItem="X6p-sY-qXj" secondAttribute="bottom" id="7ru-cx-8pq"/>
+                                    <constraint firstAttribute="trailing" secondItem="X6p-sY-qXj" secondAttribute="trailing" id="B32-dm-qiD"/>
+                                    <constraint firstItem="X6p-sY-qXj" firstAttribute="leading" secondItem="fT8-Zl-nzP" secondAttribute="leading" id="JPd-Ho-aEW"/>
+                                    <constraint firstAttribute="centerX" secondItem="y6x-B5-1zQ" secondAttribute="centerX" id="O5a-j0-mSp"/>
                                     <constraint firstAttribute="centerX" secondItem="Sdm-XO-Mvs" secondAttribute="centerX" id="TCw-xI-4gm"/>
                                     <constraint firstAttribute="trailing" secondItem="Sdm-XO-Mvs" secondAttribute="trailing" id="bT0-K4-oR7"/>
+                                    <constraint firstItem="y6x-B5-1zQ" firstAttribute="top" secondItem="fT8-Zl-nzP" secondAttribute="top" constant="20" id="jvt-mv-Yqw"/>
                                     <constraint firstItem="Sdm-XO-Mvs" firstAttribute="leading" secondItem="fT8-Zl-nzP" secondAttribute="leading" id="sZL-GN-8Uk"/>
+                                    <constraint firstItem="X6p-sY-qXj" firstAttribute="top" secondItem="y6x-B5-1zQ" secondAttribute="bottom" constant="25" id="tIq-gO-YNR"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2345,10 +2355,12 @@ Team eXposure</string>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                         <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="o9M-VI-J1J"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="buttonExposure" destination="zeT-1r-loc" id="K8l-U3-2DY"/>
                         <outlet property="buttonShare" destination="Yn2-ee-AGf" id="cys-4f-aTM"/>
                         <outlet property="constraintCommentListHeight" destination="DTq-Dk-1DA" id="DfE-Zc-Ye2"/>
                         <outlet property="imageViewUser" destination="aAr-dH-o6Q" id="beI-DG-IHd"/>

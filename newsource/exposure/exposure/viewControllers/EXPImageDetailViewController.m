@@ -56,6 +56,11 @@
         self.title = currentPost.text;
         self.labelTime.text = @"----";
         self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
+        if (currentPost.current_user_likes) {
+            [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn_selected"] forState:UIControlStateNormal];
+        } else {
+            [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn"] forState:UIControlStateNormal];
+        }
         currentLikeNumber = [currentPost.cached_votes_up integerValue];
         if ([currentPost.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
             [self.imageviewPost setImageURL:[NSURL URLWithString:currentPost.image_url]];
@@ -157,23 +162,44 @@
 #pragma mark - Actions
 - (IBAction)buttonExposureTap:(id)sender {
     [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI likePostWithPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Success"];
-        // load post info again
-        [SVProgressHUD showWithStatus:@"Loading Post"];
-        [self.serviceAPI getPostByPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+    
+    if (!currentPost.current_user_likes) {
+        [self.serviceAPI likePostWithPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
             
-            [SVProgressHUD dismiss];
-            NSLog(@"Current Post: %@", responseObject);
-            currentPost = [Post objectFromDictionary:responseObject];
-            self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
+            [self likePostHandler:responseObject];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD dismiss];
+            
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error: %@", error]];
         }];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } else {
+        [self.serviceAPI unlikePostWithPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+            
+            [self likePostHandler:responseObject];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error: %@", error]];
+        }];
+    }
+}
+
+- (void) likePostHandler:(id) responseObject {
+    [SVProgressHUD showSuccessWithStatus:@"Success"];
+    NSLog(@"Response: [%@] and Like: [%@]", responseObject, [responseObject valueForKey:@"like"]);
+    if ([[responseObject valueForKey:@"like"] boolValue] == NO) {
+        [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn"] forState:UIControlStateNormal];
+    } else {
+        [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn_selected"] forState:UIControlStateNormal];
+    }
+    // load post info again
+    [SVProgressHUD showWithStatus:@"Loading Post"];
+    [self.serviceAPI getPostByPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error: %@", error]];
+        [SVProgressHUD dismiss];
+        NSLog(@"Current Post: %@", responseObject);
+        currentPost = [Post objectFromDictionary:responseObject];
+        self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
     }];
 }
 

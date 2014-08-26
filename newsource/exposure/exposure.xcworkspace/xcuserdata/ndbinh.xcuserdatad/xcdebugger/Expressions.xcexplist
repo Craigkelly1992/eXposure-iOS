@@ -36,19 +36,19 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[EXPPortfolioViewController unfollowTap:]:EXPPortfolioViewController.m">
-      </ContextState>
-      <ContextState
          contextName = "-[EXPGalleryViewController collectionView:cellForItemAtIndexPath:]:EXPGalleryViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[EXPPhotoStreamViewController collectionView:didDeselectItemAtIndexPath:]:EXPPhotoStreamViewController.m">
+         contextName = "-[EXPPortfolioViewController unfollowTap:]:EXPPortfolioViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__45-[EXPGalleryViewController loadFromInstagram]_block_invoke:EXPGalleryViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[EXPContestDetailViewController viewWillAppear:]:EXPContestDetailViewController.m">
       </ContextState>
       <ContextState
-         contextName = "__45-[EXPGalleryViewController loadFromInstagram]_block_invoke:EXPGalleryViewController.m">
+         contextName = "-[EXPPhotoStreamViewController collectionView:didDeselectItemAtIndexPath:]:EXPPhotoStreamViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[EXPNewPostViewController buttonSendTap:]:EXPNewPostViewController.m">
@@ -69,6 +69,17 @@
       </ContextState>
       <ContextState
          contextName = "-[EXPPortfolioViewController updateScrollView]:EXPPortfolioViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPImageDetailViewController likePostHandler:]:EXPImageDetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[responseObject objectForKey:@&quot;like&quot;]">
+            </PersistentString>
+            <PersistentString
+               value = "NO">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "-[EXPPointViewController tableView:cellForRowAtIndexPath:]:EXPPointViewController.m">

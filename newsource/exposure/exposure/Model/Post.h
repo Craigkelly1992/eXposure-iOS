@@ -33,6 +33,7 @@
 @property (nonatomic, copy) NSString * image_url_square;
 @property (nonatomic, copy) NSString * image_url_preview;
 @property (nonatomic, copy) NSString * image_url_thumb;
+@property (nonatomic) BOOL current_user_likes;
 
 ///
 

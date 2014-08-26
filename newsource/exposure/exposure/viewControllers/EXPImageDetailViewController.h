@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentListHeight;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldComment;
+@property (strong, nonatomic) IBOutlet UIButton *buttonExposure;
 
 // Actions
 - (IBAction)buttonExposureTap:(id)sender;
