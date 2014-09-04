@@ -51,10 +51,42 @@
     NSLog(@"Registering for push notifications...");
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    //
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    tapGesture.numberOfTapsRequired = 1;
+    self.viewContainer.gestureRecognizers = [[NSArray alloc] initWithObjects:tapGesture, nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // unregister for keyboard notifications while not visible.
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+    
     [self.navigationController setNavigationBarHidden:YES];
+}
+
+- (void)viewDidLayoutSubviews {
+    
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
@@ -134,22 +166,31 @@
 {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    CGRect kbrect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    CGRect dRect = CGRectMake(kbrect.origin.x, kbrect.origin.y - 50, kbrect.size.width, kbrect.size.height + 50);
-    CGRect bkgndRect = activeField.superview.frame;
-    bkgndRect.size.height += kbSize.height;
-    [activeField.superview setFrame:bkgndRect];
-    if (CGRectContainsPoint(dRect, activeField.frame.origin) ) {
-    [self.scrollView setContentOffset:CGPointMake(0.0, activeField.frame.origin.y-kbSize.height) animated:NO];
-    }
+    NSLog(@"ScrollView height before : %f", self.scrollViewContainer.frame.size.height);
+    self.constraintBottomHeight.constant = kbSize.height;
+    [self.view layoutSubviews];
+    NSLog(@"ScrollView height after : %f", self.scrollViewContainer.frame.size.height);
+    [self.scrollViewContainer setContentSize:self.viewContainer.frame.size];
+    
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
+    self.scrollViewContainer.contentInset = contentInsets;
+    self.scrollViewContainer.scrollIndicatorInsets = contentInsets;
+    self.constraintBottomHeight.constant = 0;
+}
+
+- (void) dismissKeyboard {
+    [self.textFieldConfirmPassword resignFirstResponder];
+    [self.textFieldEmail resignFirstResponder];
+    [self.textFieldFirstname resignFirstResponder];
+    [self.textFieldLastname resignFirstResponder];
+    [self.textFieldPassword resignFirstResponder];
+    [self.textFieldPhone resignFirstResponder];
+    [self.textFieldUsername resignFirstResponder];
 }
 
 @end

@@ -77,6 +77,7 @@
     if(self.view.frame.origin.y != 0){
         [UIView animateWithDuration:0.2 animations:^{
             self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+            self.buttonHowItWork.frame = CGRectMake(self.buttonHowItWork.frame.origin.x, 37, self.buttonHowItWork.frame.size.width, self.buttonHowItWork.frame.size.height);
         }];
     }
 }
@@ -166,10 +167,11 @@
     if (self.view.frame.origin.y == 0) {
         [UIView animateWithDuration:0.35 animations:^{
             int signinY = self.buttonSignin.frame.origin.y + self.buttonSignin.frame.size.height;
-            int keyboardY = self.view.frame.size.height - 64 - self->keyboardHeight;
+            int keyboardY = self.view.frame.size.height - self->keyboardHeight;
             if (signinY > keyboardY) {
                 CGFloat difference = - (signinY - keyboardY);
                 weakself.view.frame = CGRectMake(0, difference, weakself.view.frame.size.width, weakself.view.frame.size.height);
+                weakself.buttonHowItWork.frame = CGRectMake(weakself.buttonHowItWork.frame.origin.x, weakself.buttonHowItWork.frame.origin.y - difference - 20, weakself.buttonHowItWork.frame.size.width, weakself.buttonHowItWork.frame.size.height);
             }
         }];
     }

@@ -17,7 +17,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *textFieldUsername;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldPassword;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldConfirmPassword;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintBottomHeight;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
+@property (strong, nonatomic) IBOutlet UIView *viewContainer;
 
 @end
