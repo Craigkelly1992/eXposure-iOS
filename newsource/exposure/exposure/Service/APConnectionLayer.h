@@ -58,6 +58,8 @@
 // notification
 #define GET_NOTIFICATION @"notifications"
 #define REGISTER_DEVICE @"users/%@/save_token" // userID
+// claim the prize
+#define CLAIM_PRIZE @"contests/%@/claim_prize" // contestID
 
 // API Parameters
 #define PARAM_USERNAME @"username"
@@ -92,6 +94,14 @@
 #define PARAM_USER_ID @"user_id"
 #define PARAM_POST_ID @"post_id"
 #define PARAM_COMMENT_TEXT @"comment[text]"
+#define PARAM_WINNER_FIRSTNAME @"winner[first_name]"
+#define PARAM_WINNER_LASTNAME @"winner[last_name]"
+#define PARAM_WINNER_EMAIL @"winner[email]"
+#define PARAM_WINNER_PHONE @"winner[phone]"
+#define PARAM_WINNER_STREET @"winner[street]"
+#define PARAM_WINNER_CITY @"winner[city]"
+#define PARAM_WINNER_PROVINCE @"winner[province]"
+#define PARAM_WINNER_POSTAL_CODE @"winner[postal_code]"
 
 // API Response
 #define RESPONSE_USER_ID @"id"
@@ -257,6 +267,21 @@
                  userToken:(NSString*)userToken
                    success:(void (^)(id responseObject))success
                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+// claim the prize
+- (void)claimThePrizeWithWinnerFirstName:(NSString*)winnerFirstName
+                          winnerLastName:(NSString*)winnerLastName
+                             winnerEmail:(NSString*)winnerEmail
+                             winnerPhone:(NSString*)winnerPhone
+                            winnerStreet:(NSString*)winnerStreet
+                              winnerCity:(NSString*)winnerCity
+                          winnerProvince:(NSString*)winnerProvince
+                        winnerPostalCode:(NSString*)winnerPostalCode
+                               userEmail:(NSString*)userEmail
+                               userToken:(NSString*)userToken
+                                 success:(void (^)(id responseObject))success
+                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 #pragma mark - Post
 // create post
 - (void)createPostWithContestId:(NSNumber*)contestId

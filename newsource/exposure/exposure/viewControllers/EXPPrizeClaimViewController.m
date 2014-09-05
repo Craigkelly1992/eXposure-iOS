@@ -92,16 +92,26 @@
         return;
     }
     
-    //
-    [SVProgressHUD showWithStatus:@"Loading"];
-//    [self.serviceAPI updatePasswordWithNewPassword:newPassword userEmail:user.email token:user.authentication_token success:^(id responseObject) {
-//        
-//        [SVProgressHUD showSuccessWithStatus:@"Success"];
-//        [self.navigationController popViewControllerAnimated:YES];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Fail: %@", error.description]];
-//    }];
+    // Send data to server
+    [SVProgressHUD showWithStatus:@"Sending data"];
+    [self.serviceAPI claimThePrizeWithWinnerFirstName:self.textFieldFirstName.text
+                                       winnerLastName:self.textFieldLastName.text
+                                          winnerEmail:self.textFieldEmail.text
+                                          winnerPhone:self.textFieldPhone.text
+                                         winnerStreet:self.textFieldStreet.text
+                                           winnerCity:self.textFieldCity.text
+                                       winnerProvince:self.textFieldProvince.text
+                                     winnerPostalCode:self.textFieldPostalCode.text
+                                            userEmail: currentUser.email
+                                            userToken:currentUser.authentication_token
+                                              success:^(id responseObject) {
+        
+                                                  NSLog(@"Success: %@", responseObject);
+                                                  [SVProgressHUD showSuccessWithStatus:@"Success"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [SVProgressHUD showErrorWithStatus:error.description];
+    }];
 }
 
 - (BOOL) checkStringEmpty:(UITextField*)textField withErrorString:(NSString*)errorString {

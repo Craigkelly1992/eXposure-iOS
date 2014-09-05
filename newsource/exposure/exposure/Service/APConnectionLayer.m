@@ -556,6 +556,46 @@
     }];
 }
 
+// claim the prize
+- (void)claimThePrizeWithContestId:(NSNumber*)contestId
+                   winnerFirstName:(NSString*)winnerFirstName
+                    winnerLastName:(NSString*)winnerLastName
+                       winnerEmail:(NSString*)winnerEmail
+                       winnerPhone:(NSString*)winnerPhone
+                      winnerStreet:(NSString*)winnerStreet
+                        winnerCity:(NSString*)winnerCity
+                    winnerProvince:(NSString*)winnerProvince
+                  winnerPostalCode:(NSString*)winnerPostalCode
+                         userEmail:(NSString*)userEmail
+                         userToken:(NSString*)userToken
+                           success:(void (^)(id responseObject))success
+                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:CLAIM_PRIZE, contestId];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                winnerFirstName, PARAM_WINNER_FIRSTNAME,
+                                winnerLastName, PARAM_WINNER_LASTNAME,
+                                winnerEmail, PARAM_WINNER_EMAIL,
+                                winnerPhone, PARAM_WINNER_PHONE,
+                                winnerStreet, PARAM_WINNER_STREET,
+                                winnerCity, PARAM_WINNER_CITY,
+                                winnerProvince, PARAM_WINNER_PROVINCE,
+                                winnerPostalCode, PARAM_WINNER_POSTAL_CODE,
+                                userEmail, PARAM_USER_EMAIL,
+                                userToken, PARAM_USER_TOKEN,
+                                nil];
+    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return list of contest with Contest type
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
 #pragma mark - Post
 // create post - checked
 - (void)createPostWithContestId:(NSNumber*)contestId
