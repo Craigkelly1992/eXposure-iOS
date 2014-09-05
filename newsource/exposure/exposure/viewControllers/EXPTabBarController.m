@@ -56,6 +56,7 @@
     [self.navigationController.navigationBar setTranslucent:NO];
     self.tabBar.translucent = NO;
     self.tabBar.barTintColor = [UIColor colorWithRed:0.0f green:0.17647059f blue:0.4f alpha:1];
+    self.selectedIndex = 4;
 }
 
 // Create ViewControllers for Tab Bar
@@ -155,7 +156,7 @@
 -(void)didPressCamera {
     if(![[Infrastructure sharedClient] currentUser]){
         // anonymous
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.tabBarController.navigationController popViewControllerAnimated:YES];
     } else {
         // has login
         contestId = nil;
@@ -166,7 +167,7 @@
 -(void)creatPostWithContest:(NSNumber*) _contestId {
     if(![[Infrastructure sharedClient] currentUser]){
         // anonymous
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.tabBarController.navigationController popViewControllerAnimated:YES];
     } else {
         // has login
         contestId = _contestId;

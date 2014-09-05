@@ -55,7 +55,7 @@
 
     } else {
         // back to login screen
-        // TODO
+        [self.tabBarController.navigationController popViewControllerAnimated:YES];
     }
 }
 
