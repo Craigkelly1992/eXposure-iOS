@@ -116,6 +116,9 @@
         [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
         [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+        [self.buttonFollow removeTarget:self
+                              action:@selector(followTap:)
+                    forControlEvents:UIControlEventTouchUpInside];
         [self.buttonFollow addTarget:self
                          action:@selector(unfollowTap:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -132,8 +135,11 @@
         
         [SVProgressHUD showSuccessWithStatus:@"Success"];
         [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
-        [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+        [self.buttonFollow removeTarget:self
+                                 action:@selector(unfollowTap:)
+                       forControlEvents:UIControlEventTouchUpInside];
         [self.buttonFollow addTarget:self
                          action:@selector(followTap:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -267,9 +273,6 @@
     
 }
 - (IBAction)buttonContestTap:(id)sender {
-    
-}
-- (IBAction)buttonFollowTap:(id)sender {
     
 }
 - (IBAction)buttonTwitterTap:(id)sender {

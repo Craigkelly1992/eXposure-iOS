@@ -34,7 +34,6 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollviewContainer;
 
 // IBAction
-- (IBAction)buttonFollowTap:(id)sender;
 - (IBAction)buttonXPTap:(id)sender;
 - (IBAction)buttonFacebookTap:(id)sender;
 - (IBAction)buttonTwitterTap:(id)sender;

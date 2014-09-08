@@ -158,10 +158,10 @@
     Submission *submission = [arraySubmission objectAtIndex:indexPath.row];
     // fill to cell
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageView];
+    [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
     if (submission.image_file_name) {
         [imageView setImageURL:[NSURL URLWithString:submission.image_file_name]];
-    } else {
-        [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
     }
     
     return cell;

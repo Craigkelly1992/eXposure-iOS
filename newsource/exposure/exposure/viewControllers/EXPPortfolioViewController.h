@@ -46,7 +46,6 @@
 - (IBAction)buttonFacebookTap:(id)sender;
 - (IBAction)buttonInstagramTap:(id)sender;
 - (IBAction)buttonContestTap:(id)sender;
-- (IBAction)buttonFollowTap:(id)sender;
 - (IBAction)buttonTwitterTap:(id)sender;
 - (IBAction)buttonIndicatorContestTap:(id)sender;
 

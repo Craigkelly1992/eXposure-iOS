@@ -25,6 +25,7 @@
 @implementation EXPBrandViewController {
     Brand *currentBrand;
     NSMutableArray *arrayContest;
+    User *currentUser;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,17 +43,84 @@
     // Do any additional setup after loading the view.
     self.title = @"";
     arrayContest = [[NSMutableArray alloc] init];
+    currentUser = [[Infrastructure sharedClient] currentUser];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     // get info of brand
     [self getBrandInfo];
+    // check follow brand
+    [self checkFollowBrand];
     // get contests of brand
     [self getContestsFromBrand];
 }
 
+// Check if the current user is following the brand
+- (void) checkFollowBrand {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI checkFollowBrand:self.brandId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        if ([[responseObject objectForKey:@"following"] boolValue] == YES) {
+            [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
+            [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+            [self.buttonFollow addTarget:self
+                                  action:@selector(unfollowTap:)
+                        forControlEvents:UIControlEventTouchUpInside];
+        } else {
+            [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
+            [self.buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+            [self.buttonFollow addTarget:self
+                                  action:@selector(followTap:)
+                        forControlEvents:UIControlEventTouchUpInside];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [SVProgressHUD dismiss];
+    }];
+}
+
+-(void)followTap:(id)sender {
+    //
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI followBrand:self.brandId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
+        [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+        [self.buttonFollow removeTarget:self action:@selector(followTap:) forControlEvents:UIControlEventTouchUpInside];
+        [self.buttonFollow addTarget:self
+                              action:@selector(unfollowTap:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Fail"];
+    }];
+}
+
+-(void)unfollowTap:(id)sender {
+    
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI unfollowBrand:self.brandId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
+        [self.buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+        [self.buttonFollow removeTarget:self action:@selector(unfollowTap:) forControlEvents:UIControlEventTouchUpInside];
+        [self.buttonFollow addTarget:self
+                              action:@selector(followTap:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD showSuccessWithStatus:@"Fail"];
+    }];
+}
+
+// Get Information from a brand
 -(void) getBrandInfo {
-    User *currentUser = [[Infrastructure sharedClient] currentUser];
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getBrandWithId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
@@ -86,7 +154,6 @@
 
 -(void) getContestsFromBrand {
     [SVProgressHUD showWithStatus:@"Loading"];
-    User *currentUser = [[Infrastructure sharedClient] currentUser];
     [self.serviceAPI getContestByBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
        
         [SVProgressHUD dismiss];
@@ -114,7 +181,7 @@
 -(void) updateScrollView {
     
     // for update tableview
-    int numberOfPost = [currentBrand.submissions_count integerValue];
+    int numberOfPost = [currentBrand.submissions_count intValue];
     int numRow = numberOfPost / 3;
     if (numberOfPost % 3 != 0) {
         numRow++;
@@ -129,10 +196,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Actions
-- (IBAction)buttonFollowTap:(id)sender {
 }
 
 - (IBAction)buttonXPTap:(id)sender {
