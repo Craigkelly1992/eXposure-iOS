@@ -230,12 +230,20 @@
 }
 
 - (IBAction)buttonFacebookTap:(id)sender {
+    NSURL *facebookURL = [NSURL URLWithString:currentBrand.facebook];
+    if ([[UIApplication sharedApplication] canOpenURL:facebookURL]){
+        [[UIApplication sharedApplication] openURL:facebookURL];
+    }
 }
 
 - (IBAction)buttonTwitterTap:(id)sender {
+    NSURL *twitterURL = [NSURL URLWithString:currentBrand.twitter];
+    [[UIApplication sharedApplication] openURL:twitterURL];
 }
 
 - (IBAction)buttonInstagramTap:(id)sender {
+    NSURL *instagramURL = [NSURL URLWithString:currentBrand.instagram];
+    [[UIApplication sharedApplication] openURL:instagramURL];
 }
 
 - (IBAction)buttonContestIndicatorTap:(id)sender {

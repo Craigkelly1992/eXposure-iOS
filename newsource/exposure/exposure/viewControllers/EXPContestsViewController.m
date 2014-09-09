@@ -112,10 +112,10 @@
         [imageViewLeft setImageURL:[NSURL URLWithString:contest.picture_url_thumb]];
     }
     //
-    [imageViewRight setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if ([contest.picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound ) {
-        [imageViewRight setImageURL:[NSURL URLWithString:contest.picture_url_thumb]];
-    }
+//    [imageViewRight setImage:[UIImage imageNamed:@"placeholder.png"]];
+//    if ([contest.picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound ) {
+//        [imageViewRight setImageURL:[NSURL URLWithString:contest.picture_url_thumb]];
+//    }
     //
     labelContestName.text = contest.title;
     labelContestDetail.text = contest.description;
