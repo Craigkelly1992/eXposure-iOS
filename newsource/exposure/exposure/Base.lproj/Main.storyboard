@@ -262,7 +262,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ohw-H4-3Vd">
-                                        <rect key="frame" x="108" y="80" width="145" height="29"/>
+                                        <rect key="frame" x="88" y="49" width="145" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="145" id="q3w-au-fjW"/>
@@ -276,7 +276,7 @@
                                         </connections>
                                     </segmentedControl>
                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wpU-8u-OC8">
-                                        <rect key="frame" x="0.0" y="116" width="320" height="452"/>
+                                        <rect key="frame" x="0.0" y="80" width="320" height="488"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="8UL-np-W7V">
@@ -325,7 +325,7 @@
                                         </connections>
                                     </collectionView>
                                     <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search for user" translatesAutoresizingMaskIntoConstraints="NO" id="MeD-Mb-kBM">
-                                        <rect key="frame" x="20" y="20" width="280" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="barTintColor" red="0.034977924440000002" green="0.27746234669999997" blue="0.53478558389999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -344,7 +344,7 @@
                                     <constraint firstAttribute="trailing" secondItem="wpU-8u-OC8" secondAttribute="trailing" id="Rhh-FS-Stn"/>
                                     <constraint firstItem="wpU-8u-OC8" firstAttribute="leading" secondItem="gNt-ff-k4R" secondAttribute="leading" id="VD8-KB-zg1"/>
                                     <constraint firstAttribute="bottom" secondItem="wpU-8u-OC8" secondAttribute="bottom" id="sVU-or-2al"/>
-                                    <constraint firstItem="wpU-8u-OC8" firstAttribute="top" secondItem="gNt-ff-k4R" secondAttribute="top" constant="116" id="zkW-VW-zac"/>
+                                    <constraint firstItem="wpU-8u-OC8" firstAttribute="top" secondItem="gNt-ff-k4R" secondAttribute="top" constant="80" id="zkW-VW-zac"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -640,7 +640,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vg1-td-ZEb">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vg1-td-ZEb">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -656,30 +656,9 @@
                                                 <rect key="frame" x="160" y="145" width="39" height="37"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </pageControl>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="RQq-KB-RXR">
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="RQq-KB-RXR" userLabel="Paging View">
                                                 <rect key="frame" x="20" y="20" width="320" height="154"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tjg-AN-T3n" userLabel="Profile">
-                                                        <rect key="frame" x="15" y="53" width="86" height="86"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    </imageView>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZE-Z0-4dV" userLabel="Label - Username">
-                                                        <rect key="frame" x="107" y="106" width="193" height="25"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eeN-oE-YXO" userLabel="Description">
-                                                        <rect key="frame" x="359" y="38" width="215" height="77"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    </textView>
-                                                </subviews>
                                                 <connections>
                                                     <outlet property="delegate" destination="vNO-6S-46Z" id="6te-wd-nYL"/>
                                                 </connections>
@@ -959,16 +938,13 @@
                         <outlet property="constraintHeightContest" destination="Wgs-3E-aJW" id="Zb3-Yd-Tdz"/>
                         <outlet property="constraintHeightFollowContainer" destination="Gqg-i8-Nla" id="17L-Uc-q7O"/>
                         <outlet property="imageViewBackground" destination="T72-S8-3zz" id="wVS-nw-cyR"/>
-                        <outlet property="imageViewProfile" destination="Tjg-AN-T3n" id="I3F-Em-Lvr"/>
                         <outlet property="labelFollowerCount" destination="he6-Tl-ic8" id="Gv8-9U-kuH"/>
                         <outlet property="labelFollowingCount" destination="ic0-TJ-xJD" id="wmr-V4-XNY"/>
                         <outlet property="labelSubmissionCount" destination="OdY-wd-1vx" id="j06-Bh-gTC"/>
-                        <outlet property="labelUsername" destination="bZE-Z0-4dV" id="tRT-Ia-F4h"/>
                         <outlet property="pageControl" destination="tm7-ee-XGt" id="aAW-hR-M3n"/>
                         <outlet property="pagingView" destination="RQq-KB-RXR" id="qQn-dV-SqB"/>
                         <outlet property="scrollViewContainer" destination="Vg1-td-ZEb" id="h0S-AI-sAd"/>
                         <outlet property="tableViewContest" destination="kv9-0f-ha3" id="yc6-cO-8a8"/>
-                        <outlet property="textViewDescription" destination="eeN-oE-YXO" id="WzS-mX-MoV"/>
                         <outlet property="viewContainter" destination="uQg-xd-syc" id="YUM-BY-vmI"/>
                         <outlet property="viewContestContainer" destination="4e8-zW-2sE" id="aUC-Jo-DQ0"/>
                         <outlet property="viewFollowContainer" destination="Rx1-ZV-3Vr" id="jYz-no-8q4"/>
@@ -1353,30 +1329,9 @@
                                                 <rect key="frame" x="160" y="140" width="39" height="37"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </pageControl>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="gLk-WH-j3f">
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="gLk-WH-j3f" userLabel="Header Scroll View">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="168"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="76Q-aD-gqU">
-                                                        <rect key="frame" x="9" y="72" width="86" height="86"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    </imageView>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="vhatfield" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pLS-kG-Xle">
-                                                        <rect key="frame" x="101" y="125" width="193" height="25"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="doy-zf-bRc">
-                                                        <rect key="frame" x="359" y="38" width="215" height="77"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    </textView>
-                                                </subviews>
                                                 <connections>
                                                     <outlet property="delegate" destination="sp9-qL-0wy" id="pLs-8A-fLa"/>
                                                 </connections>
@@ -1655,8 +1610,6 @@
                         <outlet property="constraintContestListHeight" destination="GSh-4X-geM" id="HMA-dM-lvE"/>
                         <outlet property="constraintFollowViewHeight" destination="v9A-b8-htj" id="p0Y-I5-lV8"/>
                         <outlet property="imageViewBackground" destination="KwW-9i-hUI" id="ft6-3o-66P"/>
-                        <outlet property="imageViewBrand" destination="76Q-aD-gqU" id="cdj-XB-Ron"/>
-                        <outlet property="labelBrandName" destination="pLS-kG-Xle" id="Xhl-6O-fyQ"/>
                         <outlet property="labelFollower" destination="WUR-wx-pjh" id="pDw-AX-1et"/>
                         <outlet property="labelSubmission" destination="mPX-LW-aJf" id="Tcf-6c-afI"/>
                         <outlet property="labelWinner" destination="GjM-fL-V4i" id="ots-FB-x7r"/>
@@ -1664,7 +1617,6 @@
                         <outlet property="scrollViewHeader" destination="gLk-WH-j3f" id="vKE-Tv-VVO"/>
                         <outlet property="scrollviewContainer" destination="io8-Wd-udy" id="BL2-pB-5zd"/>
                         <outlet property="tableViewContest" destination="SZT-Ju-VeT" id="jjZ-Ot-fL8"/>
-                        <outlet property="textViewDescription" destination="doy-zf-bRc" id="62L-A7-OLo"/>
                         <outlet property="viewContestContainer" destination="oxW-me-oP3" id="eVY-FE-zHa"/>
                     </connections>
                 </viewController>

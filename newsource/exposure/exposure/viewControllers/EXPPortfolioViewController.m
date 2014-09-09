@@ -30,6 +30,9 @@
     User *currentUser;
     User *profileUser;
     NSNumber *userId;
+    UIImageView *imageViewProfile;
+    UILabel *labelUsername;
+    UITextView *textViewDescription;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -46,13 +49,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"Portfolio";
-    // GUI
-    self.imageViewProfile.layer.borderWidth = 1.5f;
-    self.imageViewProfile.layer.borderColor = [UIColor whiteColor].CGColor;
-    [self.buttonSetting setTitle:@"Settings" forState:UIControlStateNormal];
     // post
     currentUser = [Infrastructure sharedClient].currentUser;
     arrayPost = [[NSArray alloc] init];
+    
     // add interaction for follower, following
     UITapGestureRecognizer *followerTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewFollowerTap)];
     followerTapGesture.numberOfTapsRequired = 1;
@@ -61,9 +61,50 @@
     UITapGestureRecognizer *followTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewFollowTap)];
     followTapGesture.numberOfTapsRequired = 1;
     [self.viewFollowing setGestureRecognizers:[[NSArray alloc] initWithObjects:followTapGesture, nil]];
+    //
+    
+    imageViewProfile = [[UIImageView alloc] init];
+    CGRect frame1 = CGRectZero;
+    frame1.origin.x = 15;
+    frame1.origin.y = 53;
+    frame1.size.width = 86;
+    frame1.size.height = 86;
+    imageViewProfile.frame = frame1;
+    imageViewProfile.layer.borderWidth = 1.5f;
+    imageViewProfile.layer.borderColor = [UIColor whiteColor].CGColor;
+    [self.buttonSetting setTitle:@"Settings" forState:UIControlStateNormal];
+    
+    labelUsername = [[UILabel alloc] init];
+    CGRect frame2 = CGRectZero;
+    frame2.origin.x = 107;
+    frame2.origin.y = 106;
+    frame2.size.width = 193;
+    frame2.size.height = 25;
+    labelUsername.textColor = [UIColor whiteColor];
+    labelUsername.font = [UIFont systemFontOfSize:21];
+    labelUsername.frame = frame2;
+    
+    textViewDescription = [[UITextView alloc] init];
+    CGRect frame3 = CGRectZero;
+    frame3.origin.x = 359;
+    frame3.origin.y = 38;
+    frame3.size.width = 215;
+    frame3.size.height = 77;
+    textViewDescription.textColor = [UIColor whiteColor];
+    textViewDescription.backgroundColor = [UIColor clearColor];
+    textViewDescription.textAlignment = NSTextAlignmentCenter;
+    textViewDescription.font = [UIFont systemFontOfSize:14];
+    textViewDescription.frame = frame3;
+    
+    self.pagingView.contentSize = CGSizeMake(2 * self.view.frame.size.width, self.pagingView.frame.size.height);
+    
+    [self.pagingView addSubview:imageViewProfile];
+    [self.pagingView addSubview:labelUsername];
+    [self.pagingView addSubview:textViewDescription];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    //
     if (!self.profileId) {
         // there's no profile id, so we're entering our home
         userId = currentUser.userId;
@@ -159,12 +200,12 @@
         // fill user's data
         if (profileUser) {
             // has login yet
-            self.labelUsername.text = profileUser.username;
+            labelUsername.text = profileUser.username;
             // profile image
             if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
-                [self.imageViewProfile setImageURL:[NSURL URLWithString:profileUser.profile_picture_url_thumb]];
+                [imageViewProfile setImageURL:[NSURL URLWithString:profileUser.profile_picture_url_thumb]];
             } else {
-                [self.imageViewProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
+                [imageViewProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
             }
             // background image
             if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
@@ -173,7 +214,7 @@
                 [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
             }
             // description
-            self.textViewDescription.text = profileUser.description;
+            textViewDescription.text = profileUser.description;
             // following, follower, submission count
             self.labelFollowerCount.text = [profileUser.followers_count stringValue];
             self.labelFollowingCount.text = [profileUser.follow_count stringValue];
@@ -230,11 +271,6 @@
         
         [SVProgressHUD dismiss];
     }];
-}
-
--(void)viewDidLayoutSubviews {
-    self.pagingView.contentSize = CGSizeMake(self.pageControl.numberOfPages*self.pagingView.frame.size.width, self.pagingView.frame.size.height);
-    [self updateScrollView];
 }
 
 -(void) updateScrollView {

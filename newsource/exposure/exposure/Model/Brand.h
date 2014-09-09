@@ -33,6 +33,8 @@
 /// just returned when getting brand by id
 @property (nonatomic, retain) NSArray *submissions;
 @property (nonatomic, retain) NSNumber *submissions_count;
+@property (nonatomic, retain) NSNumber *winners_count;
+@property (nonatomic, retain) NSNumber *followers_count;
 
 ///
 

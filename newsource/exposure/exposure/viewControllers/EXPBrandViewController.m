@@ -26,6 +26,8 @@
     Brand *currentBrand;
     NSMutableArray *arrayContest;
     User *currentUser;
+    UIImageView *imageViewBrand;
+    UILabel *labelBrandName;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,6 +46,31 @@
     self.title = @"";
     arrayContest = [[NSMutableArray alloc] init];
     currentUser = [[Infrastructure sharedClient] currentUser];
+    //
+    imageViewBrand = [[UIImageView alloc] init];
+    CGRect frame1 = CGRectZero;
+    frame1.origin.x = 15;
+    frame1.origin.y = 53;
+    frame1.size.width = 86;
+    frame1.size.height = 86;
+    imageViewBrand.frame = frame1;
+    imageViewBrand.layer.borderWidth = 1.5f;
+    imageViewBrand.layer.borderColor = [UIColor whiteColor].CGColor;
+    
+    labelBrandName = [[UILabel alloc] init];
+    CGRect frame2 = CGRectZero;
+    frame2.origin.x = 107;
+    frame2.origin.y = 106;
+    frame2.size.width = 193;
+    frame2.size.height = 25;
+    labelBrandName.textColor = [UIColor whiteColor];
+    labelBrandName.font = [UIFont systemFontOfSize:21];
+    labelBrandName.frame = frame2;
+    
+    self.scrollViewHeader.contentSize = CGSizeMake(2 * self.view.frame.size.width, self.scrollViewHeader.frame.size.height);
+    
+    [self.scrollViewHeader addSubview:imageViewBrand];
+    [self.scrollViewHeader addSubview:labelBrandName];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -127,23 +154,30 @@
         [SVProgressHUD dismiss];
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
-        self.labelBrandName.text = currentBrand.name;
+        labelBrandName.text = currentBrand.name;
         self.title = currentBrand.name;
         //
         if (currentBrand.picture_url) {
-            [self.imageViewBrand setImageURL:[NSURL URLWithString:currentBrand.picture_url]];
+            [imageViewBrand setImageURL:[NSURL URLWithString:currentBrand.picture_url]];
         } else {
-            self.imageViewBrand.image = [UIImage imageNamed:@"placeholder.png"];
+            imageViewBrand.image = [UIImage imageNamed:@"placeholder.png"];
         }
         //
         if (currentBrand.picture_url) {
             [self.imageViewBackground setImageURL:[NSURL URLWithString:currentBrand.picture_url]];
         } else {
-            self.imageViewBrand.image = [UIImage imageNamed:@"sample.jpg"];
+            imageViewBrand.image = [UIImage imageNamed:@"sample.jpg"];
         }
-        //
+        // submission count
         self.labelSubmission.text = [NSString stringWithFormat:@"%@", currentBrand.submissions_count];
+        
+        // follower count
+        self.labelFollower.text = [NSString stringWithFormat:@"%@", currentBrand.followers_count];
+        
+        // winner count
+        self.labelWinner.text = [NSString stringWithFormat:@"%@", currentBrand.winners_count];
         //
+        
         [self.collectionViewPost reloadData];
         [self updateScrollView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -170,12 +204,6 @@
         
         [SVProgressHUD dismiss];
     }];
-}
-
--(void)viewDidLayoutSubviews {
-    self.scrollViewHeader.contentSize = CGSizeMake(self.pageControl.numberOfPages*320, self.scrollViewHeader.frame.size.height);
-    //
-    [self updateScrollView];
 }
 
 -(void) updateScrollView {

@@ -17,8 +17,6 @@
 // IBOutlet
 @property (strong, nonatomic) IBOutlet UIImageView *imageViewBackground;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewHeader;
-@property (strong, nonatomic) IBOutlet UIImageView *imageViewBrand;
-@property (strong, nonatomic) IBOutlet UILabel *labelBrandName;
 @property (strong, nonatomic) IBOutlet UITextView *textViewDescription;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (strong, nonatomic) IBOutlet UIButton *buttonIndicatorContest;
