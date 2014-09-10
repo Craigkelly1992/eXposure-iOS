@@ -14,6 +14,8 @@
 #import "EXPContestDetailViewController.h"
 #import "EXPPointViewController.h"
 #import "EXPImageDetailViewController.h"
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 
 #define kContestHeightMin 33
 #define kContestHeightMax 142
@@ -303,16 +305,98 @@
     [self.navigationController pushViewController:portfolioSettingVC animated:YES];
 }
 - (IBAction)buttonFacebookTap:(id)sender {
+    if (!FBSession.activeSession.isOpen) {
+        [FBSession openActiveSessionWithAllowLoginUI: YES];
+    }
+    [SVProgressHUD show];
+    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        [SVProgressHUD dismiss];
+        if (!error) {
+            // Success! Include your code to handle the results here
+            NSLog(@"user info: %@", result);
+            NSURL *safariURL = [NSURL URLWithString:[result objectForKey:@"link"]];
+            NSURL *inAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"fb:///profile/%@", [result objectForKey:@"id"]]];
+            if ([[UIApplication sharedApplication] canOpenURL:inAppURL]){
+                [[UIApplication sharedApplication] openURL:inAppURL];
+            } else {
+                [[UIApplication sharedApplication] openURL:safariURL];
+            }
+        } else {
+            // An error occurred, we need to handle the error
+            // See: https://developers.facebook.com/docs/ios/errors
+            [SVProgressHUD showErrorWithStatus:error.description];
+        }
+    }];
     
 }
 - (IBAction)buttonInstagramTap:(id)sender {
     
+    if ([InstagramEngine sharedEngine].accessToken) {
+        [SVProgressHUD showWithStatus:@"Loading"];
+        [[InstagramEngine sharedEngine] getSelfUserDetailsWithSuccess:^(InstagramUser *userDetail) {
+            
+            NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://user?username=%@", userDetail.username]];
+            if ([[UIApplication sharedApplication] canOpenURL:instagramURL]){
+                [[UIApplication sharedApplication] openURL:instagramURL];
+            } else {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", userDetail.username]]];
+            }
+            
+            [SVProgressHUD dismiss];
+        } failure:^(NSError *error) {
+            
+            [SVProgressHUD dismiss];
+        }];
+    } else {
+        //
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please signup with an Instagram account in Profile Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }
 }
 - (IBAction)buttonContestTap:(id)sender {
     
 }
 - (IBAction)buttonTwitterTap:(id)sender {
-    
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+        ACAccountType *twitterAccountType =
+        [accountStore accountTypeWithAccountTypeIdentifier:
+         ACAccountTypeIdentifierTwitter];
+        
+        [accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [accountStore accountsWithAccountType:twitterAccountType];
+                 ACAccount *account = [twitterAccounts lastObject];
+                 if (!account) {
+                     [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please signin with an twitter account on Settings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+                 } else {
+                     // open url
+                     NSURL *twitterURL = [NSURL URLWithString:[NSString stringWithFormat:@"twitter:///user?screen_name=%@", account.username]];
+                     if ([[UIApplication sharedApplication] canOpenURL:twitterURL]){
+                         [[UIApplication sharedApplication] openURL:twitterURL];
+                     } else {
+                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@", account.username]]];
+                     }
+                 }
+                 
+             }
+         }];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"You didn\'t set up any Twitter account, please sign in at least 1 on device Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }
+}
+
+- (BOOL)userHasAccessToTwitter
+{
+    return [SLComposeViewController
+            isAvailableForServiceType:SLServiceTypeTwitter];
 }
 
 - (IBAction)buttonIndicatorContestTap:(id)sender {

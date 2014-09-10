@@ -45,6 +45,7 @@
 #define GET_MY_POST @"posts/my_posts"
 #define GET_POST_BY_USERID @"posts/by_user"
 #define GET_POST_BY_CONTEST @"posts/by_contest"
+#define PATCH_POST_WITH_CONTESTID @"posts/%@"
 #define GET_POST_BY_BRAND @"posts/by_brand"
 #define GET_STREAM_POST @"posts/stream" // return posts from who you follow
 #define LIKE_POST @"posts/%@/like" // postID
@@ -315,6 +316,14 @@
                       userToken:(NSString*)userToken
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+// patch post with contest_id
+- (void)patchPostWithPostId:(NSNumber*)postId
+                  contestId:(NSNumber*)contestId
+                  userEmail:(NSString*)userEmail
+                  userToken:(NSString*)userToken
+                    success:(void (^)(id responseObject))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // get posts by user id
 - (void)getPostByUserId:(NSNumber*)userId

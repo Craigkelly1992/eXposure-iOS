@@ -752,6 +752,32 @@
     }];
 }
 
+// patch post with contest_id
+- (void)patchPostWithPostId:(NSNumber*)postId
+                  contestId:(NSNumber*)contestId
+                  userEmail:(NSString*)userEmail
+                  userToken:(NSString*)userToken
+                    success:(void (^)(id responseObject))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:PATCH_POST_WITH_CONTESTID, postId];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                contestId, PARAM_CONTEST_ID,
+                                userEmail, PARAM_USER_EMAIL,
+                                userToken, PARAM_USER_TOKEN,
+                                nil];
+    [self PATCH:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return a list of Post
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
 // get posts by contest id - checked
 - (void)getPostByContestId:(NSNumber*)contestId
                  userEmail:(NSString*)userEmail

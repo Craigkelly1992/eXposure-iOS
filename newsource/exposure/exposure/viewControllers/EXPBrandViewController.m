@@ -12,6 +12,7 @@
 #import "EXPImageDetailViewController.h"
 #import "Contest.h"
 #import "EXPContestDetailViewController.h"
+#import "EXPBrandFollowViewController.h"
 
 #define kContestHeightMin 33
 #define kContestHeightMax 142
@@ -28,6 +29,7 @@
     User *currentUser;
     UIImageView *imageViewBrand;
     UILabel *labelBrandName;
+    UITextView *textViewDescription;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -67,10 +69,34 @@
     labelBrandName.font = [UIFont systemFontOfSize:21];
     labelBrandName.frame = frame2;
     
+    textViewDescription = [[UITextView alloc] init];
+    CGRect frame3 = CGRectZero;
+    frame3.origin.x = 359;
+    frame3.origin.y = 38;
+    frame3.size.width = 215;
+    frame3.size.height = 77;
+    textViewDescription.textColor = [UIColor whiteColor];
+    textViewDescription.backgroundColor = [UIColor clearColor];
+    textViewDescription.textAlignment = NSTextAlignmentCenter;
+    textViewDescription.font = [UIFont systemFontOfSize:14];
+    textViewDescription.frame = frame3;
+    
     self.scrollViewHeader.contentSize = CGSizeMake(2 * self.view.frame.size.width, self.scrollViewHeader.frame.size.height);
     
     [self.scrollViewHeader addSubview:imageViewBrand];
     [self.scrollViewHeader addSubview:labelBrandName];
+    [self.scrollViewHeader addSubview:textViewDescription];
+    
+    // add interaction handler for follower & winner
+    // add interaction for follower, following
+    UITapGestureRecognizer *followerTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewFollowerTap)];
+    followerTapGesture.numberOfTapsRequired = 1;
+    [self.viewFollowerContainer setGestureRecognizers:[[NSArray alloc] initWithObjects:followerTapGesture, nil]];
+    //
+    UITapGestureRecognizer *winnerTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewWinnerTap)];
+    winnerTapGesture.numberOfTapsRequired = 1;
+    [self.viewWinnerContainer setGestureRecognizers:[[NSArray alloc] initWithObjects:winnerTapGesture, nil]];
+    //
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,6 +106,28 @@
     [self checkFollowBrand];
     // get contests of brand
     [self getContestsFromBrand];
+}
+
+- (void)viewDidLayoutSubviews {
+    [self updateScrollView];
+}
+
+-(void)viewFollowerTap {
+    EXPBrandFollowViewController *followerVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPBrandFollowViewControllerIdentifier"];
+    followerVC.isFollower = YES;
+    followerVC.brandName = currentBrand.name;
+    followerVC.arrayFollower = currentBrand.followers_list;
+    followerVC.arrayWinner = currentBrand.winners;
+    [self.navigationController pushViewController:followerVC animated:YES];
+}
+
+-(void)viewWinnerTap {
+    EXPBrandFollowViewController *winnerVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPBrandFollowViewControllerIdentifier"];
+    winnerVC.isFollower = NO;
+    winnerVC.brandName = currentBrand.name;
+    winnerVC.arrayFollower = currentBrand.followers_list;
+    winnerVC.arrayWinner = currentBrand.winners;
+    [self.navigationController pushViewController:winnerVC animated:YES];
 }
 
 // Check if the current user is following the brand
@@ -155,6 +203,7 @@
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
         labelBrandName.text = currentBrand.name;
+        textViewDescription.text = currentBrand.description;
         self.title = currentBrand.name;
         //
         if (currentBrand.picture_url) {
@@ -327,19 +376,19 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostCollectionViewCellIdentifier" forIndexPath:indexPath];
     UIImageView *imagePost = (UIImageView*)[cell viewWithTag:1];
     //
-    Submission *submission = currentBrand.submissions[indexPath.row];
+    Submission *submission = currentBrand.submissions_mobile[indexPath.row];
     //
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imagePost];
     imagePost.image = [UIImage imageNamed:@"placeholder.png"];
-    if (submission.image_file_name && [submission.image_file_name rangeOfString:@"placeholder.png"].location == NSNotFound) {
-        [imagePost setImageURL:[NSURL URLWithString:submission.image_file_name]];
+    if (submission.image_url_thumb && [submission.image_url_thumb rangeOfString:@"placeholder.png"].location == NSNotFound) {
+        [imagePost setImageURL:[NSURL URLWithString:submission.image_url_thumb]];
     }
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    Submission *selectedPost = [Submission objectFromDictionary:[currentBrand.submissions objectAtIndex:indexPath.row]];
+    Submission *selectedPost = currentBrand.submissions_mobile[indexPath.row];
     EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
     postVC.postId = selectedPost.submissionId;
     [self.navigationController pushViewController:postVC animated:YES];

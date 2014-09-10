@@ -27,5 +27,9 @@
 @property (nonatomic, retain) NSNumber *cached_votes_up;
 @property (nonatomic, retain) NSNumber *cached_votes_down;
 @property (nonatomic, retain) NSNumber *cached_weighted_score;
+@property (nonatomic, copy) NSString *image_url;
+@property (nonatomic, copy) NSString *image_url_square;
+@property (nonatomic, copy) NSString *image_url_preview;
+@property (nonatomic, copy) NSString *image_url_thumb;
 
 @end

@@ -17,8 +17,16 @@
     return [NSDictionary dictionaryWithDictionary:map];
 }
 
-+ (Class)submissions_class {
++ (Class)submissions_mobile_class {
     return [Submission class];
+}
+
++ (Class)winners_class {
+    return [User class];
+}
+
++ (Class)followers_list_class {
+    return [User class];
 }
 
 @end

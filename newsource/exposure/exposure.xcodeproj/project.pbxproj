@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		047F3F1C5F2242689E515885 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B324034F210C4B26A2662BA1 /* libPods.a */; };
+		B34CDF5319C0A2AC0038F28C /* EXPBrandFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B34CDF5219C0A2AC0038F28C /* EXPBrandFollowViewController.m */; };
 		B3A4D506197EAB4D0070185E /* EXPPhotoStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A4D505197EAB4D0070185E /* EXPPhotoStreamViewController.m */; };
 		B3A4D50A197EB0340070185E /* Infrastructure.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A4D509197EB0340070185E /* Infrastructure.m */; };
 		B3A4D50E197ED2270070185E /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A4D50D197ED2270070185E /* AsyncImageView.m */; };
@@ -102,6 +103,8 @@
 /* Begin PBXFileReference section */
 		83F16BDB55334121B4ABF4AD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		B324034F210C4B26A2662BA1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B34CDF5119C0A2AC0038F28C /* EXPBrandFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXPBrandFollowViewController.h; path = viewControllers/EXPBrandFollowViewController.h; sourceTree = "<group>"; };
+		B34CDF5219C0A2AC0038F28C /* EXPBrandFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXPBrandFollowViewController.m; path = viewControllers/EXPBrandFollowViewController.m; sourceTree = "<group>"; };
 		B3A4D504197EAB4D0070185E /* EXPPhotoStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXPPhotoStreamViewController.h; path = viewControllers/EXPPhotoStreamViewController.h; sourceTree = "<group>"; };
 		B3A4D505197EAB4D0070185E /* EXPPhotoStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXPPhotoStreamViewController.m; path = viewControllers/EXPPhotoStreamViewController.m; sourceTree = "<group>"; };
 		B3A4D508197EB0340070185E /* Infrastructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Infrastructure.h; path = constant/Infrastructure.h; sourceTree = "<group>"; };
@@ -412,6 +415,8 @@
 				B3CD74B51977873400CBE2C6 /* EXPContestsViewController.m */,
 				B3AE1E36198113CE003467D7 /* EXPFollowViewController.h */,
 				B3AE1E37198113CE003467D7 /* EXPFollowViewController.m */,
+				B34CDF5119C0A2AC0038F28C /* EXPBrandFollowViewController.h */,
+				B34CDF5219C0A2AC0038F28C /* EXPBrandFollowViewController.m */,
 				B3CD74A81977864900CBE2C6 /* EXPHowItWorksViewController.h */,
 				B3CD74A91977864900CBE2C6 /* EXPHowItWorksViewController.m */,
 				B3CD74D1197837D900CBE2C6 /* EXPImageDetailViewController.h */,
@@ -786,6 +791,7 @@
 				B3DB55621987C38400402BA8 /* UIImage+Alpha.m in Sources */,
 				B3CD74A71976E98B00CBE2C6 /* Contest.m in Sources */,
 				B3CD74CD1978374400CBE2C6 /* EXPChangePasswordViewController.m in Sources */,
+				B34CDF5319C0A2AC0038F28C /* EXPBrandFollowViewController.m in Sources */,
 				B3CD74D3197837D900CBE2C6 /* EXPImageDetailViewController.m in Sources */,
 				B3CD74DF1979202000CBE2C6 /* ContestDetail.m in Sources */,
 				B3DB55631987C38400402BA8 /* UIImage+Resize.m in Sources */,

@@ -21,7 +21,9 @@
 @implementation EXPGalleryViewController {
     NSMutableArray *arrayThumbnail;
     NSMutableArray *arrayOrigin;
+    NSMutableArray *arrayId;
     BOOL gotoEditMode;
+    User *currentUser;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,7 +45,10 @@
         self.title = @"Instagram";
     } else if (self.type == kGALLERY_TWITTER) {
         self.title = @"Twitter";
+    } else if (self.type == kGALLERY_PROFILE) {
+        self.title = @"Profile";
     }
+    currentUser = [Infrastructure sharedClient].currentUser;
     // Twitter
     self.accountStore = [[ACAccountStore alloc] init];
 }
@@ -63,6 +68,9 @@
         
     } else if (self.type == kGALLERY_TWITTER) {
         [self loadFromTwitter];
+        
+    } else if (self.type == kGALLERY_PROFILE) {
+        [self loadFromProfile];
     }
 }
 
@@ -145,6 +153,28 @@
         //
         [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please signup with an Instagram account in Profile Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }
+}
+
+/**
+ * Load collection from Instagram
+ */
+-(void)loadFromProfile {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self.serviceAPI getPostByUserId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+        
+        [SVProgressHUD dismiss];
+        NSArray *array = responseObject;
+        for (int i = 0; i < array.count; i++) {
+            [arrayThumbnail addObject:[array[i] objectForKey:@"image_url_thumb"]];
+            [arrayOrigin addObject:[array[i] objectForKey:@"image_url"]];
+            [arrayId addObject:[array[i] objectForKey:@"id"]];
+        }
+        [self.collectionViewGallery reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        [SVProgressHUD dismiss];
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:[NSString stringWithFormat:@"We got an error %@", error] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }];
 }
 
 /**
@@ -284,41 +314,58 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSURL *imageURL = [NSURL URLWithString:arrayOrigin[indexPath.row]];
-    
-    // Loading bigger image
-    [SVProgressHUD showWithStatus:@"Loading origin image"];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    if (self.type == kGALLERY_PROFILE) { // load from server
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-            // Update the UI
-            UIImage *image = [UIImage imageWithData:imageData];
-            CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:image];
-            editor.delegate = self;
-            CLImageToolInfo *tonalTool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
-            tonalTool.available = NO;
+        [SVProgressHUD showWithStatus:@"Loading"];
+        [self.serviceAPI patchPostWithPostId:[arrayId objectAtIndex:indexPath.row]
+                                   contestId:self.contestId
+                                   userEmail:currentUser.email
+                                   userToken:currentUser.authentication_token
+                                     success:^(id responseObject) {
             
-            CLImageToolInfo *adjustmentTool = [editor.toolInfo subToolInfoWithToolName:@"CLAdjustmentTool" recursive:NO];
-            adjustmentTool.available = NO;
+            [SVProgressHUD showSuccessWithStatus:@"Posted to contest"];
+            [self.navigationController popViewControllerAnimated:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            CLImageToolInfo *effectTool = [editor.toolInfo subToolInfoWithToolName:@"CLEffectTool" recursive:NO];
-            effectTool.available = NO;
+            [SVProgressHUD showErrorWithStatus:error.description];
+        }];
+    } else {
+        NSURL *imageURL = [NSURL URLWithString:arrayOrigin[indexPath.row]];
+        
+        // Loading bigger image
+        [SVProgressHUD showWithStatus:@"Loading origin image"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             
-            CLImageToolInfo *blurTool = [editor.toolInfo subToolInfoWithToolName:@"CLBlurTool" recursive:NO];
-            blurTool.available = NO;
-            
-            NSArray *array = [editor.toolInfo subtools];
-            for (CLImageToolInfo *tool in array) {
-                NSLog(@"%@",tool.toolName);
-            }
-            self.navigationController.navigationBarHidden = NO;
-            [self.navigationController pushViewController:editor animated:YES];
-            // show navigation bar again
-            gotoEditMode = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [SVProgressHUD dismiss];
+                // Update the UI
+                UIImage *image = [UIImage imageWithData:imageData];
+                CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:image];
+                editor.delegate = self;
+                CLImageToolInfo *tonalTool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
+                tonalTool.available = NO;
+                
+                CLImageToolInfo *adjustmentTool = [editor.toolInfo subToolInfoWithToolName:@"CLAdjustmentTool" recursive:NO];
+                adjustmentTool.available = NO;
+                
+                CLImageToolInfo *effectTool = [editor.toolInfo subToolInfoWithToolName:@"CLEffectTool" recursive:NO];
+                effectTool.available = NO;
+                
+                CLImageToolInfo *blurTool = [editor.toolInfo subToolInfoWithToolName:@"CLBlurTool" recursive:NO];
+                blurTool.available = NO;
+                
+                NSArray *array = [editor.toolInfo subtools];
+                for (CLImageToolInfo *tool in array) {
+                    NSLog(@"%@",tool.toolName);
+                }
+                self.navigationController.navigationBarHidden = NO;
+                [self.navigationController pushViewController:editor animated:YES];
+                // show navigation bar again
+                gotoEditMode = YES;
+            });
         });
-    });
+    }
 }
 
 #pragma mark - image editor delegate

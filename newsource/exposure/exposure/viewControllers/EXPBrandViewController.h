@@ -17,7 +17,6 @@
 // IBOutlet
 @property (strong, nonatomic) IBOutlet UIImageView *imageViewBackground;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewHeader;
-@property (strong, nonatomic) IBOutlet UITextView *textViewDescription;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (strong, nonatomic) IBOutlet UIButton *buttonIndicatorContest;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewContest;
@@ -30,6 +29,8 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintFollowViewHeight;
 @property (strong, nonatomic) IBOutlet UIView *viewContestContainer;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollviewContainer;
+@property (strong, nonatomic) IBOutlet UIView *viewFollowerContainer;
+@property (strong, nonatomic) IBOutlet UIView *viewWinnerContainer;
 
 // IBAction
 - (IBAction)buttonXPTap:(id)sender;

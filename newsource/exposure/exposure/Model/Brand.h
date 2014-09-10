@@ -31,13 +31,14 @@
 @property (nonatomic, copy) NSString *picture_url;
 
 /// just returned when getting brand by id
-@property (nonatomic, retain) NSArray *submissions;
+@property (nonatomic, retain) NSArray *submissions_mobile;
 @property (nonatomic, retain) NSNumber *submissions_count;
 @property (nonatomic, retain) NSNumber *winners_count;
 @property (nonatomic, retain) NSNumber *followers_count;
 
 ///
-
+@property (nonatomic, retain) NSArray *winners;
+@property (nonatomic, retain) NSArray *followers_list;
 
 // An example
 /*

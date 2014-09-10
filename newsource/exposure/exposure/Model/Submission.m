@@ -10,6 +10,10 @@
 
 @implementation Submission
 
-
+- (NSDictionary *)map{
+    NSMutableDictionary *map = [NSMutableDictionary dictionaryWithDictionary:[super map]];
+    [map setObject:@"id" forKey:@"submissionId"];
+    return [NSDictionary dictionaryWithDictionary:map];
+}
 
 @end

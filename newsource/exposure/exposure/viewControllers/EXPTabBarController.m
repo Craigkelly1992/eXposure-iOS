@@ -171,7 +171,7 @@
     } else {
         // has login
         contestId = _contestId;
-        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", @"Facebook", @"Instagram", @"Twitter", nil]showInView:self.view];
+        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", @"Facebook", @"Instagram", @"Twitter", @"Profile", nil]showInView:self.view];
     }
 }
 
@@ -205,6 +205,10 @@
             
         case 4: // Twitter
             [self openTwitterGallery];
+            break;
+            
+        case 5: // Profile
+            [self openProfileGallery];
             break;
             
         default:
@@ -260,6 +264,14 @@
     } else {
         [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"You didn\'t set up any Twitter account, please sign in at least 1 on device Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }
+}
+
+- (void) openProfileGallery {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
+    //
+    viewController.type = kGALLERY_PROFILE;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - image picker delegate
