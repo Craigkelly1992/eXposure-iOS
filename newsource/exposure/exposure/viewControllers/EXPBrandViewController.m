@@ -203,7 +203,7 @@
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
         labelBrandName.text = currentBrand.name;
-        textViewDescription.text = currentBrand.description;
+        textViewDescription.text = currentBrand.mDescription;
         self.title = currentBrand.name;
         //
         if (currentBrand.picture_url) {
@@ -338,7 +338,7 @@
     }
     //
     labelContestName.text = contest.title;
-    labelContestDescription.text = contest.description;
+    labelContestDescription.text = contest.mDescription;
     return cell;
 }
 

@@ -49,6 +49,7 @@
     // add gesture for removing keyboard
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tapGesture.numberOfTapsRequired = 1;
+    [tapGesture setCancelsTouchesInView:NO];
     [self.viewContainer setUserInteractionEnabled:YES];
     [self.viewContainer addGestureRecognizer:tapGesture];
 }

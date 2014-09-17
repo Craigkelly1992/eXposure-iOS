@@ -15,9 +15,22 @@
 #pragma mark - Override methods
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    application.applicationIconBadgeNumber = 0;
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    UIDevice *device = [UIDevice currentDevice];
+    double iosVersion = [device.systemVersion doubleValue];
+    bool iOS8 = iosVersion >= 8;
+    bool iOS7 = iosVersion >= 7 && iosVersion < 8;
+    
+    if (iOS8) {
+     
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    } else if (iOS7){
+        application.applicationIconBadgeNumber = 0;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+    
     // Override point for customization after application launch.
     [FBLoginView class];
     [self setupUI];

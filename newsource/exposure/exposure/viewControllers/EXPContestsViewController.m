@@ -118,7 +118,7 @@
 //    }
     //
     labelContestName.text = contest.title;
-    labelContestDetail.text = contest.description;
+    labelContestDetail.text = contest.mDescription;
     return cell;
 }
 

@@ -15,7 +15,7 @@
 @property (nonatomic, retain) NSNumber *contestId;
 @property (nonatomic, retain) NSNumber *brand_id;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *mDescription;
 @property (nonatomic, copy) NSString *rules;
 @property (nonatomic, copy) NSString *prizes;
 @property (nonatomic, retain) NSNumber *voting; // false || true

@@ -14,6 +14,7 @@
 - (NSDictionary *)map{
     NSMutableDictionary *map = [NSMutableDictionary dictionaryWithDictionary:[super map]];
     [map setObject:@"id" forKey:@"brandId"];
+    [map setObject:@"description" forKey:@"mDescription"];
     return [NSDictionary dictionaryWithDictionary:map];
 }
 

@@ -13,6 +13,7 @@
 - (NSDictionary *)map{
     NSMutableDictionary *map = [NSMutableDictionary dictionaryWithDictionary:[super map]];
     [map setObject:@"id" forKey:@"contestId"];
+    [map setObject:@"description" forKey:@"mDescription"];
     return [NSDictionary dictionaryWithDictionary:map];
 }
 

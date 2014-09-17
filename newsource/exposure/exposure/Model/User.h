@@ -42,7 +42,7 @@
 @property (nonatomic, copy) NSString *background_picture_updated_at;
 @property (nonatomic, copy) NSString *device_token;
 @property (nonatomic, retain) NSNumber *cached_score;
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *mDescription;
 @property (nonatomic, copy) NSString *website;
 @property (nonatomic, retain) NSNumber *enabled;
 

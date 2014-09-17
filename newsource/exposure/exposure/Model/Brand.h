@@ -20,7 +20,7 @@
 @property (nonatomic, copy) NSString *instagram;
 @property (nonatomic, copy) NSString *slogan;
 @property (nonatomic, copy) NSString *website;
-@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *mDescription;
 @property (nonatomic, copy) NSString *created_at;
 @property (nonatomic, copy) NSString *updated_at;
 @property (nonatomic, copy) NSString *picture_file_name;

@@ -216,7 +216,7 @@
                 [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
             }
             // description
-            textViewDescription.text = profileUser.description;
+            textViewDescription.text = profileUser.mDescription;
             // following, follower, submission count
             self.labelFollowerCount.text = [profileUser.followers_count stringValue];
             self.labelFollowingCount.text = [profileUser.follow_count stringValue];
@@ -504,7 +504,7 @@
     }
     //
     labelContestName.text = contest.title;
-    labelContestDescription.text = contest.description;
+    labelContestDescription.text = contest.mDescription;
     return cell;
 }
 
