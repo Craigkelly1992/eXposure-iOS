@@ -97,7 +97,7 @@
     self.textFieldEmail.text = currentUser.email;
     self.textFieldPhone.text = currentUser.phone;
     self.textFieldUsername.text = currentUser.username;
-    self.textFieldDescription.text = currentUser.description;
+    self.textFieldDescription.text = currentUser.mDescription;
     self.textFieldWebsite.text = @"";
 }
 
