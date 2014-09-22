@@ -13,5 +13,5 @@
 
 //
 -(NSArray *)createTabBarViewControllers;
--(void)creatPostWithContest:(NSNumber*) contestId; // for creating a new post to contest
+-(void)createPostWithContest:(NSNumber*) contestId; // for creating a new post to contest
 @end

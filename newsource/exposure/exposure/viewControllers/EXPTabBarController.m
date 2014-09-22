@@ -164,7 +164,7 @@
     }
 }
 
--(void)creatPostWithContest:(NSNumber*) _contestId {
+-(void)createPostWithContest:(NSNumber*) _contestId {
     if(![[Infrastructure sharedClient] currentUser]){
         // anonymous
         [self.tabBarController.navigationController popViewControllerAnimated:YES];
@@ -269,6 +269,7 @@
 - (void) openProfileGallery {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
+    viewController.contestId = contestId;
     //
     viewController.type = kGALLERY_PROFILE;
     [self.navigationController pushViewController:viewController animated:YES];

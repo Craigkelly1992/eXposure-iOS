@@ -103,7 +103,7 @@
 #pragma mark - Actions
 - (IBAction)buttonEnterContestTap:(id)sender {
     EXPTabBarController *tabVC = (EXPTabBarController*)self.tabBarController;
-    [tabVC creatPostWithContest:currentContest.contest.info.contestId];
+    [tabVC createPostWithContest:currentContest.contest.info.contestId];
 }
 
 - (IBAction)buttonRuleTap:(id)sender {
@@ -160,8 +160,8 @@
     UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageView];
     [imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if (submission.image_file_name) {
-        [imageView setImageURL:[NSURL URLWithString:submission.image_file_name]];
+    if (submission.image_url_thumb) {
+        [imageView setImageURL:[NSURL URLWithString:submission.image_url_thumb]];
     }
     
     return cell;

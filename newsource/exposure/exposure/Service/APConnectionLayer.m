@@ -762,7 +762,7 @@
     
     NSString *path = [NSString stringWithFormat:PATCH_POST_WITH_CONTESTID, postId];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                contestId, PARAM_CONTEST_ID,
+                                contestId, PARAM_POST_CONTEST_ID,
                                 userEmail, PARAM_USER_EMAIL,
                                 userToken, PARAM_USER_TOKEN,
                                 nil];

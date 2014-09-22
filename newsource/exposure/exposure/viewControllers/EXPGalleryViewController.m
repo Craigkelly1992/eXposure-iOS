@@ -57,6 +57,7 @@
     //
     arrayOrigin = [[NSMutableArray alloc] init];
     arrayThumbnail = [[NSMutableArray alloc] init];
+    arrayId = [[NSMutableArray alloc] init];
     // reset
     gotoEditMode = NO;
     //
