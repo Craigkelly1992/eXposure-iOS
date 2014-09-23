@@ -58,10 +58,12 @@
     // add interaction for follower, following
     UITapGestureRecognizer *followerTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewFollowerTap)];
     followerTapGesture.numberOfTapsRequired = 1;
+    [followerTapGesture setCancelsTouchesInView:NO];
     [self.viewFollower setGestureRecognizers:[[NSArray alloc] initWithObjects:followerTapGesture, nil]];
     //
     UITapGestureRecognizer *followTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewFollowTap)];
     followTapGesture.numberOfTapsRequired = 1;
+    [followTapGesture setCancelsTouchesInView:NO];
     [self.viewFollowing setGestureRecognizers:[[NSArray alloc] initWithObjects:followTapGesture, nil]];
     //
     
@@ -285,6 +287,10 @@
     // for main scroll view
     int newHeight = self.viewContestContainer.frame.origin.y + self.constraintHeightContest.constant + self.constraintHeightFollowContainer.constant;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
+    
+    [self.scrollViewContainer layoutSubviews];
+    [self.viewFollowContainer layoutSubviews];
+    [self.viewFollowContainer updateConstraints];
 }
 
 - (void)didReceiveMemoryWarning

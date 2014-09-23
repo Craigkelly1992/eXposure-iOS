@@ -63,7 +63,7 @@
         }
         currentLikeNumber = [currentPost.cached_votes_up integerValue];
         if ([currentPost.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
-            [self.imageviewPost setImageURL:[NSURL URLWithString:currentPost.image_url]];
+            [self.imageviewPost setImageURL:[NSURL URLWithString:currentPost.image_url_preview]];
         } else {
             [self.imageviewPost setImage:[UIImage imageNamed:@"placeholder.png"]];
         }
