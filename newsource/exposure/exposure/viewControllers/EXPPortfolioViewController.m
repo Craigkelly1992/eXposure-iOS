@@ -222,6 +222,7 @@
             // following, follower, submission count
             self.labelFollowerCount.text = [profileUser.followers_count stringValue];
             self.labelFollowingCount.text = [profileUser.follow_count stringValue];
+            self.labelSubmissionCount.text = [NSString stringWithFormat:@"%lu", (unsigned long)[profileUser.posts count]];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -530,6 +531,10 @@
     Contest *contest = arrayContest[indexPath.row];
     EXPContestDetailViewController *contestVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPContestDetailViewControllerIdentifier"];
     contestVC.contestId = contest.contestId;
+    contestVC.image_url = contest.picture_url;
+    contestVC.image_url_preview = contest.picture_url_preview;
+    contestVC.image_url_thumb = contest.picture_url_thumb;
+    contestVC.image_url_square = contest.picture_url_square;
     [self.navigationController pushViewController:contestVC animated:YES];
 }
 

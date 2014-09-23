@@ -11,6 +11,7 @@
 #import "InstagramKit.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
+#import "EXPNewPostViewController.h"
 
 @interface EXPGalleryViewController ()
 
@@ -375,8 +376,22 @@
     // disable edit controller
     
     //
-    [self.navigationController popViewControllerAnimated:YES];
-    [SVProgressHUD showSuccessWithStatus:@"Success"];
+//    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    
+
+    //Get all view controllers in navigation controller currently
+    NSMutableArray *controllers=[[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers] ;
+    
+    //Remove the last view controller
+    [controllers removeLastObject];
+    [controllers removeLastObject];
+    
+    //set the new set of view controllers
+    [self.navigationController setViewControllers:controllers];
+    
+    EXPTabBarController *tabController = self.tabController;
+    [tabController postImage:image withEditor:editor];
 }
 
 @end

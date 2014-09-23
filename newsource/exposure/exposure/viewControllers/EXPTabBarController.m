@@ -208,7 +208,9 @@
             break;
             
         case 5: // Profile
-            [self openProfileGallery];
+            if ([[actionSheet buttonTitleAtIndex:5] isEqualToString:@"Profile"]) {
+                [self openProfileGallery];   
+            }
             break;
             
         default:
@@ -221,6 +223,8 @@
     EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
     //
     viewController.type = kGALLERY_FACEBOOK;
+    viewController.contestId = contestId;
+    viewController.tabController = self;
     //
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController.navigationBar setTranslucent:NO];
@@ -232,6 +236,10 @@
     EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
     //
     viewController.type = kGALLERY_INSTAGRAM;
+    viewController.contestId = contestId;
+    viewController.tabController = self;
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -254,6 +262,10 @@
                  EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
                  //
                  viewController.type = kGALLERY_TWITTER;
+                 viewController.contestId = contestId;
+                 viewController.tabController = self;
+                 self.navigationController.navigationBarHidden = NO;
+                 [self.navigationController.navigationBar setTranslucent:NO];
                  [self.navigationController pushViewController:viewController animated:YES];
              } else {
                  // Access was not granted, or an error occurred
@@ -272,6 +284,10 @@
     viewController.contestId = contestId;
     //
     viewController.type = kGALLERY_PROFILE;
+    viewController.contestId = contestId;
+    viewController.tabController = self;
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -305,6 +321,10 @@
 #pragma mark - image editor delegate
 - (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
 {
+    [self postImage:image withEditor:editor];
+}
+
+- (void) postImage:(UIImage*)image withEditor:(CLImageEditor *)editor{
     //
     [editor dismissViewControllerAnimated:YES completion:nil];
     //

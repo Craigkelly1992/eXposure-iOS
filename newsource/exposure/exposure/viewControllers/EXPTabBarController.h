@@ -14,4 +14,5 @@
 //
 -(NSArray *)createTabBarViewControllers;
 -(void)createPostWithContest:(NSNumber*) contestId; // for creating a new post to contest
+- (void) postImage:(UIImage*)image withEditor:(CLImageEditor *)editor;
 @end

@@ -200,6 +200,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionViewPost" destination="X6p-sY-qXj" id="0Kl-oC-fVz"/>
                         <outlet property="labelNoItem" destination="Sdm-XO-Mvs" id="83k-Bj-4Ch"/>
@@ -1034,8 +1035,9 @@
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QiU-uZ-uEr">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="sample.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Scr-PN-TWi">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Scr-PN-TWi">
                                                 <rect key="frame" x="0.0" y="0.0" width="321" height="165"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="165" id="gRP-bc-7wG"/>
                                                 </constraints>
@@ -2028,11 +2030,11 @@ Team eXposure</string>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nxq-id-fiK">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="AsI-Ed-baw">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="AsI-Ed-baw">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EXPGalleryCollectionViewCellIdentifier" id="VVz-bN-0on">
@@ -2060,16 +2062,14 @@ Team eXposure</string>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="nxq-id-fiK" secondAttribute="bottom" id="8ER-bH-P2z"/>
                             <constraint firstItem="nxq-id-fiK" firstAttribute="leading" secondItem="TmM-LI-cFU" secondAttribute="leading" id="FVX-fN-xwN"/>
-                            <constraint firstItem="FKd-98-FOw" firstAttribute="top" secondItem="nxq-id-fiK" secondAttribute="bottom" id="JNu-YD-lR7"/>
                             <constraint firstItem="nxq-id-fiK" firstAttribute="top" secondItem="TmM-LI-cFU" secondAttribute="top" id="VWq-cZ-Cuv"/>
                             <constraint firstAttribute="trailing" secondItem="nxq-id-fiK" secondAttribute="trailing" id="gKI-9G-Em5"/>
-                            <constraint firstAttribute="trailing" secondItem="nxq-id-fiK" secondAttribute="trailing" id="idn-rC-rKB"/>
-                            <constraint firstItem="nxq-id-fiK" firstAttribute="leading" secondItem="TmM-LI-cFU" secondAttribute="leading" id="oh9-zh-BWw"/>
-                            <constraint firstItem="nxq-id-fiK" firstAttribute="top" secondItem="vhg-gR-ugt" secondAttribute="bottom" id="ygq-Jg-Zrm"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionViewGallery" destination="nxq-id-fiK" id="b2K-3r-MFs"/>
                     </connections>

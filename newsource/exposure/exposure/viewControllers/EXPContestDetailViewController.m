@@ -47,10 +47,10 @@
     isDetailOpen = NO;
     isSubmissionOpen = YES;
     // load image
-    if (self.image_url_thumb) {
-        [self.imageViewContest setImageURL:[NSURL URLWithString:self.image_url_thumb]];
+    if (self.image_url) {
+        [self.imageViewContest setImageURL:[NSURL URLWithString:self.image_url]];
     } else {
-        [self.imageViewContest setImage:[UIImage imageNamed:@"sample.jpg"]];
+//        [self.imageViewContest setImage:[UIImage imageNamed:@"sample.jpg"]];
     }
 }
 
