@@ -10,6 +10,7 @@
 #import "Post.h"
 #import "ContestDetail.h"
 #import "Comment.h"
+#import "EXPPortfolioViewController.h"
 
 @interface EXPImageDetailViewController ()
 
@@ -61,7 +62,7 @@
         } else {
             [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn"] forState:UIControlStateNormal];
         }
-        currentLikeNumber = [currentPost.cached_votes_up integerValue];
+        currentLikeNumber = [currentPost.cached_votes_up intValue];
         if ([currentPost.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
             [self.imageviewPost setImageURL:[NSURL URLWithString:currentPost.image_url_preview]];
         } else {
@@ -95,19 +96,31 @@
         [SVProgressHUD dismiss];
         postUser = [User objectFromDictionary:responseObject];
         // fill data
-        if ([postUser.profile_picture_file_name rangeOfString:@"placeholder"].location == NSNotFound) {
-            [self.imageViewUser setImageURL:[NSURL URLWithString:postUser.profile_picture_file_name]];
-        } else {
-            [self.imageViewUser setImage:[UIImage imageNamed:@"placeholder.png"]];
+        [self.imageViewUser setImage:[UIImage imageNamed:@"placeholder.png"]];
+        if ([postUser.profile_picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound) {
+            [self.imageViewUser setImageURL:[NSURL URLWithString:postUser.profile_picture_url_thumb]];
         }
         //
         self.labelUsername.text = postUser.username;
-        //
+        // add gesture for user
+        UITapGestureRecognizer *userTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userProfileTap)];
+        [userTap setNumberOfTapsRequired:1];
+        [self.imageViewUser setUserInteractionEnabled:YES];
+        [self.labelUsername setUserInteractionEnabled:YES];
+        [self.imageViewUser setGestureRecognizers:[NSArray arrayWithObject:userTap]];
+        [self.labelUsername setGestureRecognizers:[NSArray arrayWithObject:userTap]];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD dismiss];
     }];
+}
+
+-(void) userProfileTap {
+
+    EXPPortfolioViewController *portfolioVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPortfolioViewControllerIdentifier"];
+    portfolioVC.profileId = currentPost.uploader_id;
+    [self.navigationController pushViewController:portfolioVC animated:YES];
 }
 
 -(void) loadPostContest:(NSNumber*)contestId {
@@ -137,7 +150,7 @@
             [arrayComment addObject:comment];
         }
         //
-        self.labelCommentCount.text = [NSString stringWithFormat:@"%d", arrayComment.count];
+        self.labelCommentCount.text = [NSString stringWithFormat:@"%lu", (unsigned long)arrayComment.count];
         // fill data
         float tableHeight = arrayComment.count * self.tableViewComment.rowHeight;
         //

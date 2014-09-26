@@ -154,8 +154,8 @@
     User *user = [arrayData objectAtIndex:indexPath.row];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewUserProfile];
     [imageViewUserProfile setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if (user.profile_picture_url && [user.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound) {
-        [imageViewUserProfile setImageURL:[NSURL URLWithString:user.profile_picture_url]];
+    if (user.profile_picture_url_thumb && [user.profile_picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound) {
+        [imageViewUserProfile setImageURL:[NSURL URLWithString:user.profile_picture_url_thumb]];
     }
     if (self.segmentOption.selectedSegmentIndex == 1) { // Follower
         buttonUnfollow.hidden = YES;
