@@ -104,8 +104,6 @@
     [self getBrandInfo];
     // check follow brand
     [self checkFollowBrand];
-    // get contests of brand
-    [self getContestsFromBrand];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -229,9 +227,13 @@
         
         [self.collectionViewPost reloadData];
         [self updateScrollView];
+        
+        // get contests of brand
+        [self getContestsFromBrand];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"We get error when trying to get information of Brand. Please try again later."];
+        NSLog([NSString stringWithFormat:@"Error: %@", error.description]);
     }];
 }
 
@@ -251,7 +253,8 @@
         [self updateScrollView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"We get error when trying to get Contest. Please try again later."];
+        NSLog([NSString stringWithFormat:@"Error: %@", error.description]);
     }];
 }
 
@@ -267,6 +270,10 @@
     // for main scroll view
     int newHeight = self.viewContestContainer.frame.origin.y + self.constraintContestListHeight.constant + self.constraintFollowViewHeight.constant;
     self.scrollviewContainer.contentSize = CGSizeMake(self.scrollviewContainer.frame.size.width, newHeight);
+    
+    [self.viewFollowerContainer updateConstraints];
+    [self.viewFollowerContainer layoutSubviews];
+    [self.scrollviewContainer layoutSubviews];
 }
 
 - (void)didReceiveMemoryWarning

@@ -285,6 +285,11 @@
 }
 
 - (IBAction)signOut:(id)sender {
+    // clear username & password
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:USERDEFAULT_KEY_EMAIL];
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:USERDEFAULT_KEY_PASSWORD];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    // back to login
     [self.tabBarController.navigationController popViewControllerAnimated:YES];
 }
 

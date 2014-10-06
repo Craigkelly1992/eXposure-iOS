@@ -51,12 +51,16 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     // load username if existing
-    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:USERDEFAULT_KEY_EMAIL];
-    if (email) {
-        self.textFieldEmail.text = email;
-    }
-    // clear password
+    self.textFieldEmail.text = @"";
     self.textFieldPassword.text = @"";
+    NSString *email = [[NSUserDefaults standardUserDefaults] stringForKey:USERDEFAULT_KEY_EMAIL];
+    NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:USERDEFAULT_KEY_PASSWORD];
+    if (email.length > 0
+        & password.length > 0) {
+        self.textFieldEmail.text = email;
+        self.textFieldPassword.text = password;
+        [self buttonSignInTap:nil];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated {

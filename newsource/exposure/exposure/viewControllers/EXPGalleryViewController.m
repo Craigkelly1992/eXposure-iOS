@@ -137,19 +137,26 @@
 -(void)loadFromInstagram {
     [SVProgressHUD showWithStatus:@"Loading"];
     if ([InstagramEngine sharedEngine].accessToken) {
-        [[InstagramEngine sharedEngine] getSelfFeedWithSuccess:^(NSArray *arrayMedia, InstagramPaginationInfo *paginationInfo) {
-            
-            [SVProgressHUD dismiss];
-            NSLog(@"Instagram Data: %@", arrayMedia);
-            for (int i = 0; i < arrayMedia.count; i++) {
-                InstagramMedia *media = arrayMedia[i];
-                [arrayThumbnail addObject:[media.thumbnailURL absoluteString]];
-                [arrayOrigin addObject:[media.standardResolutionImageURL absoluteString]];
-            }
-            [self.collectionViewGallery reloadData];
+        
+        [[InstagramEngine sharedEngine] getSelfUserDetailsWithSuccess:^(InstagramUser *userDetail) {
+            NSLog(@"Media Count: %ld", userDetail.mediaCount);
+            [userDetail loadRecentMedia:100000 withSuccess:^{
+                [SVProgressHUD dismiss];
+                NSArray *arrayMedia = userDetail.recentMedia;
+                NSLog(@"Instagram Data: %@", arrayMedia);
+                for (int i = 0; i < arrayMedia.count; i++) {
+                    InstagramMedia *media = arrayMedia[i];
+                    [arrayThumbnail addObject:[media.thumbnailURL absoluteString]];
+                    [arrayOrigin addObject:[media.standardResolutionImageURL absoluteString]];
+                }
+                [self.collectionViewGallery reloadData];
+            } failure:^{
+                [SVProgressHUD dismiss];
+                [[[UIAlertView alloc] initWithTitle:@"Warning" message:[NSString stringWithFormat:@"Failure: Can\'t load user \'s recent media"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+            }];
         } failure:^(NSError *error) {
             [SVProgressHUD dismiss];
-            [[[UIAlertView alloc] initWithTitle:@"Warning" message:[NSString stringWithFormat:@"Failure: %@", error] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Warning" message:[NSString stringWithFormat:@"Failure: Can\'t get user detail"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
         }];
     } else {
         //

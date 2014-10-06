@@ -146,10 +146,9 @@
     }
     //
     [self getUserInfo];
-    // get user's info
-    [self getPostByUserId];
     //
     [self getContestByUserId];
+    
 }
 
 -(void)followTap:(id)sender {
@@ -272,9 +271,13 @@
             [self.buttonIndicatorContest setImage:[UIImage imageNamed:@"arrow_down"] forState:UIControlStateNormal];
         }
         [self updateScrollView];
+                                    
+        // get user's info
+        [self getPostByUserId];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"We get error when trying to get Contest. Please try again later."];
+        NSLog([NSString stringWithFormat:@"Error: %@", error.description]);
     }];
 }
 
@@ -289,9 +292,9 @@
     int newHeight = self.viewContestContainer.frame.origin.y + self.constraintHeightContest.constant + self.constraintHeightFollowContainer.constant;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
     
-    [self.scrollViewContainer layoutSubviews];
-    [self.viewFollowContainer layoutSubviews];
     [self.viewFollowContainer updateConstraints];
+    [self.viewFollowContainer layoutSubviews];
+    [self.scrollViewContainer layoutSubviews];
 }
 
 - (void)didReceiveMemoryWarning
