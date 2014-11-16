@@ -71,7 +71,7 @@
     
     textViewDescription = [[UITextView alloc] init];
     CGRect frame3 = CGRectZero;
-    frame3.origin.x = 359;
+    frame3.origin.x = 372;
     frame3.origin.y = 38;
     frame3.size.width = 215;
     frame3.size.height = 77;
@@ -218,7 +218,7 @@
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
         labelBrandName.text = currentBrand.name;
-        textViewDescription.text = currentBrand.mDescription;
+        textViewDescription.text = [NSString stringWithFormat:@"%@ \n %@", currentBrand.mDescription, currentBrand.website];
         self.title = currentBrand.name;
         //
         if (currentBrand.picture_url) {
@@ -250,7 +250,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD showErrorWithStatus:@"We get error when trying to get information of Brand. Please try again later."];
-        NSLog([NSString stringWithFormat:@"Error: %@", error.description]);
+        NSLog(@"Error: %@", error.description);
     }];
 }
 
@@ -271,7 +271,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         [SVProgressHUD showErrorWithStatus:@"We get error when trying to get Contest. Please try again later."];
-        NSLog([NSString stringWithFormat:@"Error: %@", error.description]);
+        NSLog(@"Error: %@", error.description);
     }];
 }
 

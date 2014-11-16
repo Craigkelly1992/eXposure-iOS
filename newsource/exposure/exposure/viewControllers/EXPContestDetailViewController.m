@@ -69,7 +69,7 @@
         [self.labelContestName resizeToFit];
         self.title = currentContest.contest.info.title;
         //
-        self.textViewDetail.text = currentContest.contest.info.description;
+        self.textViewDetail.text = currentContest.contest.info.mDescription;
         //
         arraySubmission = currentContest.submissions.submissions;
         [self.collectionViewPost reloadData];

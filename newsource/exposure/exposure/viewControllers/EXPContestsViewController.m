@@ -104,7 +104,8 @@
     UILabel *labelContestDetail = (UILabel*)[cell viewWithTag:3];
     UIImageView *imageViewRight = (UIImageView*)[cell viewWithTag:4];
     // fill data
-    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:indexPath.row]];
+    NSInteger reverseOrder = arrayContest.count - 1 - indexPath.row;
+    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:reverseOrder]];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewLeft];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewRight];
     //
