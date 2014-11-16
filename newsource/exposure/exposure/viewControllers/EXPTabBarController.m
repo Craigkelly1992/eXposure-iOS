@@ -156,7 +156,7 @@
 -(void)didPressCamera {
     if(![[Infrastructure sharedClient] currentUser]){
         // anonymous
-        [self.tabBarController.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     } else {
         // has login
         contestId = nil;

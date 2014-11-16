@@ -129,6 +129,11 @@
 	NSLog(@"Failed to register with error : %@", error);
 }
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    
+    
+}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     application.applicationIconBadgeNumber = 0;
     NSString *msg = [NSString stringWithFormat:@"%@", userInfo];

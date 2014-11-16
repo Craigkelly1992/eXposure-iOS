@@ -102,8 +102,12 @@
 
 #pragma mark - Actions
 - (IBAction)buttonEnterContestTap:(id)sender {
-    EXPTabBarController *tabVC = (EXPTabBarController*)self.tabBarController;
-    [tabVC createPostWithContest:currentContest.contest.info.contestId];
+    if ([Infrastructure sharedClient].currentUser) {
+        EXPTabBarController *tabVC = (EXPTabBarController*)self.tabBarController;
+        [tabVC createPostWithContest:currentContest.contest.info.contestId];
+    } else {
+        [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)buttonRuleTap:(id)sender {

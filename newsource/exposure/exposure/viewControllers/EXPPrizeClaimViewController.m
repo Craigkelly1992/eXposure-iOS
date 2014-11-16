@@ -109,8 +109,8 @@
                                                   NSLog(@"Success: %@", responseObject);
                                                   [SVProgressHUD showSuccessWithStatus:@"Success"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        [SVProgressHUD showErrorWithStatus:error.description];
+        [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+        NSLog(@"Error: %@", error.description);
     }];
 }
 

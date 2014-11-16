@@ -182,7 +182,8 @@
             [self likePostHandler:responseObject];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error: %@", error]];
+            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+            NSLog(@"Error: %@", error.description);
         }];
     } else {
         [self.serviceAPI unlikePostWithPostId:self.postId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
@@ -190,7 +191,8 @@
             [self likePostHandler:responseObject];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error: %@", error]];
+            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+            NSLog(@"Error: %@", error.description);
         }];
     }
 }
@@ -254,7 +256,8 @@
         [self loadPostComment:self.postId];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD showErrorWithStatus:@"Fail. Please try again later"];
+        [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+        NSLog(@"Error: %@", error.description);
     }];
 }
 

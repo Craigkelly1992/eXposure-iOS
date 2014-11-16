@@ -336,7 +336,8 @@
             [self.navigationController popViewControllerAnimated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            [SVProgressHUD showErrorWithStatus:error.description];
+            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+            NSLog(@"Error: %@", error.description);
         }];
     } else {
         NSURL *imageURL = [NSURL URLWithString:arrayOrigin[indexPath.row]];

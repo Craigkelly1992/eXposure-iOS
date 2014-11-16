@@ -75,7 +75,8 @@
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Fail: %@", error.description]];
+        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Service Error. Please try again later!"]];
+        NSLog(@"Error: %@", error.description);
     }];
 }
 

@@ -214,8 +214,8 @@
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Failed: %@", error.description]];
-        NSLog(@"Failed: %@", error.description);
+        [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+        NSLog(@"Error: %@", error.description);
     }];
 }
 #pragma mark - actionsheet delegate
@@ -289,6 +289,7 @@
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:USERDEFAULT_KEY_EMAIL];
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:USERDEFAULT_KEY_PASSWORD];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [Infrastructure sharedClient].currentUser = nil;
     // back to login
     [self.tabBarController.navigationController popViewControllerAnimated:YES];
 }
@@ -320,7 +321,8 @@
 }
 
 -(void)instagramLoginFail:(NSError*)error {
-    [SVProgressHUD showErrorWithStatus:@"Fail"];
+    [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+    NSLog(@"Error: %@", error.description);
 }
 
 #pragma mark - Twitter

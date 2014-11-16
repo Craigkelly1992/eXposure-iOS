@@ -276,8 +276,8 @@
         [self getPostByUserId];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD showErrorWithStatus:@"We get error when trying to get Contest. Please try again later."];
-        NSLog([NSString stringWithFormat:@"Error: %@", error.description]);
+        [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+        NSLog(@"Error: %@", error.description);
     }];
 }
 
@@ -334,7 +334,8 @@
         } else {
             // An error occurred, we need to handle the error
             // See: https://developers.facebook.com/docs/ios/errors
-            [SVProgressHUD showErrorWithStatus:error.description];
+            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+            NSLog(@"Error: %@", error.description);
         }
     }];
     

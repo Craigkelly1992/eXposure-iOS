@@ -411,7 +411,7 @@
 }
 
 // log click a brand - not OK
-- (void)logClickBrandId:(NSString*)brandId
+- (void)logClickBrandId:(NSNumber*)brandId
               userEmail:(NSString*)userEmail
               userToken:(NSString*)userToken
                     via:(NSString*)target

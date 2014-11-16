@@ -228,7 +228,7 @@
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // log click a brand
-- (void)logClickBrandId:(NSString*)brandId
+- (void)logClickBrandId:(NSNumber*)brandId
               userEmail:(NSString*)userEmail
               userToken:(NSString*)userToken
                     via:(NSString*)target

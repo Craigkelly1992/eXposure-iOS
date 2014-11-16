@@ -73,7 +73,8 @@
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD showErrorWithStatus:@"Fail"];
+        [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+        NSLog(@"Error: %@", error.description);
     }];
 }
 
@@ -100,7 +101,8 @@
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [SVProgressHUD showErrorWithStatus:@"Fail"];
+        [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+        NSLog(@"Error: %@", error.description);
     }];
 }
 

@@ -111,21 +111,29 @@
 }
 
 -(void)viewFollowerTap {
-    EXPBrandFollowViewController *followerVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPBrandFollowViewControllerIdentifier"];
-    followerVC.isFollower = YES;
-    followerVC.brandName = currentBrand.name;
-    followerVC.arrayFollower = currentBrand.followers_list;
-    followerVC.arrayWinner = currentBrand.winners;
-    [self.navigationController pushViewController:followerVC animated:YES];
+    if ([Infrastructure sharedClient].currentUser) {
+        EXPBrandFollowViewController *followerVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPBrandFollowViewControllerIdentifier"];
+        followerVC.isFollower = YES;
+        followerVC.brandName = currentBrand.name;
+        followerVC.arrayFollower = currentBrand.followers_list;
+        followerVC.arrayWinner = currentBrand.winners;
+        [self.navigationController pushViewController:followerVC animated:YES];
+    } else {
+        [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 -(void)viewWinnerTap {
-    EXPBrandFollowViewController *winnerVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPBrandFollowViewControllerIdentifier"];
-    winnerVC.isFollower = NO;
-    winnerVC.brandName = currentBrand.name;
-    winnerVC.arrayFollower = currentBrand.followers_list;
-    winnerVC.arrayWinner = currentBrand.winners;
-    [self.navigationController pushViewController:winnerVC animated:YES];
+    if ([Infrastructure sharedClient].currentUser) {
+        EXPBrandFollowViewController *winnerVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPBrandFollowViewControllerIdentifier"];
+        winnerVC.isFollower = NO;
+        winnerVC.brandName = currentBrand.name;
+        winnerVC.arrayFollower = currentBrand.followers_list;
+        winnerVC.arrayWinner = currentBrand.winners;
+        [self.navigationController pushViewController:winnerVC animated:YES];
+    } else {
+        [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 // Check if the current user is following the brand
@@ -155,41 +163,50 @@
 }
 
 -(void)followTap:(id)sender {
-    //
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI followBrand:self.brandId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Success"];
-        [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
-        [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
-        [self.buttonFollow removeTarget:self action:@selector(followTap:) forControlEvents:UIControlEventTouchUpInside];
-        [self.buttonFollow addTarget:self
-                              action:@selector(unfollowTap:)
-                    forControlEvents:UIControlEventTouchUpInside];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Fail"];
-    }];
+    
+    if ([Infrastructure sharedClient].currentUser) {
+        //
+        [SVProgressHUD showWithStatus:@"Loading"];
+        [self.serviceAPI followBrand:self.brandId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
+            [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
+            [self.buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+            [self.buttonFollow removeTarget:self action:@selector(followTap:) forControlEvents:UIControlEventTouchUpInside];
+            [self.buttonFollow addTarget:self
+                                  action:@selector(unfollowTap:)
+                        forControlEvents:UIControlEventTouchUpInside];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"Fail"];
+        }];
+    } else {
+        [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 -(void)unfollowTap:(id)sender {
     
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self.serviceAPI unfollowBrand:self.brandId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Success"];
-        [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
-        [self.buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
-        [self.buttonFollow removeTarget:self action:@selector(unfollowTap:) forControlEvents:UIControlEventTouchUpInside];
-        [self.buttonFollow addTarget:self
-                              action:@selector(followTap:)
-                    forControlEvents:UIControlEventTouchUpInside];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD showSuccessWithStatus:@"Fail"];
-    }];
+    if ([Infrastructure sharedClient].currentUser) {
+        [SVProgressHUD showWithStatus:@"Loading"];
+        [self.serviceAPI unfollowBrand:self.brandId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"Success"];
+            [self.buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
+            [self.buttonFollow setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self.buttonFollow setBackgroundImage:[UIImage imageNamed:@"btn_yellow_small"] forState:UIControlStateNormal];
+            [self.buttonFollow removeTarget:self action:@selector(unfollowTap:) forControlEvents:UIControlEventTouchUpInside];
+            [self.buttonFollow addTarget:self
+                                  action:@selector(followTap:)
+                        forControlEvents:UIControlEventTouchUpInside];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [SVProgressHUD showSuccessWithStatus:@"Fail"];
+        }];
+    } else {
+        [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 // Get Information from a brand
@@ -286,19 +303,38 @@
 }
 
 - (IBAction)buttonFacebookTap:(id)sender {
+    
     NSURL *facebookURL = [NSURL URLWithString:currentBrand.facebook];
-    if ([[UIApplication sharedApplication] canOpenURL:facebookURL]){
+    [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"facebook" success:^(id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    if([[UIApplication sharedApplication] canOpenURL:facebookURL]){
         [[UIApplication sharedApplication] openURL:facebookURL];
     }
 }
 
 - (IBAction)buttonTwitterTap:(id)sender {
     NSURL *twitterURL = [NSURL URLWithString:currentBrand.twitter];
+    [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"twitter" success:^(id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
     [[UIApplication sharedApplication] openURL:twitterURL];
 }
 
 - (IBAction)buttonInstagramTap:(id)sender {
     NSURL *instagramURL = [NSURL URLWithString:currentBrand.instagram];
+    [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"instagram" success:^(id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
     [[UIApplication sharedApplication] openURL:instagramURL];
 }
 

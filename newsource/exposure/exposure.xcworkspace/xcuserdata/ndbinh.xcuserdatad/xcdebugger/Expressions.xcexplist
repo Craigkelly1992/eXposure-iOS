@@ -25,6 +25,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "__42-[EXPLoginViewController buttonSignInTap:]_block_invoke:EXPLoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[Infrastructure sharedClient].deviceToken">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[EXPPhotoStreamViewController collectionView:didDeselectItemAtIndexPath:]:EXPPhotoStreamViewController.m">
       </ContextState>
       <ContextState
@@ -42,9 +50,6 @@
          contextName = "-[EXPPortfolioViewController updateScrollView]:EXPPortfolioViewController.m">
       </ContextState>
       <ContextState
-         contextName = "-[EXPImageDetailViewController viewDidLoad]:EXPImageDetailViewController.m">
-      </ContextState>
-      <ContextState
          contextName = "-[EXPImageDetailViewController likePostHandler:]:EXPImageDetailViewController.m">
          <PersistentStrings>
             <PersistentString
@@ -54,6 +59,9 @@
                value = "NO">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPImageDetailViewController viewDidLoad]:EXPImageDetailViewController.m">
       </ContextState>
       <ContextState
          contextName = "-[EXPPortfolioViewController viewDidLayoutSubviews]:EXPPortfolioViewController.m">
