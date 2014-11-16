@@ -29,6 +29,7 @@
     User *currentUser;
     UIImageView *imageViewBrand;
     UILabel *labelBrandName;
+    UILabel *labelWebsiteURL;
     UITextView *textViewDescription;
 }
 
@@ -62,12 +63,23 @@
     labelBrandName = [[UILabel alloc] init];
     CGRect frame2 = CGRectZero;
     frame2.origin.x = 107;
-    frame2.origin.y = 106;
+    frame2.origin.y = 80;
     frame2.size.width = 193;
     frame2.size.height = 25;
     labelBrandName.textColor = [UIColor whiteColor];
-    labelBrandName.font = [UIFont systemFontOfSize:21];
+    labelBrandName.font = [UIFont systemFontOfSize:18];
     labelBrandName.frame = frame2;
+    
+    labelWebsiteURL = [[UILabel alloc] init];
+    CGRect frame4 = CGRectZero;
+    frame4.origin.x = 107;
+    frame4.origin.y = 106;
+    frame4.size.width = 193;
+    frame4.size.height = 25;
+    labelWebsiteURL.textColor = [UIColor whiteColor];
+    labelWebsiteURL.font = [UIFont systemFontOfSize:15];
+    labelWebsiteURL.frame = frame4;
+
     
     textViewDescription = [[UITextView alloc] init];
     CGRect frame3 = CGRectZero;
@@ -80,11 +92,14 @@
     textViewDescription.textAlignment = NSTextAlignmentCenter;
     textViewDescription.font = [UIFont systemFontOfSize:14];
     textViewDescription.frame = frame3;
+    textViewDescription.editable = NO;
+    textViewDescription.selectable = NO;
     
     self.scrollViewHeader.contentSize = CGSizeMake(2 * self.view.frame.size.width, self.scrollViewHeader.frame.size.height);
     
     [self.scrollViewHeader addSubview:imageViewBrand];
     [self.scrollViewHeader addSubview:labelBrandName];
+    [self.scrollViewHeader addSubview:labelWebsiteURL];
     [self.scrollViewHeader addSubview:textViewDescription];
     
     // add interaction handler for follower & winner
@@ -218,7 +233,8 @@
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
         labelBrandName.text = currentBrand.name;
-        textViewDescription.text = [NSString stringWithFormat:@"%@ \n %@", currentBrand.mDescription, currentBrand.website];
+        labelWebsiteURL.text = currentBrand.website;
+        textViewDescription.text = [NSString stringWithFormat:@"%@", currentBrand.mDescription];
         self.title = currentBrand.name;
         //
         if (currentBrand.picture_url) {

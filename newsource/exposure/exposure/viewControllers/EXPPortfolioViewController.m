@@ -99,6 +99,7 @@
     textViewDescription.textAlignment = NSTextAlignmentCenter;
     textViewDescription.font = [UIFont systemFontOfSize:14];
     textViewDescription.frame = frame3;
+    textViewDescription.editable = NO;
     
     self.pagingView.contentSize = CGSizeMake(2 * self.view.frame.size.width, self.pagingView.frame.size.height);
     
