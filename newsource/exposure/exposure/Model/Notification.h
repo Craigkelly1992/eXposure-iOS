@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSNumber * image_file_size;
 @property (nonatomic, copy) NSString * image_updated_at;
 @property (nonatomic, copy) NSString * sender_type;
+@property (nonatomic) BOOL readed_flag;
 
 @end
 

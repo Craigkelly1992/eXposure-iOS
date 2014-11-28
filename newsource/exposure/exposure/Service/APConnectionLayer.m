@@ -1190,6 +1190,31 @@
     }];
 }
 
+// read a notification
+- (void)readNotificationWithNotificationId:(int) notificationId
+                                 UserEmail:(NSString*)userEmail
+                           userToken:(NSString*)userToken
+                             success:(void (^)(id responseObject))success
+                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:POST_NOTIFICATION_READ];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userEmail, PARAM_USER_EMAIL,
+                                userToken, PARAM_USER_TOKEN,
+                                [NSNumber numberWithInt:notificationId], PARAM_NOTIFICATION_ID,
+                                nil];
+    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return a list of notifications
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
 #pragma mark - register device
 // register device token for notification - not OK
 - (void)registerDeviceWithUserId:(NSNumber*)userId
@@ -1199,13 +1224,33 @@
                          success:(void (^)(id responseObject))success
                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
-    NSString *path = [NSString stringWithFormat:REGISTER_DEVICE, deviceToken];
+    NSString *path = [NSString stringWithFormat:REGISTER_DEVICE, userId, userEmail, userToken];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
-                                userEmail, PARAM_USER_EMAIL,
-                                userToken, PARAM_USER_TOKEN,
                                 deviceToken, PARAM_DEVICE_TOKEN,
                                 nil];
     [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
+// get unread notification number 
+- (void)getUnreadNotificationWithEmail:(NSString*)userEmail
+                       userToken:(NSString*)userToken
+                         success:(void (^)(id responseObject))success
+                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:GET_BADGE_NUMBER];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userEmail, PARAM_USER_EMAIL,
+                                userToken, PARAM_USER_TOKEN,
+                                nil];
+    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success(responseObject);
         }

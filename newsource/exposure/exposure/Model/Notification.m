@@ -11,4 +11,11 @@
 
 @implementation Notification
 
+- (NSDictionary *)map{
+    NSMutableDictionary *map = [NSMutableDictionary dictionaryWithDictionary:[super map]];
+    [map setObject:@"id" forKey:@"notificationId"];
+    return [NSDictionary dictionaryWithDictionary:map];
+}
+
+
 @end

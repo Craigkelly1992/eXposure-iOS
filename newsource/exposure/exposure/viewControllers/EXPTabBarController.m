@@ -36,6 +36,7 @@
 
 @implementation EXPTabBarController {
     NSNumber *contestId;
+    UITabBarItem *tabNotification;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -57,6 +58,43 @@
     self.tabBar.translucent = NO;
     self.tabBar.barTintColor = [UIColor colorWithRed:0.0f green:0.17647059f blue:0.4f alpha:1];
     self.selectedIndex = 4;
+    //
+    [self updateNotificationNumber];
+    // add notification
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(eventListenerDidReceiveNotification:)
+                                                 name:@"UpdateNotification"
+                                               object:nil];
+}
+
+// When the notification occurs, a message will be sent to the following method
+- (void)eventListenerDidReceiveNotification:(NSNotification *)notif
+{
+    if ([[notif name] isEqualToString:@"UpdateNotification"])
+    {
+        [self updateNotificationNumber];
+    }
+}
+
+- (void) updateNotificationNumber {
+    if ([Infrastructure sharedClient].currentUser) {
+        User *user = [Infrastructure sharedClient].currentUser;
+        [SVProgressHUD showWithStatus:@"Loading"];
+        APConnectionLayer *serviceAPI = [APConnectionLayer sharedClient];
+        [serviceAPI getUnreadNotificationWithEmail:user.email userToken:user.authentication_token success:^(id responseObject) {
+            
+            NSString *badgeNumber = [NSString stringWithFormat:@"%@", [responseObject objectForKey:@"count_unread"]];
+            tabNotification.badgeValue = badgeNumber;
+            [UIApplication sharedApplication].applicationIconBadgeNumber = [[responseObject objectForKey:@"count_unread"] intValue];
+            NSLog(@"Unread notification: %@", responseObject);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+        
+    } else {
+        // back to login screen
+        [self.tabBarController.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 // Create ViewControllers for Tab Bar
@@ -98,7 +136,7 @@
     UITabBarItem *tabPhotoStream = [self.tabBar.items objectAtIndex:0];
     UITabBarItem *tabContest = [self.tabBar.items objectAtIndex:1];
     UITabBarItem *tabCamera = [self.tabBar.items objectAtIndex:2];
-    UITabBarItem *tabNotification = [self.tabBar.items objectAtIndex:3];
+    tabNotification = [self.tabBar.items objectAtIndex:3];
     UITabBarItem *tabPortfolio = [self.tabBar.items objectAtIndex:4];
     
     // #1 : PhotoStream

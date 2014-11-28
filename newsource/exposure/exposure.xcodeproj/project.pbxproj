@@ -947,7 +947,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Binh Nguyen (A4D63NQV7S)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Craig Kelly (JT962DP2B2)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -957,7 +957,7 @@
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "fa473343-0442-471e-a964-299ae188b476";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -968,7 +968,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Binh Nguyen (WQY493BK39)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Craig Kelly (JT962DP2B2)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -978,7 +978,7 @@
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "fa473343-0442-471e-a964-299ae188b476";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

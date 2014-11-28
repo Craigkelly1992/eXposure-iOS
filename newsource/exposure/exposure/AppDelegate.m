@@ -120,7 +120,7 @@
 #pragma mark - Push Notification
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken{
 	NSLog(@"deviceToken: %@", deviceToken);
-    NSString *deviceTokenString = [[NSString alloc] initWithData:deviceToken encoding:NSUTF8StringEncoding];
+    NSString *deviceTokenString = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
     [Infrastructure sharedClient].deviceToken = deviceTokenString;
 }
@@ -129,15 +129,30 @@
 	NSLog(@"Failed to register with error : %@", error);
 }
 
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-    
-    
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
 }
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+    //handle the actions
+    if ([identifier isEqualToString:@"declineAction"]){
+    }
+    else if ([identifier isEqualToString:@"answerAction"]){
+    }
+}
+#endif
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     application.applicationIconBadgeNumber = 0;
     NSString *msg = [NSString stringWithFormat:@"%@", userInfo];
     NSLog(@"%@",msg);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateNotification"
+                                                        object:nil
+                                                      userInfo:nil];
 }
 
 @end

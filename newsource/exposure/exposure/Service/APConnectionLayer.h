@@ -58,9 +58,12 @@
 #define GET_FOLLOWER_RANKING @"rankings/followers"
 // notification
 #define GET_NOTIFICATION @"notifications"
-#define REGISTER_DEVICE @"users/%@/save_token" // userID
+#define POST_NOTIFICATION_READ @"notifications/read_notification"
+// device token
+#define REGISTER_DEVICE @"users/%@/save_token?user_email=%@&user_token=%@" // userID
 // claim the prize
 #define CLAIM_PRIZE @"contests/%@/claim_prize" // contestID
+#define GET_BADGE_NUMBER @"notifications/count_unread_notifications"
 
 // API Parameters
 #define PARAM_USERNAME @"username"
@@ -103,6 +106,7 @@
 #define PARAM_WINNER_CITY @"winner[city]"
 #define PARAM_WINNER_PROVINCE @"winner[province]"
 #define PARAM_WINNER_POSTAL_CODE @"winner[postal_code]"
+#define PARAM_NOTIFICATION_ID @"id"
 
 // API Response
 #define RESPONSE_USER_ID @"id"
@@ -445,6 +449,20 @@
                            userToken:(NSString*)userToken
                              success:(void (^)(id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+// read a notification
+// read a notification
+- (void)readNotificationWithNotificationId:(int) notificationId
+                                 UserEmail:(NSString*)userEmail
+                                 userToken:(NSString*)userToken
+                                   success:(void (^)(id responseObject))success
+                                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+// get unread notification number 
+- (void)getUnreadNotificationWithEmail:(NSString*)userEmail
+                             userToken:(NSString*)userToken
+                               success:(void (^)(id responseObject))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - register device
 - (void)registerDeviceWithUserId:(NSNumber*)userId

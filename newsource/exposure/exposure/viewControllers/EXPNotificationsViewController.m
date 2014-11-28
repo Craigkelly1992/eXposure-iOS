@@ -46,7 +46,10 @@
         [self.serviceAPI getNotificationWithUserEmail:user.email userToken:user.authentication_token success:^(id responseObject) {
             
             [SVProgressHUD dismiss];
-            arrayNotification = responseObject;
+            arrayNotification = [responseObject objectForKey:@"notifications"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateNotification"
+                                                                object:nil
+                                                              userInfo:nil];
             [self.tableViewNotification reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -93,6 +96,12 @@
     UILabel *labelDetail = (UILabel*)[cell viewWithTag:5]; // for type user
     UIImageView *imageViewWinner = (UIImageView*)[cell viewWithTag:4];
     //
+    if (!notification.readed_flag) {
+        cell.backgroundColor = Rgb2UIColor(223, 109, 98);
+    } else {
+        cell.backgroundColor = Rgb2UIColor(180, 180, 180);
+    }
+    //
     if ([notification.sender_type rangeOfString:@"user"].location != NSNotFound) { // is winner
         labelContest.hidden = YES;
         labelContestSlogan.hidden = YES;
@@ -132,17 +141,29 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Notification *notification = [Notification objectFromDictionary:arrayNotification[indexPath.row]];
+    
+    User *user = [Infrastructure sharedClient].currentUser;
+    [self.serviceAPI readNotificationWithNotificationId:[notification.notificationId intValue] UserEmail:user.email userToken:user.authentication_token success:^(id responseObject) {
+    
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateNotification"
+                                                            object:nil
+                                                          userInfo:nil];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+        NSLog(@"Error: %@", error);
+    }];
     if ([notification.type rangeOfString:@"like"].location != NSNotFound) { // is like
         EXPImageDetailViewController *postVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPImageDetailViewControllerIdentifier"];
         postVC.postId = notification.post_id;
         [self.navigationController pushViewController:postVC animated:YES];
-    
+        
     } else if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
-    
+        
         EXPPrizeClaimViewController *winnerVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPPrizeClaimViewControllerIdentifier"];
         
         [self.navigationController pushViewController:winnerVC animated:YES];
     }
+    
 }
 
 @end

@@ -108,5 +108,13 @@
       <ContextState
          contextName = "__43-[EXPImageDetailViewController viewDidLoad]_block_invoke:EXPImageDetailViewController.m">
       </ContextState>
+      <ContextState
+         contextName = "__42-[EXPLoginViewController buttonSignInTap:]_block_invoke_3:EXPLoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentUser">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

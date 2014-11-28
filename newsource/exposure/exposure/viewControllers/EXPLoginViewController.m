@@ -114,7 +114,7 @@
         [self.serviceAPI registerDeviceWithUserId:currentUser.userId email:currentUser.email userToken:currentUser.authentication_token deviceToken:[Infrastructure sharedClient].deviceToken success:^(id responseObject) {
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+            NSLog(@"Error: %@", error);
         }];
         
         // go to home screen
