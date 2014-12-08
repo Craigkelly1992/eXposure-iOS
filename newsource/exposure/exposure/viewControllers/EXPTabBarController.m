@@ -83,11 +83,13 @@
         APConnectionLayer *serviceAPI = [APConnectionLayer sharedClient];
         [serviceAPI getUnreadNotificationWithEmail:user.email userToken:user.authentication_token success:^(id responseObject) {
             
+            [SVProgressHUD dismiss];
             NSString *badgeNumber = [NSString stringWithFormat:@"%@", [responseObject objectForKey:@"count_unread"]];
             tabNotification.badgeValue = badgeNumber;
             [UIApplication sharedApplication].applicationIconBadgeNumber = [[responseObject objectForKey:@"count_unread"] intValue];
             NSLog(@"Unread notification: %@", responseObject);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
             NSLog(@"Error: %@", error);
         }];
         

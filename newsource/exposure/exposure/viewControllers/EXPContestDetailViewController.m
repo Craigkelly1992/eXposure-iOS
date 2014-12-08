@@ -15,9 +15,9 @@
 #import "Post.h"
 #import "EXPImageDetailViewController.h"
 
-#define kDetailHeightMin 33
+#define kDetailHeightMin 35
 #define kDetailHeightMax 172
-#define kSubmissionHeightMin 33
+#define kSubmissionHeightMin 35
 #define kFollowHeaderHeight 44
 #define kCollectionCellSize 120
 
@@ -45,7 +45,9 @@
 {
     [super viewDidLoad];
     isDetailOpen = NO;
+    self.constraintDetailHeight.constant = kDetailHeightMin;
     isSubmissionOpen = YES;
+    self.constraintSubmissionHeight.constant = 200;
     // load image
     if (self.image_url) {
         [self.imageViewContest setImageURL:[NSURL URLWithString:self.image_url]];
@@ -96,7 +98,7 @@
         self.constraintSubmissionHeight.constant = kFollowHeaderHeight + (arraySubmission.count / 3 + arraySubmission.count % 3)*kCollectionCellSize;
     }
     // for main scroll view
-    int newHeight = self.viewDetailContainer.frame.origin.y + self.constraintDetailHeight.constant + self.constraintSubmissionHeight.constant + kTabBarHeight;
+    int newHeight = self.viewDetailContainer.frame.origin.y + self.viewDetailContainer.frame.size.height + self.constraintDetailHeight.constant + self.constraintSubmissionHeight.constant;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
 }
 
