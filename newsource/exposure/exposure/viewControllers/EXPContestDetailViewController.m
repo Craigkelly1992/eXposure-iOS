@@ -47,7 +47,7 @@
     isDetailOpen = NO;
     self.constraintDetailHeight.constant = kDetailHeightMin;
     isSubmissionOpen = YES;
-    self.constraintSubmissionHeight.constant = 200;
+//    self.constraintSubmissionHeight.constant = 200;
     // load image
     if (self.image_url) {
         [self.imageViewContest setImageURL:[NSURL URLWithString:self.image_url]];
