@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
 
-@interface EXPPrizeClaimViewController : EXPBaseViewController
+@interface EXPPrizeClaimViewController : EXPBaseViewController <UITextFieldDelegate>
 
 // Properties
 

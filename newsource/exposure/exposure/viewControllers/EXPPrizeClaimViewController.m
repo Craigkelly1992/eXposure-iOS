@@ -35,6 +35,10 @@
     self.navigationController.navigationItem.backBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
     // Done
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneEditing)];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnView)];
+    tapGesture.numberOfTapsRequired = 1;
+    [self.scrollViewContainer addGestureRecognizer:tapGesture];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -77,17 +81,8 @@
     [self checkStringEmpty:self.textFieldFirstName withErrorString:@"Please input your first name"]&&
     [self checkStringEmpty:self.textFieldLastName withErrorString:@"Please input your last name"]
     &&
-    [self checkStringEmpty:self.textFieldPhone withErrorString:@"Please input your phone"]
-    &&
-    [self checkStringEmpty:self.textFieldEmail withErrorString:@"Please input your email"]
-    &&
-    [self checkStringEmpty:self.textFieldStreet withErrorString:@"Please input your street"]
-    &&
-    [self checkStringEmpty:self.textFieldCity withErrorString:@"Please input your city"]
-    &&
-    [self checkStringEmpty:self.textFieldProvince withErrorString:@"Please input your province"]
-    &&
-    [self checkStringEmpty:self.textFieldPostalCode withErrorString:@"Please input your postal code"];
+    [self checkStringEmpty:self.textFieldEmail withErrorString:@"Please input your email"];
+
     if (!valid) {
         return;
     }
@@ -129,5 +124,30 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UITextView Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    NSInteger nextTag = textField.tag + 1;
+    // Try to find next responder
+    UIResponder* nextResponder = [textField.superview viewWithTag:nextTag];
+    if (nextResponder) {
+        // Found next responder, so set it.
+        [nextResponder becomeFirstResponder];
+    } else {
+        // Not found, so remove keyboard.
+        [textField resignFirstResponder];
+    }
+    return NO; // We do not want UITextField to insert line-breaks.
+}
+
+- (void) clickOnView {
+    [self.textFieldFirstName resignFirstResponder];
+    [self.textFieldLastName resignFirstResponder];
+    [self.textFieldEmail resignFirstResponder];
+    [self.textFieldPhone resignFirstResponder];
+    [self.textFieldStreet resignFirstResponder];
+    [self.textFieldCity resignFirstResponder];
+    [self.textFieldProvince resignFirstResponder];
+    [self.textFieldPostalCode resignFirstResponder];
+}
 
 @end
