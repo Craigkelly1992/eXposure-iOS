@@ -29,7 +29,7 @@
     User *currentUser;
     UIImageView *imageViewBrand;
     UILabel *labelBrandName;
-    UILabel *labelWebsiteURL;
+    UITextView *textViewWebsiteURL;
     UITextView *textViewDescription;
 }
 
@@ -70,15 +70,20 @@
     labelBrandName.font = [UIFont systemFontOfSize:18];
     labelBrandName.frame = frame2;
     
-    labelWebsiteURL = [[UILabel alloc] init];
+    textViewWebsiteURL = [[UITextView alloc] init];
     CGRect frame4 = CGRectZero;
     frame4.origin.x = 107;
     frame4.origin.y = 106;
     frame4.size.width = 193;
     frame4.size.height = 25;
-    labelWebsiteURL.textColor = [UIColor whiteColor];
-    labelWebsiteURL.font = [UIFont systemFontOfSize:15];
-    labelWebsiteURL.frame = frame4;
+    textViewWebsiteURL.textColor = [UIColor whiteColor];
+    textViewWebsiteURL.backgroundColor = [UIColor clearColor];
+    textViewWebsiteURL.font = [UIFont systemFontOfSize:15];
+    textViewWebsiteURL.frame = frame4;
+    textViewWebsiteURL.scrollEnabled = NO;
+    textViewWebsiteURL.editable = NO;
+    textViewWebsiteURL.dataDetectorTypes = UIDataDetectorTypeLink;
+    textViewWebsiteURL.delegate = self;
 
     
     textViewDescription = [[UITextView alloc] init];
@@ -99,7 +104,7 @@
     
     [self.scrollViewHeader addSubview:imageViewBrand];
     [self.scrollViewHeader addSubview:labelBrandName];
-    [self.scrollViewHeader addSubview:labelWebsiteURL];
+    [self.scrollViewHeader addSubview:textViewWebsiteURL];
     [self.scrollViewHeader addSubview:textViewDescription];
     
     // add interaction handler for follower & winner
@@ -233,7 +238,11 @@
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
         labelBrandName.text = currentBrand.name;
-        labelWebsiteURL.text = currentBrand.website;
+        
+        // website
+        textViewWebsiteURL.text = currentBrand.website;
+        
+        // description
         textViewDescription.text = [NSString stringWithFormat:@"%@", currentBrand.mDescription];
         self.title = currentBrand.name;
         //
@@ -462,5 +471,12 @@
     //Calculate the page we are on based on x coordinate position and width of scroll view
     self.pageControl.currentPage = (int)xPos/width;
 }
+
+#pragma mark - TextView Delegate
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange NS_AVAILABLE_IOS(7_0)
+{
+    return YES;
+}
+
 
 @end

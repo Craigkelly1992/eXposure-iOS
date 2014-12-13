@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
 
-@interface EXPBrandViewController : EXPBaseViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
+@interface EXPBrandViewController : EXPBaseViewController <UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UITextViewDelegate>
 
 //
 @property(nonatomic, strong) NSNumber *brandId;
