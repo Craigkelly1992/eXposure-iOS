@@ -1163,14 +1163,32 @@
                                                             <segue destination="sp9-qL-0wy" kind="push" id="5m7-Lc-IOP"/>
                                                         </connections>
                                                     </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFc-mC-hmy" userLabel="Button - Brand">
+                                                        <rect key="frame" x="171" y="0.0" width="60" height="43"/>
+                                                        <color key="backgroundColor" red="0.0" green="0.37254901959999998" blue="0.55298032407407405" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="60" id="Gx0-Q8-QUP"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                                        <state key="normal" title="Prize">
+                                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="buttonPrizeTap:" destination="Pul-bf-5wN" eventType="touchUpInside" id="fRe-tC-m5R"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.1764705882" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="aCm-eq-4Qb" secondAttribute="bottom" id="64w-SD-zlx"/>
+                                                    <constraint firstAttribute="bottom" secondItem="hFc-mC-hmy" secondAttribute="bottom" id="7qd-dO-HBY"/>
                                                     <constraint firstAttribute="bottom" secondItem="OwE-jo-kAP" secondAttribute="bottom" id="IAF-yT-gos"/>
+                                                    <constraint firstItem="aCm-eq-4Qb" firstAttribute="leading" secondItem="hFc-mC-hmy" secondAttribute="trailing" constant="1" id="SEv-Gb-tiz"/>
                                                     <constraint firstItem="aCm-eq-4Qb" firstAttribute="top" secondItem="YQb-KX-aWx" secondAttribute="top" id="aqf-bX-cu3"/>
                                                     <constraint firstAttribute="trailing" secondItem="OwE-jo-kAP" secondAttribute="trailing" id="fgH-AB-l6s"/>
                                                     <constraint firstItem="OwE-jo-kAP" firstAttribute="leading" secondItem="aCm-eq-4Qb" secondAttribute="trailing" id="jND-y7-ZYR"/>
+                                                    <constraint firstItem="hFc-mC-hmy" firstAttribute="top" secondItem="YQb-KX-aWx" secondAttribute="top" id="mjI-6w-KBs"/>
                                                     <constraint firstAttribute="height" constant="43" id="mq1-fx-M8D"/>
                                                     <constraint firstItem="OwE-jo-kAP" firstAttribute="top" secondItem="YQb-KX-aWx" secondAttribute="top" id="rXR-Z4-ufd"/>
                                                     <constraint firstAttribute="centerY" secondItem="ZKa-s7-vdj" secondAttribute="centerY" id="rqi-2V-qFI"/>

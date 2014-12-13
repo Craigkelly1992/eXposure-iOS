@@ -42,5 +42,6 @@
 - (IBAction)buttonRuleTap:(id)sender;
 - (IBAction)buttonIndicatorDetail:(id)sender;
 - (IBAction)buttonIndicatorSubmission:(id)sender;
+- (IBAction)buttonPrizeTap:(id)sender;
 
 @end

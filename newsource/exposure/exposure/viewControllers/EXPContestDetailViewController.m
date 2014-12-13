@@ -143,6 +143,12 @@
     }
 }
 
+- (IBAction)buttonPrizeTap:(id)sender {
+    if (currentContest) {
+        [[[UIAlertView alloc] initWithTitle:@"Prize" message:currentContest.contest.info.prizes delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }
+}
+
 #pragma mark - CollectionView Delegate
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
