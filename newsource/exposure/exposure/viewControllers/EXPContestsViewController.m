@@ -196,7 +196,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     EXPContestDetailViewController *contestDetailVC = segue.destinationViewController;
-    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:selectedIndexPath.row]];
+    NSInteger reverseOrder = arrayContest.count - 1 - selectedIndexPath.row;
+    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:reverseOrder]];
     contestDetailVC.contestId = contest.contestId;
     contestDetailVC.image_url = contest.picture_url;
     contestDetailVC.image_url_thumb = contest.picture_url_thumb;
