@@ -503,6 +503,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonSend" destination="nsY-8F-aW0" id="Uv7-Gh-lfp"/>
                         <outlet property="constraintViewDescriptionBottom" destination="NPj-fn-i7P" id="b2R-jZ-Ndc"/>
                         <outlet property="imageViewPost" destination="UhK-ft-cCt" id="RtB-cJ-ghH"/>
                         <outlet property="textFieldPostDescription" destination="7qm-26-Xrj" id="Naj-qi-c6w"/>
@@ -1163,7 +1164,7 @@
                                                             <segue destination="sp9-qL-0wy" kind="push" id="5m7-Lc-IOP"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFc-mC-hmy" userLabel="Button - Brand">
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hFc-mC-hmy" userLabel="Button - Brand">
                                                         <rect key="frame" x="171" y="0.0" width="60" height="43"/>
                                                         <color key="backgroundColor" red="0.0" green="0.37254901959999998" blue="0.55298032407407405" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -1372,6 +1373,7 @@
                         <outlet property="collectionViewPost" destination="vom-AT-68d" id="5VS-zK-iYL"/>
                         <outlet property="constraintDetailHeight" destination="rGv-Zy-2nn" id="cXL-zx-aaD"/>
                         <outlet property="constraintSubmissionHeight" destination="CQk-hf-CsZ" id="FsI-kk-KXf"/>
+                        <outlet property="imageViewAvailable" destination="m28-Dz-BUb" id="6ea-mg-vjd"/>
                         <outlet property="imageViewContest" destination="T8r-l9-f2y" id="awT-BZ-kmn"/>
                         <outlet property="labelBrandName" destination="ndJ-sn-iIE" id="dav-HH-y4j"/>
                         <outlet property="labelContestName" destination="GpH-yO-GpQ" id="SZ4-VJ-kqU"/>

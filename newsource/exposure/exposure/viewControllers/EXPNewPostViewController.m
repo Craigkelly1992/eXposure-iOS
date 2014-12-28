@@ -44,6 +44,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.imageViewPost.image = self.imagePost;
+    self.buttonSend.enabled = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -59,6 +60,7 @@
 #pragma mark - Action
 - (IBAction)buttonSendTap:(id)sender {
     [SVProgressHUD showWithStatus:@"Creating Post"];
+    self.buttonSend.enabled = NO;
     User *user = [Infrastructure sharedClient].currentUser;
     [self.serviceAPI createPostWithContestId:self.contestId
                                   uploaderId:user.userId
@@ -70,6 +72,7 @@
                                         [SVProgressHUD showSuccessWithStatus:@"Success"];
                                         [self.navigationController popViewControllerAnimated:YES];
                                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         self.buttonSend.enabled = YES;
                                          [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
                                          NSLog(@"Error: %@", error.description);
                       }];

@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *textFieldPostDescription;
 @property (strong, nonatomic) IBOutlet UIView *viewDescription;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintViewDescriptionBottom;
+@property (weak, nonatomic) IBOutlet UIButton *buttonSend;
 
 // Action
 - (IBAction)buttonSendTap:(id)sender;

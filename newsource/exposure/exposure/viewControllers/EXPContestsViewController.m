@@ -9,6 +9,7 @@
 #import "EXPContestsViewController.h"
 #import "Contest.h"
 #import "EXPContestDetailViewController.h"
+#import "Util.h"
 
 @interface EXPContestsViewController ()
 
@@ -20,6 +21,7 @@
     NSArray *arrayContest;
     NSIndexPath *selectedIndexPath;
     User *currentUser;
+    NSString *currentDateTime;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,6 +50,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
     self.labelNoItem.hidden = YES;
     if (self.segmentOption.selectedSegmentIndex == 0) { // Following
         
@@ -108,6 +111,14 @@
     Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:reverseOrder]];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewLeft];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewRight];
+    // compare start & end to show available
+    if ([contest.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedAscending &&
+        [contest.end_date caseInsensitiveCompare:currentDateTime] == NSOrderedDescending) {
+        
+        imageViewRight.hidden = NO;
+    } else {
+        imageViewRight.hidden = YES;
+    }
     //
     [imageViewLeft setImage:[UIImage imageNamed:@"placeholder.png"]];
     if ([contest.picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound ) {

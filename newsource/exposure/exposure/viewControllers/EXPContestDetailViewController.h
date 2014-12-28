@@ -35,6 +35,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionViewPost;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
 @property (strong, nonatomic) IBOutlet UIView *viewDetailContainer;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewAvailable;
 
 
 // Actions

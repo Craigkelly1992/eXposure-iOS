@@ -14,6 +14,7 @@
 #import "EXPBrandViewController.h"
 #import "Post.h"
 #import "EXPImageDetailViewController.h"
+#import "Util.h"
 
 #define kDetailHeightMin 35
 #define kDetailHeightMax 172
@@ -70,8 +71,23 @@
         self.labelContestName.text = currentContest.contest.info.title;
         [self.labelContestName resizeToFit];
         self.title = currentContest.contest.info.title;
+        
+        // compare start & end to show available
+        NSString *currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
+        if ([currentContest.contest.info.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedAscending &&
+            [currentContest.contest.info.end_date caseInsensitiveCompare:currentDateTime] == NSOrderedDescending) {
+            
+            self.imageViewAvailable.hidden = NO;
+            self.buttonEnter.enabled = YES;
+        } else {
+            self.imageViewAvailable.hidden = YES;
+            self.buttonEnter.enabled = NO;
+        }
+        
         //
-        self.textViewDetail.text = currentContest.contest.info.mDescription;
+        NSString *detail = [NSString stringWithFormat:@"Prize: %@ \n\n %@", currentContest.contest.info.prizes, currentContest.contest.info.mDescription];
+        self.textViewDetail.text = detail;
+        
         //
         arraySubmission = currentContest.submissions.submissions;
         [self.collectionViewPost reloadData];
