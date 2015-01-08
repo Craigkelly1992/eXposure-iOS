@@ -15,6 +15,7 @@
 @implementation EXPPrizeClaimViewController {
     User *currentUser;
     User *winnerUser;
+    UITextField *textFieldSelected;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,6 +49,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self getUserInfo];
+    [self registerForKeyboardNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self deregisterFromKeyboardNotifications];
 }
 
 -(void) getUserInfo {
@@ -137,6 +143,68 @@
         [textField resignFirstResponder];
     }
     return NO; // We do not want UITextField to insert line-breaks.
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    textFieldSelected = textField;
+    return YES;
+}
+
+#pragma mark - keyboard notification
+- (void)registerForKeyboardNotifications {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+}
+
+- (void)deregisterFromKeyboardNotifications {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardDidHideNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+    
+}
+
+- (void)keyboardWasShown:(NSNotification *)notification {
+    
+    NSDictionary* info = [notification userInfo];
+    
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    CGPoint buttonOrigin = textFieldSelected.frame.origin;
+    
+    CGFloat buttonHeight = textFieldSelected.frame.size.height;
+    
+    CGRect visibleRect = self.view.frame;
+    
+    visibleRect.size.height -= keyboardSize.height;
+    
+    if (!CGRectContainsPoint(visibleRect, buttonOrigin)){
+        
+        CGPoint scrollPoint = CGPointMake(0.0, buttonOrigin.y - visibleRect.size.height + buttonHeight);
+        
+        [self.scrollViewContainer setContentOffset:scrollPoint animated:YES];
+        
+    }
+    
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *)notification {
+    
+    [self.scrollViewContainer setContentOffset:CGPointZero animated:YES];
+    
 }
 
 - (void) clickOnView {

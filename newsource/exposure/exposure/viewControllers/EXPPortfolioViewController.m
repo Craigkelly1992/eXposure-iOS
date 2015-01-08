@@ -215,7 +215,8 @@
             if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
                 [self.imageViewBackground setImageURL:[NSURL URLWithString:profileUser.background_picture_url_preview]];
             } else {
-                [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
+//                [self.imageViewBackground setImage:[UIImage imageNamed:@"sample.jpg"]];
+                [self.imageViewBackground setBackgroundColor:[UIColor blackColor]];
             }
             // description
             textViewDescription.text = profileUser.mDescription;

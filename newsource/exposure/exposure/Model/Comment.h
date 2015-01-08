@@ -17,5 +17,6 @@
 @property (nonatomic, retain) NSString *text;
 @property (nonatomic, retain) NSString *createdAt;
 @property (nonatomic, retain) NSString *updated_at;
+@property (nonatomic, retain) NSString *user_avatar_url;
 
 @end

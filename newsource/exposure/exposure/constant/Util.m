@@ -13,6 +13,7 @@
     NSDateFormatter *startDateTimeFormatter;
     NSDateFormatter *endDateTimeFormatter;
     NSDateFormatter *dateTimeFormatter;
+    NSDateFormatter *systemDateTimeFormatter;
     NSDateFormatter *friendlyDateTimeFormatter;
     NSDateFormatter *dateFormatter;
     NSDateFormatter *timeFormatter;
@@ -36,6 +37,12 @@
         [dateTimeFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         [dateTimeFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
         [dateTimeFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss"];
+        
+        // parse 2011-01-21T12:26:47.000Z -> date
+        systemDateTimeFormatter = [[NSDateFormatter alloc] init];
+        [systemDateTimeFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+        [systemDateTimeFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+        [systemDateTimeFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss.000'Z'"];
         
         // parse 2011/01/21,12:26:47 -> friendly date time
         friendlyDateTimeFormatter = [[NSDateFormatter alloc] init];
@@ -195,6 +202,24 @@
     
     // convert to new format
     NSString *datetime = [friendlyDateTimeFormatter stringFromDate:destinationDate];
+    
+    return datetime;
+}
+// 2015-01-01T11:52:00.000Z
+- (NSString*) getCurrentSystemDateString {
+    NSDate* sourceDate = [NSDate date];
+    
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    NSTimeZone* destinationTimeZone = [NSTimeZone systemTimeZone];
+    
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:sourceDate];
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:sourceDate];
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+    
+    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:sourceDate];
+    
+    // convert to new format
+    NSString *datetime = [systemDateTimeFormatter stringFromDate:destinationDate];
     
     return datetime;
 }

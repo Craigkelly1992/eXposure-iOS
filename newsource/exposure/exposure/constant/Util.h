@@ -26,6 +26,8 @@
 - (NSString*) getCurrentFriendlyDateString;
 - (NSString*) getCurrentStartDateString;
 - (NSString*) getCurrentEndDateString;
+// 2015-01-01T11:52:00.000Z
+- (NSString*) getCurrentSystemDateString;
 - (NSDate*) parseFriendlyDateTimeFormat:(NSString*)jobDateTime;
 
 @end

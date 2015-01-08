@@ -280,10 +280,20 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PostCommentTableViewCellIdentifier"];
     }
+    
     //
     UILabel *labelComment = (UILabel*)[cell viewWithTag:1];
     Comment *comment = [arrayComment objectAtIndex:indexPath.row];
     labelComment.text = comment.text;
+    
+    // Avatar image
+    UIImageView *imageUser = (UIImageView*)[cell viewWithTag:2];
+    if (comment.user_avatar_url) {
+        [imageUser setImageURL:[NSURL URLWithString:comment.user_avatar_url]];
+    } else {
+        imageUser.image = [UIImage imageNamed:@"placeholder.png"];
+    }
+    
     // color for cell
     if (indexPath.row % 2 == 0) {
         [cell setBackgroundColor:Rgb2UIColor(255, 122, 98)];
