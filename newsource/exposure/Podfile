@@ -9,6 +9,5 @@ pod 'DAKeyboardControl', '~> 2.3'
 pod 'UIAlertView-Blocks', '0.0.1'
 pod 'SVProgressHUD', :head
 pod 'SVPullToRefresh'
-pod 'IQKeyboardManager'
 pod 'TTTAttributedLabel'
 # pod 'CLImageEditor/AllTools', :git => 'https://github.com/ndbinh99/CLImageEditor.git'

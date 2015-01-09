@@ -11,6 +11,7 @@
 #import "ContestDetail.h"
 #import "Comment.h"
 #import "EXPPortfolioViewController.h"
+#import "TimeUtil.h"
 
 @interface EXPImageDetailViewController ()
 
@@ -55,7 +56,15 @@
         // fill data
         self.labelPostName.text = currentPost.text;
         self.title = currentPost.text;
-        self.labelTime.text = @"----";
+        // get elapsed time
+        
+//        currentPost.created_at = @"2015-01-08T15:36:37.000Z";
+        if (currentPost.created_at) {
+            NSDate *postCreatedAt = [[TimeUtil sharedUtil] convertToDateZFormat:currentPost.created_at];
+            self.labelTime.text = [[TimeUtil sharedUtil] elapsedTimeSince:postCreatedAt];
+        } else {
+            self.labelTime.text = @"----";
+        }
         self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
         if (currentPost.current_user_likes) {
             [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn_selected"] forState:UIControlStateNormal];
