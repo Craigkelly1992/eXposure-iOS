@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperationManager.h"
+#import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "User.h"
 
 // base url
@@ -106,7 +106,7 @@
 #define PARAM_WINNER_CITY @"winner[city]"
 #define PARAM_WINNER_PROVINCE @"winner[province]"
 #define PARAM_WINNER_POSTAL_CODE @"winner[postal_code]"
-#define PARAM_NOTIFICATION_ID @"id"
+#define PARAM_NOTIFICATION_ID @"notification_id"
 
 // API Response
 #define RESPONSE_USER_ID @"id"
@@ -123,9 +123,9 @@
 
 // Constants
 #define TARGET_WEBSITE @"website"
-#define TARGET_FACEBOOK @"facebook"
-#define TARGET_TWITTER @"twitter"
-#define TARGET_INSTAGRAM @"instagram"
+#define TARGET_FACEBOOK @"user[facebook]"
+#define TARGET_TWITTER @"user[twitter]"
+#define TARGET_INSTAGRAM @"user[instagram]"
 
 ///
 @interface APConnectionLayer : AFHTTPRequestOperationManager
@@ -172,6 +172,9 @@
                    backgroundPicture:(NSData*)backgroundPicture
                            userEmail:(NSString*)userEmail // old email for verification
                            userToken:(NSString*)userToken
+                          facebookId:(NSString*)facebookId
+                         instagramId:(NSString*)instagramId
+                           twitterId:(NSString*)twitterId
                              success:(void (^)(id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
@@ -274,7 +277,9 @@
                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // claim the prize
-- (void)claimThePrizeWithWinnerFirstName:(NSString*)winnerFirstName
+- (void)claimThePrizeWithContestId:(NSNumber*)contestId
+                    notificationId:(NSNumber*)notificationId
+                         WinnerFirstName:(NSString*)winnerFirstName
                           winnerLastName:(NSString*)winnerLastName
                              winnerEmail:(NSString*)winnerEmail
                              winnerPhone:(NSString*)winnerPhone
@@ -300,6 +305,7 @@
 
 // get post by post id
 - (void)getPostByPostId:(NSNumber*)postId
+                 userId:(NSNumber*)userId
               userEmail:(NSString*)userEmail
               userToken:(NSString*)userToken
                 success:(void (^)(id responseObject))success

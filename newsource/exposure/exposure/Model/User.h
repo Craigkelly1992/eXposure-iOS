@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSArray *posts; // Post type
 @property (nonatomic, retain) NSNumber *followers_count;
 @property (nonatomic, retain) NSNumber *follow_count;
+@property (nonatomic, copy) NSString *facebook;
 
 /// returned in contest's winner
 @property (nonatomic, copy) NSString *created_at;

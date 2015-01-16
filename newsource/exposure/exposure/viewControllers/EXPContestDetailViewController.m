@@ -71,6 +71,7 @@
         self.labelContestName.text = currentContest.contest.info.title;
         [self.labelContestName resizeToFit];
         self.title = currentContest.contest.info.title;
+        NSLog(currentContest.contest.info.title);
         
         // compare start & end to show available
         NSString *currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];

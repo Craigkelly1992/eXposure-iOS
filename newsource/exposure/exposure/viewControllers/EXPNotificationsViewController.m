@@ -118,6 +118,8 @@
         if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
             imageViewWinner.image = [UIImage imageNamed:@"badge_winner"];
         }
+        [Infrastructure sharedClient].contestId = notification.contest_id;
+        [Infrastructure sharedClient].notificationId = notification.notificationId;
     }
     if ([notification.sender_picture rangeOfString:@"placeholder"].location != NSNotFound ) {
         [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];

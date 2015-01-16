@@ -27,6 +27,7 @@
 @end
 
 @implementation EXPPortfolioViewController {
+    NSString *facebookId;
     NSArray *arrayPost;
     NSMutableArray *arrayContest;
     User *currentUser;
@@ -201,6 +202,7 @@
         
         [SVProgressHUD dismiss];
         profileUser = [User objectFromDictionary:responseObject];
+        facebookId = profileUser.facebook;
         // fill user's data
         if (profileUser) {
             // has login yet
@@ -326,8 +328,8 @@
         if (!error) {
             // Success! Include your code to handle the results here
             NSLog(@"user info: %@", result);
-            NSURL *safariURL = [NSURL URLWithString:[result objectForKey:@"link"]];
-            NSURL *inAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"fb:///profile/%@", [result objectForKey:@"id"]]];
+            NSURL *safariURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",facebookId]];
+            NSURL *inAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"fb:///profile/%@", facebookId]];
             if ([[UIApplication sharedApplication] canOpenURL:inAppURL]){
                 [[UIApplication sharedApplication] openURL:inAppURL];
             } else {

@@ -94,8 +94,17 @@
     }
     
     // Send data to server
+    NSNumber *contestID = [Infrastructure sharedClient].contestId;
+    NSNumber *notificationID = [Infrastructure sharedClient].notificationId;
+    NSLog(@"-----------LOG-----------");
+    NSLog(@"%i", [contestID intValue]);
+    NSLog(@"%i", [notificationID intValue]);
+    NSLog(@"-----------END-----------");
+    
     [SVProgressHUD showWithStatus:@"Sending data"];
-    [self.serviceAPI claimThePrizeWithWinnerFirstName:self.textFieldFirstName.text
+    [self.serviceAPI claimThePrizeWithContestId:contestID
+                                       notificationId:notificationID
+                                      WinnerFirstName:self.textFieldFirstName.text
                                        winnerLastName:self.textFieldLastName.text
                                           winnerEmail:self.textFieldEmail.text
                                           winnerPhone:self.textFieldPhone.text

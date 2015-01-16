@@ -149,7 +149,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     application.applicationIconBadgeNumber = 0;
     NSString *msg = [NSString stringWithFormat:@"%@", userInfo];
-    NSLog(@"%@",msg);
+    NSLog(@"New notification mess:%@",msg);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateNotification"
                                                         object:nil
                                                       userInfo:nil];

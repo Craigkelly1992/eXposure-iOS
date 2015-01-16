@@ -152,6 +152,9 @@
     NSString *deviceToken = nil;
     NSString *description = nil;
     NSString *website = nil;
+    NSString *facebookId = nil;
+    NSString *instagramId = nil;
+    NSString *twitterId = nil;
     if (![self.textFieldFirstname.text isEqualToString:@""]
         && ![self.textFieldFirstname.text isEqualToString:user.first_name]) {
         firstName = self.textFieldFirstname.text;
@@ -194,6 +197,9 @@
     }
     
     // call service here
+    facebookId =[Infrastructure sharedClient].facebookId;
+    instagramId=[Infrastructure sharedClient].instagramId;
+    twitterId=[Infrastructure sharedClient].twitterId;
     [SVProgressHUD showWithStatus:@"Updating"];
     [self.serviceAPI editUserProfileWithFirstname:firstName
                                          lastName:lastName
@@ -207,13 +213,15 @@
                                 backgroundPicture:backgroundPicture
                                         userEmail:user.email
                                         userToken:user.authentication_token
+                                       facebookId:facebookId
+                                      instagramId:instagramId
+                                        twitterId:twitterId
                                           success:^(id responseObject) {
-        
+                                              
         [SVProgressHUD showSuccessWithStatus:@"Success"];
         [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
         NSLog(@"Error: %@", error.description);
     }];
@@ -296,7 +304,8 @@
 
 #pragma mark - Facebook Login Delegate
 -(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
-    
+    NSString *facebookId = [user objectForKey:@"link"] ? [user objectForKey:@"link"] : [NSString stringWithFormat:@"%@@facebook.com", user.username];
+    [Infrastructure sharedClient].facebookId = facebookId;
 }
 
 -(void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
@@ -353,8 +362,6 @@
                  NSArray *twitterAccounts =
                  [self.accountStore accountsWithAccountType:twitterAccountType];
                  [[[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"You\'re having %lu Twitter account, app will automatically use the last account", (unsigned long)twitterAccounts.count] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
-                 
-                 
              }
              else {
                  // Access was not granted, or an error occurred

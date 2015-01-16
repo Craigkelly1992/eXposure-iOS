@@ -91,6 +91,7 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [SVProgressHUD dismiss];
             NSLog(@"Error: %@", error);
+            NSLog(@"UPDATED!!!");
         }];
         
     } else {

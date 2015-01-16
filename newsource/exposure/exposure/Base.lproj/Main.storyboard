@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ugi-0Q-BOs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ugi-0Q-BOs">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -627,7 +627,7 @@
                                                     <outlet property="delegate" destination="vNO-6S-46Z" id="6te-wd-nYL"/>
                                                 </connections>
                                             </scrollView>
-                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ngk-iR-BQy" userLabel="View - Social">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ngk-iR-BQy" userLabel="View - Social">
                                                 <rect key="frame" x="20" y="171" width="319" height="44"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKk-8s-QPb" userLabel="Button - Facebook">
@@ -675,11 +675,14 @@
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.0" green="0.1764705882" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="oJU-YT-qr3"/>
+                                                </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4e8-zW-2sE" userLabel="View - Current Contest">
                                                 <rect key="frame" x="20" y="214" width="320" height="142"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoF-Op-Z33">
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoF-Op-Z33">
                                                         <rect key="frame" x="134" y="7" width="20" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="eT4-N3-52k"/>
@@ -692,7 +695,7 @@
                                                             <action selector="buttonIndicatorContestTap:" destination="vNO-6S-46Z" eventType="touchUpInside" id="ROH-L6-Yg0"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Contests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxj-of-lnO">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Current Contests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxj-of-lnO">
                                                         <rect key="frame" x="8" y="5" width="118" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -767,10 +770,14 @@
                                                 <color key="backgroundColor" red="0.85098039219999999" green="0.28235294119999998" blue="0.21960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="kv9-0f-ha3" firstAttribute="leading" secondItem="4e8-zW-2sE" secondAttribute="leading" id="306-dC-2fL"/>
+                                                    <constraint firstAttribute="trailing" secondItem="hoF-Op-Z33" secondAttribute="trailing" constant="166" id="Cwf-Ju-daz"/>
                                                     <constraint firstItem="kv9-0f-ha3" firstAttribute="top" secondItem="4e8-zW-2sE" secondAttribute="top" constant="34" id="KuZ-zH-caU"/>
                                                     <constraint firstAttribute="height" constant="142" id="Wgs-3E-aJW"/>
                                                     <constraint firstAttribute="bottom" secondItem="kv9-0f-ha3" secondAttribute="bottom" id="adm-Uc-R8c"/>
+                                                    <constraint firstItem="hoF-Op-Z33" firstAttribute="leading" secondItem="gxj-of-lnO" secondAttribute="trailing" constant="8" id="b4R-co-m8V"/>
                                                     <constraint firstAttribute="trailing" secondItem="kv9-0f-ha3" secondAttribute="trailing" id="h0J-tV-mgK"/>
+                                                    <constraint firstItem="kv9-0f-ha3" firstAttribute="top" secondItem="hoF-Op-Z33" secondAttribute="bottom" constant="7" id="hZD-XC-cTM"/>
+                                                    <constraint firstItem="hoF-Op-Z33" firstAttribute="top" secondItem="4e8-zW-2sE" secondAttribute="top" constant="7" id="hrZ-dC-G3h"/>
                                                 </constraints>
                                             </view>
                                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rx1-ZV-3Vr" userLabel="View - Follow">
@@ -894,11 +901,14 @@
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="top" secondItem="uQg-xd-syc" secondAttribute="top" constant="20" id="Rv6-8q-ncM"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="leading" secondItem="uQg-xd-syc" secondAttribute="leading" constant="20" id="Tin-Ll-RMF"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="leading" secondItem="RQq-KB-RXR" secondAttribute="leading" id="VHk-Qj-cNP"/>
+                                            <constraint firstItem="Ngk-iR-BQy" firstAttribute="leading" secondItem="uQg-xd-syc" secondAttribute="leading" constant="20" id="X1j-qA-6ko"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="leading" secondItem="uQg-xd-syc" secondAttribute="leading" constant="20" id="XEC-B0-bsx"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="centerX" secondItem="4e8-zW-2sE" secondAttribute="centerX" id="Yqg-fV-74x"/>
+                                            <constraint firstItem="Ngk-iR-BQy" firstAttribute="top" secondItem="uQg-xd-syc" secondAttribute="top" constant="171" id="Z0v-Qw-svq"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="leading" secondItem="Rx1-ZV-3Vr" secondAttribute="leading" id="ZBA-fx-jrh"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="centerX" secondItem="Rx1-ZV-3Vr" secondAttribute="centerX" id="ZaT-2t-ViD"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="top" secondItem="uQg-xd-syc" secondAttribute="top" constant="20" id="aRQ-XU-J0w"/>
+                                            <constraint firstAttribute="trailing" secondItem="Ngk-iR-BQy" secondAttribute="trailing" constant="21" id="c6l-bo-Vfa"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="centerY" secondItem="RQq-KB-RXR" secondAttribute="centerY" id="g8P-pb-9na"/>
                                             <constraint firstItem="T72-S8-3zz" firstAttribute="centerX" secondItem="RQq-KB-RXR" secondAttribute="centerX" id="h82-dc-jgm"/>
                                             <constraint firstAttribute="trailing" secondItem="T72-S8-3zz" secondAttribute="trailing" constant="20" id="hBw-C5-VjG"/>
@@ -1774,7 +1784,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d9F-F2-qau">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d9F-F2-qau">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PoG-0Z-SFZ">
@@ -1925,7 +1935,7 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BbU-oU-O3G">
+                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BbU-oU-O3G">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Pw-xh-MCd" userLabel="View - Container">
@@ -2068,6 +2078,8 @@ Team eXposure</string>
                         <color key="backgroundColor" red="0.58431372550000005" green="0.81960784310000001" blue="0.7725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="BbU-oU-O3G" secondAttribute="bottom" id="8S2-AC-xff"/>
+                            <constraint firstAttribute="trailing" secondItem="BbU-oU-O3G" secondAttribute="trailing" id="KZD-8w-mmZ"/>
+                            <constraint firstItem="BbU-oU-O3G" firstAttribute="leading" secondItem="Ita-cK-Vb1" secondAttribute="leading" id="P8B-vl-jCf"/>
                             <constraint firstItem="BbU-oU-O3G" firstAttribute="top" secondItem="Ita-cK-Vb1" secondAttribute="top" id="nJP-ai-6wz"/>
                         </constraints>
                     </view>
@@ -2149,7 +2161,7 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XpQ-f8-nK4">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpQ-f8-nK4">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="You have won! We'll be needing to confirm a few things from you to ship your prize!" translatesAutoresizingMaskIntoConstraints="NO" id="p4Q-b7-a6B">
@@ -2378,7 +2390,7 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="2bY-sV-O2S">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="2bY-sV-O2S">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WbE-bo-FWB">

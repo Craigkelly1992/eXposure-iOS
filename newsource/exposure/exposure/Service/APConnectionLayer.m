@@ -141,6 +141,9 @@
               backgroundPicture:(NSData*)backgroundPicture
                            userEmail:(NSString*)userEmail // old email for verification
                            userToken:(NSString*)userToken
+                          facebookId:(NSString*)facebookId
+                         instagramId:(NSString*)instagramId
+                           twitterId:(NSString*)twitterId
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     // Neither a key nor a value can be nil; if you need to represent a null value in a dictionary, you should use NSNull
@@ -204,6 +207,18 @@
         if (userToken) {
             [formData appendPartWithFormData:[userToken dataUsingEncoding:NSUTF8StringEncoding]
                                     name:PARAM_USER_TOKEN];
+        }
+        if (facebookId) {
+            [formData appendPartWithFormData:[facebookId dataUsingEncoding:NSUTF8StringEncoding]
+                                        name:TARGET_FACEBOOK];
+        }
+        if (instagramId) {
+            [formData appendPartWithFormData:[instagramId dataUsingEncoding:NSUTF8StringEncoding]
+                                        name:TARGET_INSTAGRAM];
+        }
+        if (twitterId) {
+            [formData appendPartWithFormData:[twitterId dataUsingEncoding:NSUTF8StringEncoding]
+                                        name:TARGET_TWITTER];
         }
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -558,7 +573,8 @@
 
 // claim the prize
 - (void)claimThePrizeWithContestId:(NSNumber*)contestId
-                   winnerFirstName:(NSString*)winnerFirstName
+                    notificationId:(NSNumber*)notificationId
+                   WinnerFirstName:(NSString*)winnerFirstName
                     winnerLastName:(NSString*)winnerLastName
                        winnerEmail:(NSString*)winnerEmail
                        winnerPhone:(NSString*)winnerPhone
@@ -573,6 +589,8 @@
     
     NSString *path = [NSString stringWithFormat:CLAIM_PRIZE, contestId];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                contestId, PARAM_CONTEST_ID,
+                                notificationId, PARAM_NOTIFICATION_ID,
                                 winnerFirstName, PARAM_WINNER_FIRSTNAME,
                                 winnerLastName, PARAM_WINNER_LASTNAME,
                                 winnerEmail, PARAM_WINNER_EMAIL,
@@ -584,7 +602,7 @@
                                 userEmail, PARAM_USER_EMAIL,
                                 userToken, PARAM_USER_TOKEN,
                                 nil];
-    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // if success, return list of contest with Contest type
         if (success) {
             success(responseObject);
@@ -645,6 +663,7 @@
 
 // get post by post id - checked
 - (void)getPostByPostId:(NSNumber*)postId
+                 userId:(NSNumber*)userId
               userEmail:(NSString*)userEmail
               userToken:(NSString*)userToken
                 success:(void (^)(id responseObject))success
@@ -652,6 +671,7 @@
     
     NSString *path = [NSString stringWithFormat:GET_POST_BY_ID, postId];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userId,PARAM_USER_ID,
                                 userEmail, PARAM_USER_EMAIL,
                                 userToken, PARAM_USER_TOKEN,
                                 nil];

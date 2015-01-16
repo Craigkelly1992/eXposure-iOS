@@ -15,5 +15,4 @@
     [map setObject:@"id" forKey:@"postId"];
     return [NSDictionary dictionaryWithDictionary:map];
 }
-
 @end
