@@ -48,6 +48,7 @@
     [self.textFieldConfirmPassword resignFirstResponder];
 }
 
+
 - (void)doneEditing {
     // check current password
     NSString *currentPassword = [[NSUserDefaults standardUserDefaults] valueForKey:USERDEFAULT_KEY_PASSWORD];

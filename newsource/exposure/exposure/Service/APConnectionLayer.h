@@ -64,6 +64,9 @@
 // claim the prize
 #define CLAIM_PRIZE @"contests/%@/claim_prize" // contestID
 #define GET_BADGE_NUMBER @"notifications/count_unread_notifications"
+// get xp
+#define GET_XP_WITH_USERID_USERTOKEN_USEREMAIL @"users/%@/get_all_expose_of_user?user_token=%@&user_email=%@"
+
 
 // API Parameters
 #define PARAM_USERNAME @"username"
@@ -172,9 +175,9 @@
                    backgroundPicture:(NSData*)backgroundPicture
                            userEmail:(NSString*)userEmail // old email for verification
                            userToken:(NSString*)userToken
-                          facebookId:(NSString*)facebookId
-                         instagramId:(NSString*)instagramId
-                           twitterId:(NSString*)twitterId
+                            facebook:(NSString*)facebook
+                           instagram:(NSString*)instagram
+                             twitter:(NSString*)twitter
                              success:(void (^)(id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
@@ -469,6 +472,11 @@
                              userToken:(NSString*)userToken
                                success:(void (^)(id responseObject))success
                                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)getXpPointsWithUserId:(NSString*)userId
+                    userToken:(NSString*)userToken
+                     userEmai:(NSString*)userEmail
+                      success:(void (^)(id responseObject))success
+                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 #pragma mark - register device
 - (void)registerDeviceWithUserId:(NSNumber*)userId

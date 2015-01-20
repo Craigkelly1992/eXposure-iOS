@@ -29,6 +29,9 @@
 @property (nonatomic, retain) NSNumber *followers_count;
 @property (nonatomic, retain) NSNumber *follow_count;
 @property (nonatomic, copy) NSString *facebook;
+@property (nonatomic, copy) NSString *twitter;
+@property (nonatomic, copy) NSString *instagram;
+@property (nonatomic, copy) NSString *total_xp;
 
 /// returned in contest's winner
 @property (nonatomic, copy) NSString *created_at;

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		047F3F1C5F2242689E515885 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B324034F210C4B26A2662BA1 /* libPods.a */; };
 		B34CDF5319C0A2AC0038F28C /* EXPBrandFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B34CDF5219C0A2AC0038F28C /* EXPBrandFollowViewController.m */; };
 		B358011A1A5FF3AB007C0079 /* TimeUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B35801191A5FF3AB007C0079 /* TimeUtil.m */; };
 		B36BFB1C1A4FC5DC002B8B14 /* CLImageEditor.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B36BFAAE1A4FC5DB002B8B14 /* CLImageEditor.bundle */; };
@@ -76,11 +75,6 @@
 		B3CD73B3196E879800CBE2C6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD73B2196E879800CBE2C6 /* AppDelegate.m */; };
 		B3CD73B6196E879800CBE2C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3CD73B4196E879800CBE2C6 /* Main.storyboard */; };
 		B3CD73BB196E879800CBE2C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3CD73BA196E879800CBE2C6 /* Images.xcassets */; };
-		B3CD73C2196E879800CBE2C6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CD73C1196E879800CBE2C6 /* XCTest.framework */; };
-		B3CD73C3196E879800CBE2C6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CD73A2196E879800CBE2C6 /* Foundation.framework */; };
-		B3CD73C4196E879800CBE2C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CD73A6196E879800CBE2C6 /* UIKit.framework */; };
-		B3CD73CC196E879800CBE2C6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3CD73CA196E879800CBE2C6 /* InfoPlist.strings */; };
-		B3CD73CE196E879800CBE2C6 /* exposureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD73CD196E879800CBE2C6 /* exposureTests.m */; };
 		B3CD7426196E8F8400CBE2C6 /* EXPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD7425196E8F8400CBE2C6 /* EXPLoginViewController.m */; };
 		B3CD742D196E95E900CBE2C6 /* EXPSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD742C196E95E900CBE2C6 /* EXPSignUpViewController.m */; };
 		B3CD7432196E990A00CBE2C6 /* APConnectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD7431196E990A00CBE2C6 /* APConnectionLayer.m */; };
@@ -137,17 +131,9 @@
 		B3DB55AF198A2F3700402BA8 /* InstagramUser.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55A8198A2F3700402BA8 /* InstagramUser.m */; };
 		B3DB55B2198A2F7300402BA8 /* InstagramKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3DB55B1198A2F7300402BA8 /* InstagramKit.plist */; };
 		B3DB55B5198B8B3700402BA8 /* EXPGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */; };
+		B57BE5941A6DF7B2003B031F /* key.png in Resources */ = {isa = PBXBuildFile; fileRef = B57BE5931A6DF7B2003B031F /* key.png */; };
+		F3C5670A662BF488F3EFDC4C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B324034F210C4B26A2662BA1 /* libPods.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B3CD73C5196E879800CBE2C6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B3CD7397196E879700CBE2C6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B3CD739E196E879800CBE2C6;
-			remoteInfo = exposure;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B324034F210C4B26A2662BA1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -281,7 +267,6 @@
 		B3CD73B2196E879800CBE2C6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B3CD73B5196E879800CBE2C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B3CD73BA196E879800CBE2C6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B3CD73C0196E879800CBE2C6 /* exposureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = exposureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3CD73C1196E879800CBE2C6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B3CD73C9196E879800CBE2C6 /* exposureTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "exposureTests-Info.plist"; sourceTree = "<group>"; };
 		B3CD73CB196E879800CBE2C6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -396,6 +381,7 @@
 		B3DB55B1198A2F7300402BA8 /* InstagramKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InstagramKit.plist; path = Library/InstagramKit/InstagramKit.plist; sourceTree = "<group>"; };
 		B3DB55B3198B8B3700402BA8 /* EXPGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXPGalleryViewController.h; path = viewControllers/EXPGalleryViewController.h; sourceTree = "<group>"; };
 		B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXPGalleryViewController.m; path = viewControllers/EXPGalleryViewController.m; sourceTree = "<group>"; };
+		B57BE5931A6DF7B2003B031F /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
 		FC7B9CA3B3EC2FBF18782A1E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FEAB7CFAC7B17883BEB6A299 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -412,18 +398,8 @@
 				B3DB55831987C3C500402BA8 /* ImageIO.framework in Frameworks */,
 				B3CD73A7196E879800CBE2C6 /* UIKit.framework in Frameworks */,
 				B3CD73A3196E879800CBE2C6 /* Foundation.framework in Frameworks */,
-				047F3F1C5F2242689E515885 /* libPods.a in Frameworks */,
 				B3DB558D1989F16A00402BA8 /* FacebookSDK.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B3CD73BD196E879800CBE2C6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B3CD73C2196E879800CBE2C6 /* XCTest.framework in Frameworks */,
-				B3CD73C4196E879800CBE2C6 /* UIKit.framework in Frameworks */,
-				B3CD73C3196E879800CBE2C6 /* Foundation.framework in Frameworks */,
+				F3C5670A662BF488F3EFDC4C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,10 +445,10 @@
 		B36BFAB51A4FC5DB002B8B14 /* ImageTools */ = {
 			isa = PBXGroup;
 			children = (
+				B36BFABF1A4FC5DB002B8B14 /* CLDrawTool */,
 				B36BFAB61A4FC5DB002B8B14 /* CLAdjustmentTool */,
 				B36BFAB91A4FC5DB002B8B14 /* CLBlurTool */,
 				B36BFABC1A4FC5DB002B8B14 /* CLClippingTool */,
-				B36BFABF1A4FC5DB002B8B14 /* CLDrawTool */,
 				B36BFAC21A4FC5DB002B8B14 /* CLEffectTool */,
 				B36BFAD61A4FC5DB002B8B14 /* CLEmoticonTool */,
 				B36BFAD91A4FC5DB002B8B14 /* CLFilterTool */,
@@ -722,6 +698,7 @@
 		B3A4D515197F72C00070185E /* image */ = {
 			isa = PBXGroup;
 			children = (
+				B57BE5931A6DF7B2003B031F /* key.png */,
 				B3DB55551986385A00402BA8 /* sample.jpg */,
 				B3A4D518197FB0B50070185E /* placeholder.png */,
 			);
@@ -753,7 +730,6 @@
 			isa = PBXGroup;
 			children = (
 				B3CD739F196E879800CBE2C6 /* exposure.app */,
-				B3CD73C0196E879800CBE2C6 /* exposureTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1067,24 +1043,6 @@
 			productReference = B3CD739F196E879800CBE2C6 /* exposure.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B3CD73BF196E879800CBE2C6 /* exposureTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B3CD73D4196E879800CBE2C6 /* Build configuration list for PBXNativeTarget "exposureTests" */;
-			buildPhases = (
-				B3CD73BC196E879800CBE2C6 /* Sources */,
-				B3CD73BD196E879800CBE2C6 /* Frameworks */,
-				B3CD73BE196E879800CBE2C6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B3CD73C6196E879800CBE2C6 /* PBXTargetDependency */,
-			);
-			name = exposureTests;
-			productName = exposureTests;
-			productReference = B3CD73C0196E879800CBE2C6 /* exposureTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1096,9 +1054,6 @@
 				TargetAttributes = {
 					B3CD739E196E879800CBE2C6 = {
 						DevelopmentTeam = WQY493BK39;
-					};
-					B3CD73BF196E879800CBE2C6 = {
-						TestTargetID = B3CD739E196E879800CBE2C6;
 					};
 				};
 			};
@@ -1116,7 +1071,6 @@
 			projectRoot = "";
 			targets = (
 				B3CD739E196E879800CBE2C6 /* exposure */,
-				B3CD73BF196E879800CBE2C6 /* exposureTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1126,6 +1080,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B57BE5941A6DF7B2003B031F /* key.png in Resources */,
 				B3CD73BB196E879800CBE2C6 /* Images.xcassets in Resources */,
 				B3DB55561986385A00402BA8 /* sample.jpg in Resources */,
 				B3DB55B2198A2F7300402BA8 /* InstagramKit.plist in Resources */,
@@ -1134,14 +1089,6 @@
 				B36BFB1C1A4FC5DC002B8B14 /* CLImageEditor.bundle in Resources */,
 				B3CD73AD196E879800CBE2C6 /* InfoPlist.strings in Resources */,
 				B3CD73B6196E879800CBE2C6 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B3CD73BE196E879800CBE2C6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B3CD73CC196E879800CBE2C6 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1296,23 +1243,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B3CD73BC196E879800CBE2C6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B3CD73CE196E879800CBE2C6 /* exposureTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B3CD73C6196E879800CBE2C6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B3CD739E196E879800CBE2C6 /* exposure */;
-			targetProxy = B3CD73C5196E879800CBE2C6 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B3CD73AB196E879800CBE2C6 /* InfoPlist.strings */ = {
@@ -1418,7 +1349,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Craig Kelly (YU344669UU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1440,8 +1372,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Craig Kelly (YU344669UU)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Craig Kelly (YU344669UU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1454,46 +1386,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "af6225d2-856a-4d15-ba83-58a2b5fb5ce4";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		B3CD73D5196E879800CBE2C6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/exposure.app/exposure";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "exposure/exposure-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "exposureTests/exposureTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		B3CD73D6196E879800CBE2C6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/exposure.app/exposure";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "exposure/exposure-Prefix.pch";
-				INFOPLIST_FILE = "exposureTests/exposureTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -1514,15 +1406,6 @@
 			buildConfigurations = (
 				B3CD73D2196E879800CBE2C6 /* Debug */,
 				B3CD73D3196E879800CBE2C6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B3CD73D4196E879800CBE2C6 /* Build configuration list for PBXNativeTarget "exposureTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B3CD73D5196E879800CBE2C6 /* Debug */,
-				B3CD73D6196E879800CBE2C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

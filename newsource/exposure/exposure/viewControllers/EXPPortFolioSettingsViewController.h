@@ -29,7 +29,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonChangePassword;
 @property (strong, nonatomic) IBOutlet UIButton *buttonInstagram;
 @property (strong, nonatomic) IBOutlet UIButton *buttonTwitter;
-
 // Actions
 - (IBAction)signOut:(id)sender;
 - (IBAction)changePassword:(id)sender;

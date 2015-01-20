@@ -27,9 +27,10 @@
 @property(nonatomic, strong) NSString *deviceToken;
 @property(nonatomic, strong) NSNumber *contestId;
 @property(nonatomic, strong) NSNumber *notificationId;
-@property(nonatomic, strong) NSString *facebookId;
-@property(nonatomic, strong) NSString *instagramId;
-@property(nonatomic, strong) NSString *twitterId;
-
+@property(nonatomic, strong) NSString *facebook;
+@property(nonatomic, strong) NSString *instagram;
+@property(nonatomic, strong) NSString *twitter;
+@property(nonatomic, strong) NSString *accessTokenInstagram;
+@property(nonatomic, strong) NSString *total_xp;
 
 @end

@@ -27,7 +27,8 @@
 @end
 
 @implementation EXPPortfolioViewController {
-    NSString *facebookId;
+    NSString *facebookLink;
+    NSString *twitterLink;
     NSArray *arrayPost;
     NSMutableArray *arrayContest;
     User *currentUser;
@@ -202,7 +203,9 @@
         
         [SVProgressHUD dismiss];
         profileUser = [User objectFromDictionary:responseObject];
-        facebookId = profileUser.facebook;
+        facebookLink = profileUser.facebook;
+        twitterLink = profileUser.twitter;
+        
         // fill user's data
         if (profileUser) {
             // has login yet
@@ -328,8 +331,8 @@
         if (!error) {
             // Success! Include your code to handle the results here
             NSLog(@"user info: %@", result);
-            NSURL *safariURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",facebookId]];
-            NSURL *inAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"fb:///profile/%@", facebookId]];
+            NSURL *safariURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",facebookLink]];
+            NSURL *inAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"fb:///profile/%@", facebookLink]];
             if ([[UIApplication sharedApplication] canOpenURL:inAppURL]){
                 [[UIApplication sharedApplication] openURL:inAppURL];
             } else {
@@ -397,7 +400,7 @@
                      if ([[UIApplication sharedApplication] canOpenURL:twitterURL]){
                          [[UIApplication sharedApplication] openURL:twitterURL];
                      } else {
-                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@", account.username]]];
+                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@", twitterLink]]];
                      }
                  }
                  

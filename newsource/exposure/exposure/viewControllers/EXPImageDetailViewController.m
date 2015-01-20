@@ -13,6 +13,7 @@
 #import "EXPPortfolioViewController.h"
 #import "TimeUtil.h"
 
+#define URL_AVATAR_IMAGE @"http://exposuretechnologies.com/%@"
 @interface EXPImageDetailViewController ()
 
 @end
@@ -304,15 +305,12 @@
     UILabel *labelComment = (UILabel*)[cell viewWithTag:1];
     Comment *comment = [arrayComment objectAtIndex:indexPath.row];
     labelComment.text = comment.text;
-    
     // Avatar image
+    NSURL * imageURL = [NSURL URLWithString:comment.user_avatar_url];
+    NSData * imageData = [NSData dataWithContentsOfURL:imageURL];
+    UIImage * image = [UIImage imageWithData:imageData];
     UIImageView *imageUser = (UIImageView*)[cell viewWithTag:2];
-    if (comment.user_avatar_url) {
-        [imageUser setImageURL:[NSURL URLWithString:comment.user_avatar_url]];
-    } else {
-        imageUser.image = [UIImage imageNamed:@"placeholder.png"];
-    }
-    
+    imageUser.image = image;
     // color for cell
     if (indexPath.row % 2 == 0) {
         [cell setBackgroundColor:Rgb2UIColor(255, 122, 98)];

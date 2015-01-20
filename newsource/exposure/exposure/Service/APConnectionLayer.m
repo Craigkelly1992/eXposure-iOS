@@ -141,9 +141,9 @@
               backgroundPicture:(NSData*)backgroundPicture
                            userEmail:(NSString*)userEmail // old email for verification
                            userToken:(NSString*)userToken
-                          facebookId:(NSString*)facebookId
-                         instagramId:(NSString*)instagramId
-                           twitterId:(NSString*)twitterId
+                            facebook:(NSString*)facebook
+                           instagram:(NSString*)instagram
+                             twitter:(NSString*)twitter
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     // Neither a key nor a value can be nil; if you need to represent a null value in a dictionary, you should use NSNull
@@ -208,16 +208,16 @@
             [formData appendPartWithFormData:[userToken dataUsingEncoding:NSUTF8StringEncoding]
                                     name:PARAM_USER_TOKEN];
         }
-        if (facebookId) {
-            [formData appendPartWithFormData:[facebookId dataUsingEncoding:NSUTF8StringEncoding]
+        if (facebook) {
+            [formData appendPartWithFormData:[facebook dataUsingEncoding:NSUTF8StringEncoding]
                                         name:TARGET_FACEBOOK];
         }
-        if (instagramId) {
-            [formData appendPartWithFormData:[instagramId dataUsingEncoding:NSUTF8StringEncoding]
+        if (instagram) {
+            [formData appendPartWithFormData:[instagram dataUsingEncoding:NSUTF8StringEncoding]
                                         name:TARGET_INSTAGRAM];
         }
-        if (twitterId) {
-            [formData appendPartWithFormData:[twitterId dataUsingEncoding:NSUTF8StringEncoding]
+        if (twitter) {
+            [formData appendPartWithFormData:[twitter dataUsingEncoding:NSUTF8StringEncoding]
                                         name:TARGET_TWITTER];
         }
         
@@ -1280,5 +1280,25 @@
         }
     }];
 }
+//get Xp points
+
+-(void)getXpPointsWithUserId:(NSString *)userId userToken:(NSString *)userToken userEmai:(NSString *)userEmail success:(void (^)(id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure{
+    
+    NSString *path = [NSString stringWithFormat:GET_XP_WITH_USERID_USERTOKEN_USEREMAIL,userId,userToken,userEmail];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                userEmail, PARAM_USER_EMAIL,
+                                userToken, PARAM_USER_TOKEN,
+                                nil];
+    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
 
 @end

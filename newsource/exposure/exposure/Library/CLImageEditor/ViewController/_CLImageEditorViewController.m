@@ -8,6 +8,7 @@
 #import "_CLImageEditorViewController.h"
 
 #import "CLImageToolBase.h"
+#import "User.h"
 
 
 #pragma mark- _CLImageEditorViewController
@@ -17,6 +18,10 @@
 @property (nonatomic, strong) CLImageToolBase *currentTool;
 @property (nonatomic, strong, readwrite) CLImageToolInfo *toolInfo;
 @property (nonatomic, strong) UIImageView *targetImageView;
+@property (nonatomic, strong) NSNumber *userId;
+@property (nonatomic, strong) NSString *userToken;
+@property (nonatomic, strong) NSString *userEmail;
+@property (nonatomic, strong) NSString *totalXp;
 @end
 
 
@@ -178,11 +183,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.serviceAPI = [APConnectionLayer sharedClient];
     self.title = self.toolInfo.title;
     self.view.clipsToBounds = YES;
     self.view.backgroundColor = self.theme.backgroundColor;
     self.navigationController.view.backgroundColor = self.view.backgroundColor;
+    self.totalXp = [Infrastructure sharedClient].total_xp;
     
     if([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)]){
         self.automaticallyAdjustsScrollViewInsets = NO;
@@ -203,6 +209,27 @@
         [_scrollView addSubview:_imageView];
         [self refreshImageView];
     }
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    //request the xp of user
+    NSString *defaultTotalXp = @"0";
+    [Infrastructure sharedClient].total_xp = defaultTotalXp;
+    [SVProgressHUD showWithStatus:@"Loading..."];
+    User *currentUser = [Infrastructure sharedClient].currentUser;
+    self.userId = currentUser.userId;
+    self.userToken = currentUser.authentication_token;
+    self.userEmail = currentUser.email;
+    NSString *userId = [self.userId stringValue];
+    
+    [self.serviceAPI getXpPointsWithUserId:userId userToken:self.userToken userEmai:self.userEmail success:^(id responseObject) {
+        NSString *total_xp = [responseObject objectForKey:@"total_xp"];
+        [Infrastructure sharedClient].total_xp = total_xp;
+        [SVProgressHUD dismiss];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning
