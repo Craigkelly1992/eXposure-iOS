@@ -45,6 +45,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //browse mode
+    NSNumber *zeroValue = [NSNumber numberWithInt:0];
+    if(![Infrastructure sharedClient].currentUser){
+        [self.buttonFollow setEnabled:NO];
+    }
     // Do any additional setup after loading the view.
     self.title = @"";
     arrayContest = [[NSMutableArray alloc] init];
@@ -235,6 +240,8 @@
     [self.serviceAPI getBrandWithId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
+        //get facebook, instagram, twitte
+        
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
         labelBrandName.text = currentBrand.name;
@@ -273,9 +280,13 @@
         // get contests of brand
         [self getContestsFromBrand];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD showErrorWithStatus:@"We get error when trying to get information of Brand. Please try again later."];
-        NSLog(@"Error: %@", error.description);
+        if(![[Infrastructure sharedClient] currentUser]){
+            
+                [SVProgressHUD dismiss];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"We get error when trying to get information of Brand. Please try again later.!!!!!"];
+            NSLog(@"Error: %@", error.description);
+        }
     }];
 }
 
@@ -294,9 +305,12 @@
         [self.tableViewContest reloadData];
         [self updateScrollView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        [SVProgressHUD showErrorWithStatus:@"We get error when trying to get Contest. Please try again later."];
-        NSLog(@"Error: %@", error.description);
+        if(![Infrastructure sharedClient].currentUser){
+            [SVProgressHUD dismiss];
+        }else{
+            [SVProgressHUD showErrorWithStatus:@"We get error when trying to get information of Brand. Please try again later.!!!!!"];
+            NSLog(@"Error: %@", error.description);
+        }
     }];
 }
 
@@ -328,39 +342,49 @@
 }
 
 - (IBAction)buttonFacebookTap:(id)sender {
-    
-    NSURL *facebookURL = [NSURL URLWithString:currentBrand.facebook];
-    [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"facebook" success:^(id responseObject) {
+    if(currentBrand.facebook){
+        NSURL *facebookURL = [NSURL URLWithString:currentBrand.facebook];
+        [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"facebook" success:^(id responseObject) {
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-    if([[UIApplication sharedApplication] canOpenURL:facebookURL]){
-        [[UIApplication sharedApplication] openURL:facebookURL];
+        if([[UIApplication sharedApplication] canOpenURL:facebookURL]){
+            [[UIApplication sharedApplication] openURL:facebookURL];
+        }
+    }
+    else{
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Facebook account in Port Folio Profile Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }
 }
 
 - (IBAction)buttonTwitterTap:(id)sender {
-    NSURL *twitterURL = [NSURL URLWithString:currentBrand.twitter];
-    [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"twitter" success:^(id responseObject) {
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-    [[UIApplication sharedApplication] openURL:twitterURL];
+    if(currentBrand.twitter != nil){
+        NSURL *twitterURL = [NSURL URLWithString:[NSString stringWithFormat:@"twitter:///user?screen_name=%@", currentBrand.twitter]];
+        if ([[UIApplication sharedApplication] canOpenURL:twitterURL]){
+            [[UIApplication sharedApplication] openURL:twitterURL];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@", currentBrand.twitter]]];
+        }
+    }else{
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Twitter account in Port Folio Profile Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }
 }
 
 - (IBAction)buttonInstagramTap:(id)sender {
-    NSURL *instagramURL = [NSURL URLWithString:currentBrand.instagram];
-    [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"instagram" success:^(id responseObject) {
+    if (currentBrand.instagram!= nil) {
+        NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://user?username=%@", currentBrand.instagram]];
+        if ([[UIApplication sharedApplication] canOpenURL:instagramURL]){
+            [[UIApplication sharedApplication] openURL:instagramURL];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", currentBrand.instagram]]];
+        }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-    [[UIApplication sharedApplication] openURL:instagramURL];
+    } else {
+        //
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Instagram account in Port Folio Profile Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    }
 }
 
 - (IBAction)buttonContestIndicatorTap:(id)sender {

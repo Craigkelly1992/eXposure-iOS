@@ -43,54 +43,76 @@
     // Do any additional setup after loading the view.
     currentUser = [Infrastructure sharedClient].currentUser;
     [SVProgressHUD showWithStatus:@"Loading Post"];
-    [self.serviceAPI getPostByPostId:self.postId
-                              userId:currentUser.userId
-                           userEmail:currentUser.email
-                           userToken:currentUser.authentication_token
-                             success:^(id responseObject) {
-       
-        [SVProgressHUD dismiss];
-        NSLog(@"Current Post: %@", responseObject);
-        currentPost = [Post objectFromDictionary:responseObject];
-        // get user posted
+    if(![[Infrastructure sharedClient] currentUser]){
+            //browse mode
+            currentUser.userId = nil;
+            currentUser.email = nil;
+            currentUser.authentication_token = nil;
+            //disable button exposure, button comment
+            //btn exposure
+            self.buttonExposure.enabled = false;
+            //btn share
+            [self.buttonShare setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            self.buttonShare.enabled=false;
+            //btn comment
+            self.buttonComment.enabled = false;
+            //text field comment
+            self.textFieldComment.enabled = false;
+            //btn send
+            self.buttonSend.enabled = false;
+            [self.buttonSend setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }
+        [self.serviceAPI getPostByPostId:self.postId
+                                  userId:currentUser.userId
+                               userEmail:currentUser.email
+                               userToken:currentUser.authentication_token
+                                 success:^(id responseObject) {
+                                     
+                                     [SVProgressHUD dismiss];
+                                     NSLog(@"Current Post: %@", responseObject);
+                                     currentPost = [Post objectFromDictionary:responseObject];
+                                     // get user posted
+                                     
+                                     [self loadPostUser:currentPost.uploader_id];
+                                     // get contest post in
+                                     [self loadPostContest:currentPost.contest_id];
+                                     // get comments of post
+                                     [self loadPostComment:self.postId];
+                                     // fill data
+                                     self.labelPostName.text = currentPost.text;
+                                     self.title = currentPost.text;
+                                     if (currentPost.current_user_likes == YES){
+                                         [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn"] forState:UIControlStateNormal];
+                                     }else{
+                                         [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn_selected"] forState:UIControlStateNormal];
+                                     }
+                                     
+                                     // get elapsed time
+                                     // currentPost.created_at = @"2015-01-08T15:36:37.000Z";
+                                     if (currentPost.created_at) {
+                                         NSDate *postCreatedAt = [[TimeUtil sharedUtil] convertToDateZFormat:currentPost.created_at];
+                                         self.labelTime.text = [[TimeUtil sharedUtil] elapsedTimeSince:postCreatedAt];
+                                     } else {
+                                         self.labelTime.text = @"----";
+                                     }
+                                     self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
+                                     if (currentPost.current_user_likes) {
+                                         [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn_selected"] forState:UIControlStateNormal];
+                                     } else {
+                                         [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn"] forState:UIControlStateNormal];
+                                     }
+                                     currentLikeNumber = [currentPost.cached_votes_up intValue];
+                                     if ([currentPost.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
+                                         [self.imageviewPost setImageURL:[NSURL URLWithString:currentPost.image_url_preview]];
+                                     } else {
+                                         [self.imageviewPost setImage:[UIImage imageNamed:@"placeholder.png"]];
+                                     }
+                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                     [SVProgressHUD dismiss];
+                                 }];
         
-        [self loadPostUser:currentPost.uploader_id];
-        // get contest post in
-        [self loadPostContest:currentPost.contest_id];
-        // get comments of post
-        [self loadPostComment:self.postId];
-        // fill data
-        self.labelPostName.text = currentPost.text;
-        self.title = currentPost.text;
-        if (currentPost.current_user_likes == YES){
-            [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn"] forState:UIControlStateNormal];
-        }else{
-            [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn_selected"] forState:UIControlStateNormal];
-        }
-        // get elapsed time
         
-//        currentPost.created_at = @"2015-01-08T15:36:37.000Z";
-        if (currentPost.created_at) {
-            NSDate *postCreatedAt = [[TimeUtil sharedUtil] convertToDateZFormat:currentPost.created_at];
-            self.labelTime.text = [[TimeUtil sharedUtil] elapsedTimeSince:postCreatedAt];
-        } else {
-            self.labelTime.text = @"----";
-        }
-        self.labelXpCount.text = [currentPost.cached_votes_up stringValue];
-        if (currentPost.current_user_likes) {
-            [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn_selected"] forState:UIControlStateNormal];
-        } else {
-            [self.buttonExposure setBackgroundImage:[UIImage imageNamed:@"expose_btn"] forState:UIControlStateNormal];
-        }
-        currentLikeNumber = [currentPost.cached_votes_up intValue];
-        if ([currentPost.image_url rangeOfString:@"placeholder"].location == NSNotFound) {
-            [self.imageviewPost setImageURL:[NSURL URLWithString:currentPost.image_url_preview]];
-        } else {
-            [self.imageviewPost setImage:[UIImage imageNamed:@"placeholder.png"]];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD dismiss];
-    }];
+    
     //
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tapGesture.numberOfTapsRequired = 1;

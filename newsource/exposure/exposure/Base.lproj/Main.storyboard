@@ -718,7 +718,7 @@
                                                             <action selector="buttonIndicatorContestTap:" destination="vNO-6S-46Z" eventType="touchUpInside" id="ROH-L6-Yg0"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Current Contests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxj-of-lnO">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Contests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxj-of-lnO">
                                                         <rect key="frame" x="8" y="5" width="118" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -795,9 +795,13 @@
                                                     <constraint firstItem="kv9-0f-ha3" firstAttribute="leading" secondItem="4e8-zW-2sE" secondAttribute="leading" id="306-dC-2fL"/>
                                                     <constraint firstAttribute="trailing" secondItem="hoF-Op-Z33" secondAttribute="trailing" constant="166" id="Cwf-Ju-daz"/>
                                                     <constraint firstItem="kv9-0f-ha3" firstAttribute="top" secondItem="4e8-zW-2sE" secondAttribute="top" constant="34" id="KuZ-zH-caU"/>
+                                                    <constraint firstItem="kv9-0f-ha3" firstAttribute="top" secondItem="gxj-of-lnO" secondAttribute="bottom" constant="8" id="U1u-6g-2B3"/>
                                                     <constraint firstAttribute="height" constant="142" id="Wgs-3E-aJW"/>
+                                                    <constraint firstItem="gxj-of-lnO" firstAttribute="top" secondItem="4e8-zW-2sE" secondAttribute="top" constant="5" id="YF0-C0-LPa"/>
                                                     <constraint firstAttribute="bottom" secondItem="kv9-0f-ha3" secondAttribute="bottom" id="adm-Uc-R8c"/>
                                                     <constraint firstItem="hoF-Op-Z33" firstAttribute="leading" secondItem="gxj-of-lnO" secondAttribute="trailing" constant="8" id="b4R-co-m8V"/>
+                                                    <constraint firstItem="hoF-Op-Z33" firstAttribute="leading" secondItem="gxj-of-lnO" secondAttribute="trailing" constant="8" id="bjf-SN-7aA"/>
+                                                    <constraint firstItem="gxj-of-lnO" firstAttribute="leading" secondItem="4e8-zW-2sE" secondAttribute="leading" constant="8" id="fUV-IM-OZn"/>
                                                     <constraint firstAttribute="trailing" secondItem="kv9-0f-ha3" secondAttribute="trailing" id="h0J-tV-mgK"/>
                                                     <constraint firstItem="kv9-0f-ha3" firstAttribute="top" secondItem="hoF-Op-Z33" secondAttribute="bottom" constant="7" id="hZD-XC-cTM"/>
                                                     <constraint firstItem="hoF-Op-Z33" firstAttribute="top" secondItem="4e8-zW-2sE" secondAttribute="top" constant="7" id="hrZ-dC-G3h"/>
@@ -2413,7 +2417,7 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="2bY-sV-O2S">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="2bY-sV-O2S">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WbE-bo-FWB">
@@ -2576,7 +2580,9 @@ Team eXposure</string>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="buttonComment" destination="GXf-wi-RSO" id="uzc-Ss-bfH"/>
                         <outlet property="buttonExposure" destination="zeT-1r-loc" id="K8l-U3-2DY"/>
+                        <outlet property="buttonSend" destination="FF1-11-VX2" id="QGw-0v-xpT"/>
                         <outlet property="buttonShare" destination="Yn2-ee-AGf" id="cys-4f-aTM"/>
                         <outlet property="constraintCommentListHeight" destination="DTq-Dk-1DA" id="DfE-Zc-Ye2"/>
                         <outlet property="imageViewUser" destination="aAr-dH-o6Q" id="beI-DG-IHd"/>

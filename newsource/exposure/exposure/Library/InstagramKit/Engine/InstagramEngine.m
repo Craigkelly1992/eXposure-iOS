@@ -275,6 +275,27 @@ typedef enum
     
 }
 
+- (void)logoutWithoutAlert
+{
+    //    Clear all cookies so the next time the user wishes to switch accounts,
+    //    they can do so
+    
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    self.accessToken = nil;
+    
+    NSLog(@"User is now logged out");
+    
+
+    
+}
+
+
 -(NSDictionary*)queryStringParametersFromString:(NSString*)string {
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];

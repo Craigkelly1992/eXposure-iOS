@@ -29,6 +29,7 @@
 @implementation EXPPortfolioViewController {
     NSString *facebookLink;
     NSString *twitterLink;
+    NSString *instagramLink;
     NSArray *arrayPost;
     NSMutableArray *arrayContest;
     User *currentUser;
@@ -110,6 +111,28 @@
     [self.pagingView addSubview:textViewDescription];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    NSNumber *zeroValue = [NSNumber numberWithInt:0];
+    //browse mode
+    if(![[Infrastructure sharedClient] currentUser]){
+        //browse mode
+        [self.buttonSetting setEnabled:NO];
+        [self.buttonFollow setEnabled:NO];
+    }
+    [Infrastructure sharedClient].countFBFetch = zeroValue;
+    //get profile id from app_scoped_id
+    NSError *error;
+    NSURL* aUrl =
+    [NSURL URLWithString:@"https://www.facebook.com/app_scoped_user_id/1403078126657270/"];
+    NSMutableURLRequest* request =
+    [NSMutableURLRequest requestWithURL:aUrl
+                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                        timeoutInterval:21864];
+    NSHTTPURLResponse *res = nil;
+    NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:[res allHeaderFields]
+                                                              forURL:aUrl];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     //
     if (!self.profileId) {
@@ -125,7 +148,6 @@
         // check if follow/ unfollow
         [SVProgressHUD showWithStatus:@"Loading"];
         [self.serviceAPI checkFollowUser:userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-            
             [SVProgressHUD dismiss];
             if ([[responseObject objectForKey:@"following"] boolValue] == YES) {
                 [self.buttonFollow setTitle:@"Unfollow" forState:UIControlStateNormal];
@@ -148,10 +170,14 @@
         }];
     }
     //
-    [self getUserInfo];
-    //
-    [self getContestByUserId];
-    
+    if(userId!=nil)
+    {
+        [self getUserInfo];
+        //
+        [self getContestByUserId];
+    }else{
+        //do nothing
+    }
 }
 
 -(void)followTap:(id)sender {
@@ -205,6 +231,7 @@
         profileUser = [User objectFromDictionary:responseObject];
         facebookLink = profileUser.facebook;
         twitterLink = profileUser.twitter;
+        instagramLink = profileUser.instagram;
         
         // fill user's data
         if (profileUser) {
@@ -332,11 +359,9 @@
             // Success! Include your code to handle the results here
             NSLog(@"user info: %@", result);
             NSURL *safariURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",facebookLink]];
-            NSURL *inAppURL = [NSURL URLWithString:[NSString stringWithFormat:@"fb:///profile/%@", facebookLink]];
-            if ([[UIApplication sharedApplication] canOpenURL:inAppURL]){
-                [[UIApplication sharedApplication] openURL:inAppURL];
-            } else {
-                [[UIApplication sharedApplication] openURL:safariURL];
+            [[UIApplication sharedApplication] openURL:safariURL];
+            if(facebookLink==nil){
+                [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Facebook account in Port Folio Profile" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
             }
         } else {
             // An error occurred, we need to handle the error
@@ -345,29 +370,20 @@
             NSLog(@"Error: %@", error.description);
         }
     }];
-    
 }
 - (IBAction)buttonInstagramTap:(id)sender {
     
-    if ([InstagramEngine sharedEngine].accessToken) {
-        [SVProgressHUD showWithStatus:@"Loading"];
-        [[InstagramEngine sharedEngine] getSelfUserDetailsWithSuccess:^(InstagramUser *userDetail) {
-            
-            NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://user?username=%@", userDetail.username]];
-            if ([[UIApplication sharedApplication] canOpenURL:instagramURL]){
-                [[UIApplication sharedApplication] openURL:instagramURL];
-            } else {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", userDetail.username]]];
-            }
-            
-            [SVProgressHUD dismiss];
-        } failure:^(NSError *error) {
-            
-            [SVProgressHUD dismiss];
-        }];
+    if (instagramLink!=nil) {
+        NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://user?username=%@", instagramLink]];
+        if ([[UIApplication sharedApplication] canOpenURL:instagramURL]){
+            [[UIApplication sharedApplication] openURL:instagramURL];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://instagram.com/%@", instagramLink]]];
+        }
+
     } else {
         //
-        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please signup with an Instagram account in Profile Setting" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Instagram account in Port Folio Profile Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }
 }
 - (IBAction)buttonContestTap:(id)sender {
@@ -396,7 +412,7 @@
                      [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please signin with an twitter account on Settings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
                  } else {
                      // open url
-                     NSURL *twitterURL = [NSURL URLWithString:[NSString stringWithFormat:@"twitter:///user?screen_name=%@", account.username]];
+                     NSURL *twitterURL = [NSURL URLWithString:[NSString stringWithFormat:@"twitter:///user?screen_name=%@", twitterLink]];
                      if ([[UIApplication sharedApplication] canOpenURL:twitterURL]){
                          [[UIApplication sharedApplication] openURL:twitterURL];
                      } else {
@@ -407,7 +423,7 @@
              }
          }];
     } else {
-        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"You didn\'t set up any Twitter account, please sign in at least 1 on device Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Twitter Account in Profile Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     }
 }
 

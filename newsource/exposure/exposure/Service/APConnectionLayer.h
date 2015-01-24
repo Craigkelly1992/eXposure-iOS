@@ -20,6 +20,7 @@
 #define CHECK_USER_FOLLOW @"users/%@/check_follow" // checks if the user is being followed by current_user
 #define POST_USER_FOLLOW @"users/%@/follow"
 #define POST_USER_UNFOLLOW @"users/%@/unfollow"
+#define GET_ALL_EMAILS_USERS @"users/get_users/"
 #define GET_USER_WITH_ID @"users/%@" // users/<userID>
 #define GET_USER_PROFILE @"profile"
 #define UPDATE_USER_PROFILE @"profile/update"
@@ -42,6 +43,7 @@
 #define CREATE_POST @"posts"
 #define GET_ALL_POST @"posts"
 #define GET_POST_BY_ID @"posts/%@" // posts/<postID>
+#define GET_POST_WITHOUT_AUTHENTICATION @"posts/show_without_authenticate"
 #define GET_MY_POST @"posts/my_posts"
 #define GET_POST_BY_USERID @"posts/by_user"
 #define GET_POST_BY_CONTEST @"posts/by_contest"
@@ -66,7 +68,10 @@
 #define GET_BADGE_NUMBER @"notifications/count_unread_notifications"
 // get xp
 #define GET_XP_WITH_USERID_USERTOKEN_USEREMAIL @"users/%@/get_all_expose_of_user?user_token=%@&user_email=%@"
-
+//update facebook, instagram, twitter
+#define UPDATE_FACEBOOK @"users/update_facebook"
+#define UPDATE_INSTAGRAM @"users/update_instagram"
+#define UPDATE_TWITTER @"users/update_twitter"
 
 // API Parameters
 #define PARAM_USERNAME @"username"
@@ -99,6 +104,7 @@
 #define PARAM_TARGET @"target"
 #define PARAM_BRAND_ID @"brand_id"
 #define PARAM_USER_ID @"user_id"
+#define PARAM_POST_ID_WITHOUT_AUTHENTICATION @"id"
 #define PARAM_POST_ID @"post_id"
 #define PARAM_COMMENT_TEXT @"comment[text]"
 #define PARAM_WINNER_FIRSTNAME @"winner[first_name]"
@@ -126,9 +132,9 @@
 
 // Constants
 #define TARGET_WEBSITE @"website"
-#define TARGET_FACEBOOK @"user[facebook]"
-#define TARGET_TWITTER @"user[twitter]"
-#define TARGET_INSTAGRAM @"user[instagram]"
+#define TARGET_FACEBOOK @"facebook"
+#define TARGET_TWITTER @"twitter"
+#define TARGET_INSTAGRAM @"instagram"
 
 ///
 @interface APConnectionLayer : AFHTTPRequestOperationManager
@@ -148,6 +154,11 @@
 - (void)signupWithUser:(User *)user
                    success:(void (^)(id responseObject))success
                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+//get all emails, users of database
+-(void)getAllEmailsUsers:(NSString*)user
+                 success:(void (^)(id responseObject))success
+                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 // find user
 - (void)getUserWithId:(NSNumber*)userId
@@ -175,9 +186,6 @@
                    backgroundPicture:(NSData*)backgroundPicture
                            userEmail:(NSString*)userEmail // old email for verification
                            userToken:(NSString*)userToken
-                            facebook:(NSString*)facebook
-                           instagram:(NSString*)instagram
-                             twitter:(NSString*)twitter
                              success:(void (^)(id responseObject))success
                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
@@ -187,6 +195,28 @@
                                 token:(NSString*)token
                               success:(void (^)(id responseObject))success
                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+//update facebook
+- (void)updateFacebookWithNewFacebook:(NSString*)facebook
+                                token:(NSString*)token
+                            userEmail:(NSString*)email
+                              success:(void (^)(id responseObject))success
+                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+//update instagram
+-(void)updateInstagramWithNewInstagram:(NSString*)email
+                                 token:(NSString*)token
+                                 email:(NSString*)email
+                               success:(void (^)(id responseObject))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
+//update twitter
+-(void)updateTwitterWithNewTwitter:(NSString*)twitter
+                             token:(NSString*)token
+                             email:(NSString*)email
+                           success:(void (^)(id responseObject))success
+                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 
 // delete user profile
 - (void)deleteUserProfileWithUserId:(NSNumber*)userId
@@ -313,7 +343,10 @@
               userToken:(NSString*)userToken
                 success:(void (^)(id responseObject))success
                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-
+//get post (browse mode) by post id without authentication token
+- (void)getPostBrowseModeByPostId:(NSNumber*)postId
+                          success:(void (^)(id responseObject))success
+                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 // get all post
 - (void)getAllPostWithUserEmail:(NSString*)userEmail
                       userToken:(NSString*)userToken
@@ -420,7 +453,7 @@
 - (void)getFollowingWithUserId:(NSNumber*)userId
                      userEmail:(NSString*)userEmail
                          token:(NSString*)userToken
-                       success:(void (^)(id responseObject))success
+                       success:(void (^)(id responseObject))successx
                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 

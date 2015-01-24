@@ -10,6 +10,9 @@
 #import "Post.h"
 #import "EXPImageDetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "EXPLoginViewController.h"
+
+#define VC_PORTFOLIO_ID @"EXPLoginViewControllerIdentifier"
 
 @interface EXPPhotoStreamViewController ()
 
@@ -102,7 +105,12 @@
     if (self.segmentOption.selectedSegmentIndex == 0) { // All user
         [self getAllPhotoStream];
     } else if (self.segmentOption.selectedSegmentIndex == 1) {
-        [self getFollowingPhotoStream];
+        if(![Infrastructure sharedClient].currentUser){
+            // back to login screen
+            [self.tabBarController.navigationController popViewControllerAnimated:YES];
+        }else{
+            [self getFollowingPhotoStream];
+        }
     }
 }
 

@@ -131,7 +131,8 @@
 		B3DB55AF198A2F3700402BA8 /* InstagramUser.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55A8198A2F3700402BA8 /* InstagramUser.m */; };
 		B3DB55B2198A2F7300402BA8 /* InstagramKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3DB55B1198A2F7300402BA8 /* InstagramKit.plist */; };
 		B3DB55B5198B8B3700402BA8 /* EXPGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */; };
-		B57BE5941A6DF7B2003B031F /* key.png in Resources */ = {isa = PBXBuildFile; fileRef = B57BE5931A6DF7B2003B031F /* key.png */; };
+		B5449DEA1A7258C200BF15D4 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = B5449DE91A7258C200BF15D4 /* Base64.m */; };
+		B5DE43571A709BE10058F08B /* key.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE43561A709BE10058F08B /* key.png */; };
 		F3C5670A662BF488F3EFDC4C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B324034F210C4B26A2662BA1 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -381,7 +382,9 @@
 		B3DB55B1198A2F7300402BA8 /* InstagramKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InstagramKit.plist; path = Library/InstagramKit/InstagramKit.plist; sourceTree = "<group>"; };
 		B3DB55B3198B8B3700402BA8 /* EXPGalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXPGalleryViewController.h; path = viewControllers/EXPGalleryViewController.h; sourceTree = "<group>"; };
 		B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXPGalleryViewController.m; path = viewControllers/EXPGalleryViewController.m; sourceTree = "<group>"; };
-		B57BE5931A6DF7B2003B031F /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
+		B5449DE81A7258C200BF15D4 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		B5449DE91A7258C200BF15D4 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
+		B5DE43561A709BE10058F08B /* key.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key.png; sourceTree = "<group>"; };
 		FC7B9CA3B3EC2FBF18782A1E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FEAB7CFAC7B17883BEB6A299 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -698,7 +701,7 @@
 		B3A4D515197F72C00070185E /* image */ = {
 			isa = PBXGroup;
 			children = (
-				B57BE5931A6DF7B2003B031F /* key.png */,
+				B5DE43561A709BE10058F08B /* key.png */,
 				B3DB55551986385A00402BA8 /* sample.jpg */,
 				B3A4D518197FB0B50070185E /* placeholder.png */,
 			);
@@ -907,6 +910,7 @@
 		B3CD74C01977937E00CBE2C6 /* library */ = {
 			isa = PBXGroup;
 			children = (
+				B5449DE71A72587600BF15D4 /* Base64 */,
 				B36BFAAD1A4FC5DB002B8B14 /* CLImageEditor */,
 				B3DB5594198A2B3D00402BA8 /* InstagramKit */,
 				B3DB55591987C36A00402BA8 /* UIImage+Resize */,
@@ -1021,6 +1025,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		B5449DE71A72587600BF15D4 /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				B5449DE81A7258C200BF15D4 /* Base64.h */,
+				B5449DE91A7258C200BF15D4 /* Base64.m */,
+			);
+			name = Base64;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1080,7 +1093,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B57BE5941A6DF7B2003B031F /* key.png in Resources */,
+				B5DE43571A709BE10058F08B /* key.png in Resources */,
 				B3CD73BB196E879800CBE2C6 /* Images.xcassets in Resources */,
 				B3DB55561986385A00402BA8 /* sample.jpg in Resources */,
 				B3DB55B2198A2F7300402BA8 /* InstagramKit.plist in Resources */,
@@ -1155,6 +1168,7 @@
 				B3CD74BC1977879C00CBE2C6 /* EXPRankingsViewController.m in Sources */,
 				B3A4D50A197EB0340070185E /* Infrastructure.m in Sources */,
 				B36BFB3E1A4FC5DC002B8B14 /* CLColorPickerView.m in Sources */,
+				B5449DEA1A7258C200BF15D4 /* Base64.m in Sources */,
 				B3A4D50E197ED2270070185E /* AsyncImageView.m in Sources */,
 				B36BFB241A4FC5DC002B8B14 /* CLBloomEffect.m in Sources */,
 				B3DB557A1987C39100402BA8 /* MKAnnotationView+WebCache.m in Sources */,

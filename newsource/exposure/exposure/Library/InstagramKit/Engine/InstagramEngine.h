@@ -102,6 +102,7 @@ sourceApplication
          annotation:(id)annotation;
 
 - (void)logout;
+- (void)logoutWithoutAlert;
 
 #pragma mark - Media -
 

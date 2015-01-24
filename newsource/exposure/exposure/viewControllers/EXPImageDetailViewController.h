@@ -28,6 +28,8 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintCommentListHeight;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldComment;
 @property (strong, nonatomic) IBOutlet UIButton *buttonExposure;
+@property (weak, nonatomic) IBOutlet UIButton *buttonComment;
+@property (weak, nonatomic) IBOutlet UIButton *buttonSend;
 
 // Actions
 - (IBAction)buttonExposureTap:(id)sender;

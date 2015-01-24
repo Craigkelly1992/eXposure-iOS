@@ -88,7 +88,6 @@
 
 #pragma mark - IB Actions
 - (IBAction)buttonSignInTap:(id)sender {
-    
     // checking
     NSString *emailTrimString = [self.textFieldEmail.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@""]];
     if (emailTrimString.length <= 0 || self.textFieldPassword.text.length <= 0) {
@@ -141,6 +140,7 @@
 
 - (IBAction)buttonBrowseTap:(id)sender {
     EXPTabBarController *tabBarVC = [[EXPTabBarController alloc]init];
+    //navigate to tabBarVC
     [self.navigationController pushViewController:tabBarVC animated:YES];
 }
 

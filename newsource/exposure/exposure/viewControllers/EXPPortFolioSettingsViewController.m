@@ -8,6 +8,7 @@
 
 #import "EXPPortFolioSettingsViewController.h"
 #import "EXPChangePasswordViewController.h"
+#import "EXPPortfolioViewController.h"
 #import "User.h"
 #import "CLImageEditor.h"
 #import "Brand.h"
@@ -19,6 +20,7 @@
 #import "IKLoginViewController.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
+#import "Base64.h"
 
 #define GET_USERNAME_WITH_ACCESSTOKEN @"https://api.instagram.com/v1/users/self?access_token=%@"
 
@@ -82,25 +84,8 @@
     isBackgroundChanged = NO;
 }
 - (void) viewDidAppear:(BOOL)animated{
-    //get instagram username)
-    if(self.accessToken != nil){
-        NSString *path = [NSString stringWithFormat:GET_USERNAME_WITH_ACCESSTOKEN,self.accessToken];
-        NSData *allCoursesData = [[NSData alloc] initWithContentsOfURL:
-                                  [NSURL URLWithString:path]];
-        NSError *error;
-        NSDictionary *allCourses = [NSJSONSerialization
-                                    JSONObjectWithData:allCoursesData
-                                    options:kNilOptions
-                                    error:&error];
-        if( error )
-        {
-            NSLog(@"%@", [error localizedDescription]);
-        }
-        else {
-            NSString *username = [[allCourses objectForKey:@"data"] objectForKey:@"username"];
-            [Infrastructure sharedClient].instagram = username;
-        }
-    }
+    //dismiss the Progress
+    [SVProgressHUD dismiss];
 }
 
 -(void) dismissKeyboard {
@@ -179,9 +164,6 @@
     NSString *deviceToken = nil;
     NSString *description = nil;
     NSString *website = nil;
-    NSString *facebook = nil;
-    NSString *instagram = nil;
-    NSString *twitter = nil;
     if (![self.textFieldFirstname.text isEqualToString:@""]
         && ![self.textFieldFirstname.text isEqualToString:user.first_name]) {
         firstName = self.textFieldFirstname.text;
@@ -224,9 +206,6 @@
     }
     
     // call service here
-    facebook =[Infrastructure sharedClient].facebook;
-    instagram=[Infrastructure sharedClient].instagram;
-    twitter=[Infrastructure sharedClient].twitter;
     [SVProgressHUD showWithStatus:@"Updating"];
     [self.serviceAPI editUserProfileWithFirstname:firstName
                                          lastName:lastName
@@ -240,12 +219,9 @@
                                 backgroundPicture:backgroundPicture
                                         userEmail:user.email
                                         userToken:user.authentication_token
-                                         facebook:facebook
-                                      instagram:instagram
-                                          twitter:twitter
                                           success:^(id responseObject) {
                                               
-        [SVProgressHUD showSuccessWithStatus:@"Success"];
+        [SVProgressHUD showSuccessWithStatus:@"Update Success"];
         [Infrastructure sharedClient].currentUser = [User objectFromDictionary:responseObject];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -325,22 +301,50 @@
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:USERDEFAULT_KEY_PASSWORD];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [Infrastructure sharedClient].currentUser = nil;
+    //log out facebook account
+    FBSession* session = [FBSession activeSession];
+    [session closeAndClearTokenInformation];
+    [session close];
+    [FBSession setActiveSession:nil];
+    
+    NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSArray* facebookCookies = [cookies cookiesForURL:[NSURL URLWithString:@"https://facebook.com/"]];
+    
+    for (NSHTTPCookie* cookie in facebookCookies) {
+        [cookies deleteCookie:cookie];
+    }
+    //log out instagram
+    [[InstagramEngine sharedEngine] logoutWithoutAlert];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:USERDEFAULT_KEY_INSTAGRAM_TOKEN];
+    [self.buttonInstagram setTitle:@"Login Instagram" forState:UIControlStateNormal];
+    
     // back to login
     [self.tabBarController.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Facebook Login Delegate
 -(void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
-    NSString *facebook = [user objectForKey:@"link"] ? [user objectForKey:@"link"] : [NSString stringWithFormat:@"%@@facebook.com", user.username];
-    [Infrastructure sharedClient].facebook = facebook;
+    NSNumber *compareValue = [NSNumber numberWithInt:1];
+    if([[Infrastructure sharedClient].countFBFetch doubleValue]>[compareValue doubleValue]){
+        NSString *facebook = [user objectForKey:@"link"] ? [user objectForKey:@"link"] : [NSString stringWithFormat:@"%@@facebook.com", user.username];
+        //update facebook
+        User *currUser = [Infrastructure sharedClient].currentUser;
+        [SVProgressHUD showWithStatus:@"Updating Facebook"];
+        [self.serviceAPI updateFacebookWithNewFacebook:facebook token:currUser.authentication_token userEmail:currUser.email success:^(id responseObject) {
+            [SVProgressHUD showSuccessWithStatus:@"Update Success"];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+            NSLog(@"Error: %@", error.description);
+        }];
+    }
 }
+
 
 -(void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    
+    [Infrastructure sharedClient].countFBFetch = [NSNumber numberWithInt: [[Infrastructure sharedClient].countFBFetch intValue] + 1];
 }
-
 -(void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
-    
+    [Infrastructure sharedClient].countFBFetch = [NSNumber numberWithInt: [[Infrastructure sharedClient].countFBFetch intValue] + 1];
 }
 
 -(void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
@@ -353,9 +357,39 @@
     [[NSUserDefaults standardUserDefaults] setObject:accessToken forKey:USERDEFAULT_KEY_INSTAGRAM_TOKEN];
     //
     self.accessToken = accessToken;
-    [SVProgressHUD showSuccessWithStatus:@"Success"];
+    NSString *username;
+    //get instagram username)
+    if(self.accessToken != nil){
+        NSString *path = [NSString stringWithFormat:GET_USERNAME_WITH_ACCESSTOKEN,self.accessToken];
+        NSData *allCoursesData = [[NSData alloc] initWithContentsOfURL:
+                                  [NSURL URLWithString:path]];
+        NSError *error;
+        NSDictionary *allCourses = [NSJSONSerialization
+                                    JSONObjectWithData:allCoursesData
+                                    options:kNilOptions
+                                    error:&error];
+        if( error )
+        {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+        else {
+            username = [[allCourses objectForKey:@"data"] objectForKey:@"username"];
+            [Infrastructure sharedClient].instagram = username;
+        }
+    }
     [self.buttonInstagram setTitle:@"Logout Instagram" forState:UIControlStateNormal];
-    
+    //update instagram
+    if(username!=nil){
+        User *currUser = [Infrastructure sharedClient].currentUser;
+        [SVProgressHUD showWithStatus:@"Updating Instagram"];
+        [self.serviceAPI updateInstagramWithNewInstagram:(NSString *)username token:currUser.authentication_token email:currUser.email success:^(id responseObject) {
+            [SVProgressHUD showSuccessWithStatus:@"Update Success"];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+            NSLog(@"Error: %@", error.description);
+        }];
+    }
+
 }
 
 -(void)instagramLoginFail:(NSError*)error {
@@ -391,10 +425,18 @@
                  //  Step 2:  Create a request
                  NSArray *twitterAccounts =
                  [self.accountStore accountsWithAccountType:twitterAccountType];
-                 [[[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"You\'re having %lu Twitter account, app will automatically use the last account", (unsigned long)twitterAccounts.count] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
                  ACAccount *twitterAccountInfo = [twitterAccounts objectAtIndex:0];
                  NSString *description = twitterAccountInfo.accountDescription;
                  [Infrastructure sharedClient].twitter = description;
+                 //update twitter
+                 User *currUser = [Infrastructure sharedClient].currentUser;
+                 [SVProgressHUD showWithStatus:@"Updating Twitter"];
+                 [self.serviceAPI updateTwitterWithNewTwitter:(NSString *)description token:currUser.authentication_token email:currUser.email success:^(id responseObject) {
+                     [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Update Success!\nYou have been used account: %@",description]];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+                     NSLog(@"Error: %@", error.description);
+                 }];
              }
              else {
                  // Access was not granted, or an error occurred

@@ -84,6 +84,23 @@
         }
     }];
 }
+//get all emails & users of database
+-(void)getAllEmailsUsers:(NSString*)user
+                 success:(void (^)(id responseObject))successHandler
+                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failureHandler {
+    NSString *path = [NSString stringWithFormat:GET_ALL_EMAILS_USERS];
+    [self GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // if success, return objects likes signup, except authentication_token
+        if (successHandler) {
+            successHandler(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failureHandler) {
+            failureHandler(operation, error);
+        }
+    }];
+}
+
 
 // find user - checked
 - (void)getUserWithId:(NSNumber*)userId
@@ -141,9 +158,6 @@
               backgroundPicture:(NSData*)backgroundPicture
                            userEmail:(NSString*)userEmail // old email for verification
                            userToken:(NSString*)userToken
-                            facebook:(NSString*)facebook
-                           instagram:(NSString*)instagram
-                             twitter:(NSString*)twitter
                         success:(void (^)(id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     // Neither a key nor a value can be nil; if you need to represent a null value in a dictionary, you should use NSNull
@@ -208,18 +222,6 @@
             [formData appendPartWithFormData:[userToken dataUsingEncoding:NSUTF8StringEncoding]
                                     name:PARAM_USER_TOKEN];
         }
-        if (facebook) {
-            [formData appendPartWithFormData:[facebook dataUsingEncoding:NSUTF8StringEncoding]
-                                        name:TARGET_FACEBOOK];
-        }
-        if (instagram) {
-            [formData appendPartWithFormData:[instagram dataUsingEncoding:NSUTF8StringEncoding]
-                                        name:TARGET_INSTAGRAM];
-        }
-        if (twitter) {
-            [formData appendPartWithFormData:[twitter dataUsingEncoding:NSUTF8StringEncoding]
-                                        name:TARGET_TWITTER];
-        }
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -256,6 +258,79 @@
             failure(operation, error);
         }
     }];
+}
+
+//update facebook
+-(void)updateFacebookWithNewFacebook:(NSString *)facebook
+                               token:(NSString *)token
+                            userEmail:(NSString *)email
+                             success:(void (^)(id responseObject))success
+                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+
+    NSString *path = [NSString stringWithFormat:UPDATE_FACEBOOK];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                facebook, TARGET_FACEBOOK,
+                                token, PARAM_USER_TOKEN,
+                                email, PARAM_USER_EMAIL,
+                                nil];
+    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+    
+}
+
+//update instagram
+-(void)updateInstagramWithNewInstagram:(NSString *)instagram
+                                 token:(NSString *)token
+                                 email:(NSString *)email
+                               success:(void (^)(id responseObject))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *path = [NSString stringWithFormat:UPDATE_INSTAGRAM];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                instagram, TARGET_INSTAGRAM,
+                                token, PARAM_USER_TOKEN,
+                                email, PARAM_USER_EMAIL,
+                                nil];
+    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+    
+}
+
+//update twitter
+-(void)updateTwitterWithNewTwitter:(NSString *)twitter
+                             token:(NSString *)token
+                             email:(NSString *)email
+                           success:(void (^)(id responseObject))success
+                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *path = [NSString stringWithFormat:UPDATE_TWITTER];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                twitter, TARGET_TWITTER,
+                                token, PARAM_USER_TOKEN,
+                                email, PARAM_USER_EMAIL,
+                                nil];
+    [self POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+    
 }
 
 // delete user profile - checked
@@ -685,6 +760,26 @@
         }
     }];
 }
+//get post (browse mode) by post id without authentication token
+- (void)getPostBrowseModeByPostId:(NSNumber*)postId
+                success:(void (^)(id responseObject))success
+                failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    NSString *path = [NSString stringWithFormat:GET_POST_WITHOUT_AUTHENTICATION];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
+                                postId,PARAM_POST_ID_WITHOUT_AUTHENTICATION,
+                                nil];
+    [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(operation, error);
+        }
+    }];
+}
+
 
 // get all post - checked
 - (void)getAllPostWithUserEmail:(NSString*)userEmail

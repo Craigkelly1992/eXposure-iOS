@@ -55,6 +55,8 @@
     } else {
 //        [self.imageViewContest setImage:[UIImage imageNamed:@"sample.jpg"]];
     }
+    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,7 +73,6 @@
         self.labelContestName.text = currentContest.contest.info.title;
         [self.labelContestName resizeToFit];
         self.title = currentContest.contest.info.title;
-        NSLog(currentContest.contest.info.title);
         
         // compare start & end to show available
         NSString *currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
@@ -84,7 +85,11 @@
             self.imageViewAvailable.hidden = YES;
             self.buttonEnter.enabled = NO;
         }
-        
+        //browse mode
+        if(![[Infrastructure sharedClient] currentUser]){
+                //browse mode
+                [self.buttonEnter setEnabled:FALSE];
+        }
         //
         NSString *detail = [NSString stringWithFormat:@"Prize: %@ \n\n %@", currentContest.contest.info.prizes, currentContest.contest.info.mDescription];
         self.textViewDetail.text = detail;

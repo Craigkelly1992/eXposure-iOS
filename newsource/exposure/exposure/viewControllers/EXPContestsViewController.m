@@ -38,6 +38,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"Contests";
+    if(![Infrastructure sharedClient].currentUser){
+        self.segmentOption.selectedSegmentIndex = 1;
+    }
     // get all contest
     currentUser = [Infrastructure sharedClient].currentUser;
     arrayContest = [[NSArray alloc] init];
@@ -69,7 +72,13 @@
 #pragma mark - Segment Delegate
 - (IBAction)segmentValueChanged:(id)sender {
     if (self.segmentOption.selectedSegmentIndex == 0) { // Following
-        [self loadFollowingContest];
+        if(![Infrastructure sharedClient].currentUser){
+            // back to login screen
+            [self.tabBarController.navigationController popViewControllerAnimated:YES];
+        }else{
+            [self loadFollowingContest];
+        }
+
     } else if (self.segmentOption.selectedSegmentIndex == 1) { // All
         [self loadAllContest];
     }
