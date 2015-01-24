@@ -343,13 +343,15 @@
 
 - (IBAction)buttonFacebookTap:(id)sender {
     if(currentBrand.facebook){
-        NSURL *facebookURL = [NSURL URLWithString:currentBrand.facebook];
+        
+        // log for analytics
         [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"facebook" success:^(id responseObject) {
-            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
         }];
         
+        NSString *brandFBUrl = currentBrand.facebook;
+        brandFBUrl = [brandFBUrl stringByReplacingOccurrencesOfString:@"//www." withString:@"//"];
+        NSURL *facebookURL = [NSURL URLWithString:brandFBUrl];
         if([[UIApplication sharedApplication] canOpenURL:facebookURL]){
             [[UIApplication sharedApplication] openURL:facebookURL];
         }

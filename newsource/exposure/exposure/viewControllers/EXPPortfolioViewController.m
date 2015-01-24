@@ -349,27 +349,36 @@
     [self.navigationController pushViewController:portfolioSettingVC animated:YES];
 }
 - (IBAction)buttonFacebookTap:(id)sender {
-    if (!FBSession.activeSession.isOpen) {
-        [FBSession openActiveSessionWithAllowLoginUI: YES];
+//    if (!FBSession.activeSession.isOpen) {
+//        [FBSession openActiveSessionWithAllowLoginUI: YES];
+//    }
+//    [SVProgressHUD show];
+//    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+//        [SVProgressHUD dismiss];
+//        if (!error) {
+//            // Success! Include your code to handle the results here
+//            NSLog(@"user info: %@", result);
+//            NSURL *safariURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",facebookLink]];
+//            [[UIApplication sharedApplication] openURL:safariURL];
+//            if(facebookLink==nil){
+//                [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Facebook account in Port Folio Profile" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+//            }
+//        } else {
+//            // An error occurred, we need to handle the error
+//            // See: https://developers.facebook.com/docs/ios/errors
+//            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+//            NSLog(@"Error: %@", error.description);
+//        }
+//    }];
+    
+    
+    
+    if(facebookLink==nil){
+        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Facebook account in Port Folio Profile" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+    } else {
+        NSURL *safariURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",facebookLink]];
+        [[UIApplication sharedApplication] openURL:safariURL];
     }
-    [SVProgressHUD show];
-    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        [SVProgressHUD dismiss];
-        if (!error) {
-            // Success! Include your code to handle the results here
-            NSLog(@"user info: %@", result);
-            NSURL *safariURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@",facebookLink]];
-            [[UIApplication sharedApplication] openURL:safariURL];
-            if(facebookLink==nil){
-                [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Facebook account in Port Folio Profile" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
-            }
-        } else {
-            // An error occurred, we need to handle the error
-            // See: https://developers.facebook.com/docs/ios/errors
-            [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
-            NSLog(@"Error: %@", error.description);
-        }
-    }];
 }
 - (IBAction)buttonInstagramTap:(id)sender {
     
