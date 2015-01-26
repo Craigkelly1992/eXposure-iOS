@@ -33,6 +33,7 @@
 @property (nonatomic, retain) NSNumber *cached_views;
 @property (nonatomic, retain) NSNumber *winner_id;
 @property (nonatomic, copy) NSString *brand_name;
+@property(nonatomic, copy) NSString *current_date_server;
 
 /// get contest from brand id
 @property (nonatomic, copy) NSString *picture_url;

@@ -112,7 +112,7 @@
     // #2
     EXPContestsViewController *contestVC = [storyboard instantiateViewControllerWithIdentifier:VC_CONTEST_ID];
     UINavigationController *contestNavigationVC = [[UINavigationController alloc]initWithRootViewController:contestVC];
-    contestVC.title = @"Contest";
+    contestVC.title = @"Contests";
     // #3
     // Camera Button
     // #4

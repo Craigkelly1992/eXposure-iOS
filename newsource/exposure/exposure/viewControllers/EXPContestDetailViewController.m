@@ -75,10 +75,8 @@
         self.title = currentContest.contest.info.title;
         
         // compare start & end to show available
-        NSString *currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
-        if ([currentContest.contest.info.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedAscending &&
-            [currentContest.contest.info.end_date caseInsensitiveCompare:currentDateTime] == NSOrderedDescending) {
-            
+        if ([currentContest.contest.info.start_date caseInsensitiveCompare:currentContest.contest.info.current_date_server] == NSOrderedAscending &&
+            [currentContest.contest.info.end_date caseInsensitiveCompare:currentContest.contest.info.current_date_server] == NSOrderedDescending) {
             self.imageViewAvailable.hidden = NO;
             self.buttonEnter.enabled = YES;
         } else {
@@ -88,7 +86,7 @@
         //browse mode
         if(![[Infrastructure sharedClient] currentUser]){
                 //browse mode
-                [self.buttonEnter setEnabled:FALSE];
+                self.buttonEnter.enabled = NO;
         }
         //
         NSString *detail = [NSString stringWithFormat:@"Prize: %@ \n\n %@", currentContest.contest.info.prizes, currentContest.contest.info.mDescription];

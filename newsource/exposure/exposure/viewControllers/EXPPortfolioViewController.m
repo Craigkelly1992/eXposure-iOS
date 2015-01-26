@@ -135,7 +135,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     //
-    if (!self.profileId) {
+    if (!self.profileId || ([Infrastructure sharedClient].currentUser.userId == self.profileId)) {
         // there's no profile id, so we're entering our home
         userId = currentUser.userId;
         [self.buttonFollow setTitle:@"Setting" forState:UIControlStateNormal];
@@ -339,9 +339,14 @@
 
 #pragma mark - Actions
 - (IBAction)buttonXPTap:(id)sender {
-    EXPPointViewController *pointVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPointViewControllerIdentifier"];
-    pointVC.userId = userId;
-    [self.navigationController pushViewController:pointVC animated:YES];
+    if(![Infrastructure sharedClient].currentUser){
+        // back to login screen
+        [self.tabBarController.navigationController popViewControllerAnimated:YES];
+    }else{
+        EXPPointViewController *pointVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPointViewControllerIdentifier"];
+        pointVC.userId = userId;
+        [self.navigationController pushViewController:pointVC animated:YES];
+    }
 }
 
 - (void)buttonSettingTap:(id)sender {
@@ -370,9 +375,6 @@
 //            NSLog(@"Error: %@", error.description);
 //        }
 //    }];
-    
-    
-    
     if(facebookLink==nil){
         [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"No Facebook account in Port Folio Profile" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
     } else {

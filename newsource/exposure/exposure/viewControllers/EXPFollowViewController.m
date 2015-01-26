@@ -20,6 +20,7 @@
     NSMutableArray *arrayData;
     User *currentUser; // user login
     User *userProfile; // user's profile we are watching
+    NSMutableArray* current_user_following;
     int mode;
 }
 
@@ -54,22 +55,20 @@
     [self.viewContainer addGestureRecognizer:tapGesture];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+-(void)viewDidAppear:(BOOL)animated{
     // load user
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getUserWithId:self.userId email:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-        
         [SVProgressHUD dismiss];
         userProfile = [User objectFromDictionary:responseObject];
         self.title = userProfile.username;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         [SVProgressHUD dismiss];
     }];
     //
-    if (self.userId && self.isFollowing) {
+    if (self.userId && self.segmentOption.selectedSegmentIndex == 0) {
         [self loadFollowingUser:self.userId];
-    } else if (self.userId && !self.isFollowing) {
+    } else if (self.userId && self.segmentOption.selectedSegmentIndex == 1) {
         [self loadFollowerUser:self.userId];
     }
 }
@@ -77,7 +76,6 @@
 - (void) loadFollowingUser:(NSNumber*)userId {
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getFollowingWithUserId:userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-        
         [SVProgressHUD dismiss];
         NSArray *array = responseObject;
         arrayFollowing = [[NSMutableArray alloc] init];
@@ -90,7 +88,6 @@
         [self.collectionViewUser reloadData];
         [self filterUser];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         [SVProgressHUD dismiss];
     }];
 }
@@ -98,20 +95,22 @@
 - (void) loadFollowerUser:(NSNumber*)userId {
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getFollowerWithUserId:userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
-        
         [SVProgressHUD dismiss];
         NSArray *array = responseObject;
         arrayFollower = [[NSMutableArray alloc] init];
         User *user = nil;
+        NSMutableArray *currUserFollowing = [[NSMutableArray alloc] init];
+
         for (int i = 0; i < array.count; i++) {
             user = [User objectFromDictionary:array[i]];
             [arrayFollower addObject:user];
+            [currUserFollowing addObject:user.current_user_following];
         }
         arrayData = arrayFollower;
+        current_user_following = currUserFollowing;
         [self.collectionViewUser reloadData];
         [self filterUser];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         [SVProgressHUD dismiss];
     }];
 }
@@ -123,7 +122,7 @@
 }
 
 #pragma mark - CollectionView Delegate
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
 }
 
@@ -142,13 +141,12 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"FollowCollectionViewCellIdentifier" forIndexPath:indexPath];
-    //
-    UIImageView *imageViewUserProfile = (UIImageView*)[cell viewWithTag:1];
+    UIImageView *imageViewUserProfile = (UIImageView*)[cell viewWithTag:3];
     UILabel *labelUsername = (UILabel*)[cell viewWithTag:2];
-    UIButton *buttonUnfollow = (UIButton*)[cell viewWithTag:3];
-    buttonUnfollow.tag = indexPath.row;
+    UIButton *buttonUnfollow = (UIButton*)[cell viewWithTag:1];
+    //buttonUnfollow.tag = indexPath.row;
     [buttonUnfollow addTarget:self
-                 action:@selector(unfollowTap:)
+                       action:@selector(unfollowTap:event:)
        forControlEvents:UIControlEventTouchUpInside];
     // fill data
     User *user = [arrayData objectAtIndex:indexPath.row];
@@ -157,29 +155,43 @@
     if (user.profile_picture_url_thumb && [user.profile_picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound) {
         [imageViewUserProfile setImageURL:[NSURL URLWithString:user.profile_picture_url_thumb]];
     }
-    if (self.segmentOption.selectedSegmentIndex == 1) { // Follower
-        buttonUnfollow.hidden = YES;
-    } else {
+    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
         buttonUnfollow.hidden = NO;
+    } else {
+        NSInteger index = indexPath.row;
+        NSString *value = [current_user_following objectAtIndex:index];
+        if([value boolValue]){
+            buttonUnfollow.hidden = NO;
+        }else{
+            buttonUnfollow.hidden = YES;
+        }
     }
     //
     labelUsername.text = user.username;
     return cell;
 }
 
--(void)unfollowTap:(id)sender {
-    UIButton *buttonFollow = sender;
-    int index = buttonFollow.tag;
+-(void)unfollowTap:(id)sender event:(id) event {
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.collectionViewUser];
+    
+    NSIndexPath *buttonCellIndexPath = [self.collectionViewUser indexPathForItemAtPoint:currentTouchPosition];
+    NSInteger index = buttonCellIndexPath.row;
+    
     User *user = [arrayData objectAtIndex:index];
-    //
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI unfollowUser:user.userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD showSuccessWithStatus:@"Success"];
         [arrayFollowing removeObject:user];
+        if (self.userId && self.segmentOption.selectedSegmentIndex == 0) {
+            [self loadFollowingUser:self.userId];
+        } else if (self.userId && self.segmentOption.selectedSegmentIndex == 1) {
+            [self loadFollowerUser:self.userId];
+        }
         [self.collectionViewUser reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         [SVProgressHUD showSuccessWithStatus:@"Fail"];
     }];
 }
@@ -195,10 +207,8 @@
 #pragma mark - Actions
 - (IBAction)segmentValueChanged:(id)sender {
     if (self.segmentOption.selectedSegmentIndex == 0) { // Following
-        
         [self loadFollowingUser:self.userId];
     } else { // Follower
-        
         [self loadFollowerUser:self.userId];
     }
 }
@@ -233,11 +243,9 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length <= 0) {
         if (self.segmentOption.selectedSegmentIndex == 0) { // Following
-            
             arrayData = arrayFollowing;
             [self.collectionViewUser reloadData];
         } else { // Follower
-            
             arrayData = arrayFollower;
             [self.collectionViewUser reloadData];
         }
