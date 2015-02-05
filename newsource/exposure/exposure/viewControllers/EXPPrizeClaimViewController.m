@@ -116,11 +116,14 @@
                                             userToken:currentUser.authentication_token
                                               success:^(id responseObject) {
         
-                                                  NSLog(@"Success: %@", responseObject);
-                                                  [SVProgressHUD showSuccessWithStatus:@"Success"];
+                                                  NSLog(@"Claim Success: %@", responseObject);
+                                                  [SVProgressHUD showSuccessWithStatus:@"Claim Success"];
+                                                  [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
         NSLog(@"Error: %@", error.description);
+        [NSThread sleepForTimeInterval:1.0f];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 

@@ -120,17 +120,17 @@
         [self.buttonFollow setEnabled:NO];
     }
     [Infrastructure sharedClient].countFBFetch = zeroValue;
-    //get profile id from app_scoped_id
-    NSError *error;
-    NSURL* aUrl =
-    [NSURL URLWithString:@"https://www.facebook.com/app_scoped_user_id/1403078126657270/"];
-    NSMutableURLRequest* request =
-    [NSMutableURLRequest requestWithURL:aUrl
-                            cachePolicy:NSURLRequestUseProtocolCachePolicy
-                        timeoutInterval:21864];
-    NSHTTPURLResponse *res = nil;
-    NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:[res allHeaderFields]
-                                                              forURL:aUrl];
+//    //get profile id from app_scoped_id
+//    NSError *error;
+//    NSURL* aUrl =
+//    [NSURL URLWithString:@"https://www.facebook.com/app_scoped_user_id/1403078126657270/"];
+//    NSMutableURLRequest* request =
+//    [NSMutableURLRequest requestWithURL:aUrl
+//                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+//                        timeoutInterval:21864];
+//    NSHTTPURLResponse *res = nil;
+//    NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:[res allHeaderFields]
+//                                                              forURL:aUrl];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -294,7 +294,7 @@
         NSArray *array = responseObject;
         Contest *contest = nil;
         arrayContest = [[NSMutableArray alloc] init];
-        for (int i = 0; i < array.count; i++) {
+        for (int i = (int)array.count-1; i >= 0; i--) {
             contest = [Contest objectFromDictionary:array[i]];
             [arrayContest addObject:contest];
         }

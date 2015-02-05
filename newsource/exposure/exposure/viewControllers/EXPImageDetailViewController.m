@@ -26,6 +26,7 @@
     NSMutableArray *arrayComment;
     CGPoint textFieldCommentOrigin;
     int currentLikeNumber;
+    NSNumber *tap_id;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -158,12 +159,22 @@
     }];
 }
 
--(void) userProfileTap {
-
+-(void) userProfileTap
+{
     EXPPortfolioViewController *portfolioVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPortfolioViewControllerIdentifier"];
     portfolioVC.profileId = currentPost.uploader_id;
     [self.navigationController pushViewController:portfolioVC animated:YES];
 }
+
+
+-(void) userProfileCommentTap:(id)sender
+{
+    UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *)sender;
+    EXPPortfolioViewController *portfolioVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPPortfolioViewControllerIdentifier"];
+    portfolioVC.profileId = [NSNumber numberWithInteger:[tapRecognizer.view tag]];
+    [self.navigationController pushViewController:portfolioVC animated:YES];
+}
+
 
 -(void) loadPostContest:(NSNumber*)contestId {
     [SVProgressHUD showWithStatus:@"Loading Contest"];
@@ -249,7 +260,7 @@
     }
     // load post info again
     [SVProgressHUD showWithStatus:@"Loading Post"];
-    [self.serviceAPI getPostByPostId:self.postId userId:currentUser userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+    [self.serviceAPI getPostByPostId:self.postId userId:currentUser.userId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
         NSLog(@"Current Post: %@", responseObject);
@@ -322,7 +333,6 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PostCommentTableViewCellIdentifier"];
     }
-    
     //
     UILabel *labelComment = (UILabel*)[cell viewWithTag:1];
     Comment *comment = [arrayComment objectAtIndex:indexPath.row];
@@ -333,6 +343,14 @@
     UIImage * image = [UIImage imageWithData:imageData];
     UIImageView *imageUser = (UIImageView*)[cell viewWithTag:2];
     imageUser.image = image;
+    // add gesture for tapping avatar - comment
+    UITapGestureRecognizer *userTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userProfileCommentTap:)];
+    [userTap setNumberOfTapsRequired:1];
+    imageUser.tag = [comment.user_id intValue];
+    [imageUser setUserInteractionEnabled:YES];
+    [imageUser setGestureRecognizers:[NSArray arrayWithObject:userTap]];
+    
+
     // color for cell
     if (indexPath.row % 2 == 0) {
         [cell setBackgroundColor:Rgb2UIColor(255, 122, 98)];

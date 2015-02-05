@@ -36,10 +36,6 @@
     self.title = @"Notifications";
     //
     arrayNotification = [[NSMutableArray alloc] init];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
     if ([Infrastructure sharedClient].currentUser) {
         User *user = [Infrastructure sharedClient].currentUser;
         [SVProgressHUD showWithStatus:@"Loading"];
@@ -55,11 +51,16 @@
             
             [SVProgressHUD dismiss];
         }];
-
+        
     } else {
         // back to login screen
         [self.tabBarController.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,10 +88,10 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notificationTableViewCellIdentifier"];
     }
+    
     // convert to notification
     Notification *notification = [Notification objectFromDictionary:arrayNotification[indexPath.row]];
-    //
-    UIImageView *imageViewSender = (UIImageView*)[cell viewWithTag:1];
+    AsyncImageView *imageViewSender = (AsyncImageView*)[cell viewWithTag:1];
     UILabel *labelContest = (UILabel*)[cell viewWithTag:2];
     UILabel *labelContestSlogan = (UILabel*)[cell viewWithTag:3];
     UILabel *labelDetail = (UILabel*)[cell viewWithTag:5]; // for type user
@@ -117,16 +118,18 @@
         labelContestSlogan.text = notification.text;
         if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
             imageViewWinner.image = [UIImage imageNamed:@"badge_winner"];
-        }
+        }  
         [Infrastructure sharedClient].contestId = notification.contest_id;
         [Infrastructure sharedClient].notificationId = notification.notificationId;
     }
-    if ([notification.sender_picture rangeOfString:@"placeholder"].location != NSNotFound ) {
-        [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];
-    } else {
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewSender];
+    [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];
+    if ([notification.sender_picture rangeOfString:@"placeholder"].location == NSNotFound ) {
+//        [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];
+//    } else {
         [imageViewSender setImageURL:[NSURL URLWithString:notification.sender_picture]];
+        //load cell image
     }
-    
     return cell;
 }
 
