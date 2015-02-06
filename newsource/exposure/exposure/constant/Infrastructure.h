@@ -27,6 +27,7 @@
 @property(nonatomic, strong) NSString *deviceToken;
 @property(nonatomic, strong) NSNumber *contestId;
 @property(nonatomic, strong) NSNumber *notificationId;
+@property(nonatomic, strong) NSString *AdPrizeClaim;
 @property(nonatomic, strong) NSString *facebook;
 @property(nonatomic, strong) NSNumber *countFBFetch;
 @property(nonatomic, strong) NSString *instagram;

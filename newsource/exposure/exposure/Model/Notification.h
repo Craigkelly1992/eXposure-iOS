@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSNumber * post_id;
 @property (nonatomic, copy) NSString * text;
 @property (nonatomic, copy) NSString * sender_picture;
+@property (nonatomic, copy) NSString * sender_picture_thumb;
 @property (nonatomic, copy) NSString * sender_name;
 @property (nonatomic, copy) NSString * created_at;
 @property (nonatomic, copy) NSString * updated_at;
@@ -27,8 +28,10 @@
 @property (nonatomic, retain) NSNumber * image_file_size;
 @property (nonatomic, copy) NSString * image_updated_at;
 @property (nonatomic, copy) NSString * sender_type;
-@property (nonatomic,copy) NSNumber * contest_id;
+@property (nonatomic, copy) NSNumber * contest_id;
+@property (nonatomic, copy) NSString * notification_image_url;
 @property (nonatomic) BOOL readed_flag;
+@property (nonatomic) BOOL is_claimed;
 
 @end
 

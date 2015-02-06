@@ -36,6 +36,9 @@
     self.title = @"Notifications";
     //
     arrayNotification = [[NSMutableArray alloc] init];
+    }
+
+- (void)viewWillAppear:(BOOL)animated {
     if ([Infrastructure sharedClient].currentUser) {
         User *user = [Infrastructure sharedClient].currentUser;
         [SVProgressHUD showWithStatus:@"Loading"];
@@ -56,10 +59,7 @@
         // back to login screen
         [self.tabBarController.navigationController popViewControllerAnimated:YES];
     }
-}
 
-- (void)viewWillAppear:(BOOL)animated {
-    
     
 }
 
@@ -88,10 +88,15 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notificationTableViewCellIdentifier"];
     }
+    else{
+        AsyncImageView *imageViewSender = (AsyncImageView*)[cell viewWithTag:1];
+        imageViewSender.image = nil;
+    }
     
     // convert to notification
     Notification *notification = [Notification objectFromDictionary:arrayNotification[indexPath.row]];
     AsyncImageView *imageViewSender = (AsyncImageView*)[cell viewWithTag:1];
+    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewSender];
     UILabel *labelContest = (UILabel*)[cell viewWithTag:2];
     UILabel *labelContestSlogan = (UILabel*)[cell viewWithTag:3];
     UILabel *labelDetail = (UILabel*)[cell viewWithTag:5]; // for type user
@@ -118,15 +123,14 @@
         labelContestSlogan.text = notification.text;
         if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
             imageViewWinner.image = [UIImage imageNamed:@"badge_winner"];
-        }  
+        }
+        [Infrastructure sharedClient].AdPrizeClaim = notification.notification_image_url;
         [Infrastructure sharedClient].contestId = notification.contest_id;
         [Infrastructure sharedClient].notificationId = notification.notificationId;
     }
-    [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewSender];
+    
     [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];
-    if ([notification.sender_picture rangeOfString:@"placeholder"].location == NSNotFound ) {
-//        [imageViewSender setImage:[UIImage imageNamed:@"placeholder.png"]];
-//    } else {
+    if(notification.sender_picture != nil && notification.sender_picture.length>0){
         [imageViewSender setImageURL:[NSURL URLWithString:notification.sender_picture]];
         //load cell image
     }
@@ -162,11 +166,21 @@
         postVC.postId = notification.post_id;
         [self.navigationController pushViewController:postVC animated:YES];
         
-    } else if ([notification.type rangeOfString:@"winner"].location != NSNotFound) { // is winner
-        
+    } else if ([notification.type rangeOfString:@"winner"].location != NSNotFound && !notification.is_claimed) { // is winner
+        [Infrastructure sharedClient].AdPrizeClaim = notification.notification_image_url;
+        [Infrastructure sharedClient].contestId = notification.contest_id;
+        [Infrastructure sharedClient].notificationId = notification.notificationId;
         EXPPrizeClaimViewController *winnerVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"EXPPrizeClaimViewControllerIdentifier"];
         
         [self.navigationController pushViewController:winnerVC animated:YES];
+    }
+    else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Prize Claim"
+                                                        message:@"The prize is claimed, you can't claim again!"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
     }
     
 }

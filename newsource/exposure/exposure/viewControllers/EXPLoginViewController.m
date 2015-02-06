@@ -110,11 +110,15 @@
         
         // register device token
         User *currentUser = [Infrastructure sharedClient].currentUser;
-        [self.serviceAPI registerDeviceWithUserId:currentUser.userId email:currentUser.email userToken:currentUser.authentication_token deviceToken:[Infrastructure sharedClient].deviceToken success:^(id responseObject) {
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
+        if([Infrastructure sharedClient].deviceToken != nil){
+            [self.serviceAPI registerDeviceWithUserId:currentUser.userId email:currentUser.email userToken:currentUser.authentication_token deviceToken:[Infrastructure sharedClient].deviceToken success:^(id responseObject) {
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSString *token= [Infrastructure sharedClient].deviceToken;
+                
+                NSLog(@"Error: %@", error);
+            }];
+        }
         
         // go to home screen
         EXPTabBarController *tabBarVC = [[EXPTabBarController alloc]init];

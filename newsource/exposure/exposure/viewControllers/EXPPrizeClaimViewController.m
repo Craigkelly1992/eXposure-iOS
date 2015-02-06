@@ -50,6 +50,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self getUserInfo];
     [self registerForKeyboardNotifications];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -71,8 +72,8 @@
             self.textFieldEmail.text = winnerUser.email;
             self.textFieldPhone.text = winnerUser.phone;
             [self.imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-            if ([winnerUser.profile_picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound) {
-                [self.imageView setImageURL:[NSURL URLWithString:winnerUser.profile_picture_url_thumb]];
+            if ([[Infrastructure sharedClient].AdPrizeClaim rangeOfString:@"placeholder"].location == NSNotFound) {
+                [self.imageView setImageURL:[NSURL URLWithString:[Infrastructure sharedClient].AdPrizeClaim]];
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -95,15 +96,15 @@
     
     // Send data to server
     NSNumber *contestID = [Infrastructure sharedClient].contestId;
-    NSNumber *notificationID = [Infrastructure sharedClient].notificationId;
+    NSNumber *notificationId = [Infrastructure sharedClient].notificationId;
     NSLog(@"-----------LOG-----------");
     NSLog(@"%i", [contestID intValue]);
-    NSLog(@"%i", [notificationID intValue]);
+    NSLog(@"%i", [notificationId intValue]);
     NSLog(@"-----------END-----------");
     
     [SVProgressHUD showWithStatus:@"Sending data"];
     [self.serviceAPI claimThePrizeWithContestId:contestID
-                                       notificationId:notificationID
+                                       notificationId:notificationId
                                       WinnerFirstName:self.textFieldFirstName.text
                                        winnerLastName:self.textFieldLastName.text
                                           winnerEmail:self.textFieldEmail.text
@@ -117,13 +118,13 @@
                                               success:^(id responseObject) {
         
                                                   NSLog(@"Claim Success: %@", responseObject);
-                                                  [SVProgressHUD showSuccessWithStatus:@"Claim Success"];
+                                                  [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+                                                  
                                                   [self.navigationController popViewControllerAnimated:YES];
+                                                  
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"Service Error. Please try again later!"];
+        [SVProgressHUD showErrorWithStatus:@"Claim Fail. Please try again later!"];
         NSLog(@"Error: %@", error.description);
-        [NSThread sleepForTimeInterval:1.0f];
-        [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 
