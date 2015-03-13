@@ -240,14 +240,17 @@
     [self.serviceAPI getBrandWithId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
-        //get facebook, instagram, twitte
+        //get facebook, instagram, twitter
         
         currentBrand = [Brand objectFromDictionary:responseObject];
         // fill data to UI
         labelBrandName.text = currentBrand.name;
         
         // website
-        textViewWebsiteURL.text = currentBrand.website;
+        NSString *brandWebsite = @"";
+        brandWebsite = [currentBrand.website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+        brandWebsite = [brandWebsite stringByReplacingOccurrencesOfString:@"https://" withString:@""];
+        textViewWebsiteURL.text = brandWebsite;
         
         // description
         textViewDescription.text = [NSString stringWithFormat:@"%@", currentBrand.mDescription];

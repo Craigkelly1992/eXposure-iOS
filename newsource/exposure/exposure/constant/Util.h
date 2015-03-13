@@ -16,6 +16,7 @@
 - (NSString*) convertToFriendlyDateTimeFormat:(NSString*)jobDateTime;
 - (NSString*) convertToFriendlyDateTimeFormatFromDate:(NSDate*)jobDateTime;
 - (NSString*) convertToDateFormat:(NSString*)jobDateTime;
+- (NSString*) convertToDateFormatZ:(NSString*)jobDateTime;
 - (NSString*) convertToTimeFormat:(NSString*)jobDateTime;
 // convert friendly date time format to format @"yyyy'-'MM'-'dd'T'HH':'mm':'ss"
 - (NSString*) convertToDateTimeFormatFromFriendly:(NSString*)friendlyTimeString;

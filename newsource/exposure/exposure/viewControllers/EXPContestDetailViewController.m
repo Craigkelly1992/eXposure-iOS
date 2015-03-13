@@ -15,6 +15,7 @@
 #import "Post.h"
 #import "EXPImageDetailViewController.h"
 #import "Util.h"
+#import "TimeUtil.h"
 
 #define kDetailHeightMin 35
 #define kDetailHeightMax 172
@@ -89,7 +90,8 @@
                 self.buttonEnter.enabled = NO;
         }
         //
-        NSString *detail = [NSString stringWithFormat:@"Prize: %@ \n\n %@", currentContest.contest.info.prizes, currentContest.contest.info.mDescription];
+        NSString *endDate = [[Util sharedUtil] convertToDateFormatZ:currentContest.contest.info.end_date];
+        NSString *detail = [NSString stringWithFormat:@" Prize: %@ \n End date: %@\n\n %@", currentContest.contest.info.prizes, endDate, currentContest.contest.info.mDescription];
         self.textViewDetail.text = detail;
         
         //

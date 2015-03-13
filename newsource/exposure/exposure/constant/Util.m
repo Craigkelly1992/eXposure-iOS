@@ -97,6 +97,22 @@
     return date;
 }
 
+// jobDateTime in format @"yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
+- (NSString*) convertToDateFormatZ:(NSString*)jobDateTime {
+    NSDate *dateTime = [systemDateTimeFormatter dateFromString:jobDateTime];
+    NSDate *currentDate = [[NSDate alloc] init];
+    NSString *jobDateString = [dateFormatter stringFromDate:dateTime];
+    NSString *currentDateString = [dateFormatter stringFromDate:currentDate];
+    
+    NSString *date;
+    if ([jobDateString isEqualToString:currentDateString]) {
+        date = @"Today";
+    } else {
+        date = jobDateString;
+    }
+    return date;
+}
+
 // convert friendly date time format to format @"yyyy'-'MM'-'dd'T'HH':'mm':'ss"
 - (NSString*) convertToDateTimeFormatFromFriendly:(NSString*)friendlyTimeString {
     NSDate *dateTime = [friendlyDateTimeFormatter dateFromString:friendlyTimeString];

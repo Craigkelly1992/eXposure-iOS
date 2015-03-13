@@ -140,7 +140,7 @@
 //    }
     //
     labelContestName.text = contest.title;
-    labelContestDetail.text = contest.mDescription;
+    labelContestDetail.text = contest.brand_name;
     return cell;
 }
 
