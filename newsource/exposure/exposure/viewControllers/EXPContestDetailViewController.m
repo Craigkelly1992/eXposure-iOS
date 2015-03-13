@@ -90,7 +90,8 @@
                 self.buttonEnter.enabled = NO;
         }
         //
-        NSString *endDate = [[Util sharedUtil] convertToDateFormatZ:currentContest.contest.info.end_date];
+        NSString *endDate = currentContest.contest.info.end_date;
+        
         NSString *detail = [NSString stringWithFormat:@" Prize: %@ \n End date: %@\n\n %@", currentContest.contest.info.prizes, endDate, currentContest.contest.info.mDescription];
         self.textViewDetail.text = detail;
         

@@ -262,8 +262,8 @@
             imageViewBrand.image = [UIImage imageNamed:@"placeholder.png"];
         }
         //
-        if (currentBrand.picture_url) {
-            [self.imageViewBackground setImageURL:[NSURL URLWithString:currentBrand.picture_url]];
+        if (currentBrand.background_url_preview) {
+            [self.imageViewBackground setImageURL:[NSURL URLWithString:currentBrand.background_url_preview]];
         } else {
             imageViewBrand.image = [UIImage imageNamed:@"sample.jpg"];
         }
@@ -284,7 +284,6 @@
         [self getContestsFromBrand];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if(![[Infrastructure sharedClient] currentUser]){
-            
                 [SVProgressHUD dismiss];
         }else{
             [SVProgressHUD showErrorWithStatus:@"We get error when trying to get information of Brand. Please try again later.!!!!!"];

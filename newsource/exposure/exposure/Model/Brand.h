@@ -29,6 +29,7 @@
 @property (nonatomic, copy) NSString *picture_updated_at;
 @property (nonatomic, retain) NSNumber *cached_views;
 @property (nonatomic, copy) NSString *picture_url;
+@property (nonatomic, copy) NSString *background_url_preview;
 
 /// just returned when getting brand by id
 @property (nonatomic, retain) NSArray *submissions_mobile;
