@@ -237,6 +237,13 @@
         if (profileUser) {
             // has login yet
             labelUsername.text = profileUser.username;
+            UIColor *color = [UIColor blackColor];
+            labelUsername.layer.shadowColor = [color CGColor];
+            labelUsername.layer.shadowRadius = 4.0f;
+            labelUsername.layer.shadowOpacity = .9;
+            labelUsername.layer.shadowOffset = CGSizeZero;
+            labelUsername.layer.masksToBounds = NO;
+
             // profile image
             if ([profileUser.profile_picture_url rangeOfString:@"placeholder"].location == NSNotFound ) {
                 [imageViewProfile setImageURL:[NSURL URLWithString:profileUser.profile_picture_url_thumb]];
@@ -252,6 +259,11 @@
             }
             // description
             textViewDescription.text = profileUser.mDescription;
+            textViewDescription.layer.shadowColor = [color CGColor];
+            textViewDescription.layer.shadowRadius = 4.0f;
+            textViewDescription.layer.shadowOpacity = .9;
+            textViewDescription.layer.shadowOffset = CGSizeZero;
+            textViewDescription.layer.masksToBounds = NO;
             // following, follower, submission count
             self.labelFollowerCount.text = [profileUser.followers_count stringValue];
             self.labelFollowingCount.text = [profileUser.follow_count stringValue];

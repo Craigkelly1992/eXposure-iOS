@@ -77,7 +77,7 @@
     NSString *totalXp = [Infrastructure sharedClient].total_xp;
     int totalXpVal = [totalXp intValue];
     int numberFilterUnlocked = 0;
-    
+
     if(totalXpVal<=9){
         numberFilterUnlocked = 4;
     }else{

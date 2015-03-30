@@ -343,6 +343,7 @@
               userToken:(NSString*)userToken
                 success:(void (^)(id responseObject))success
                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 //get post (browse mode) by post id without authentication token
 - (void)getPostBrowseModeByPostId:(NSNumber*)postId
                           success:(void (^)(id responseObject))success

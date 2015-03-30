@@ -201,7 +201,7 @@
     } else {
         // has login
         contestId = nil;
-        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", @"Facebook", @"Instagram", @"Twitter", nil]showInView:self.view];
+        [[[UIActionSheet alloc]initWithTitle:@"" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera",@"Library", @"Facebook", @"Instagram", @"Twitter",@"Profile", nil]showInView:self.view];
     }
 }
 

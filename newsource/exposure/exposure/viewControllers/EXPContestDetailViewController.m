@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 looper. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "EXPContestDetailViewController.h"
 #import "ContestDetail.h"
 #import "SubmissionList.h"
@@ -75,9 +76,29 @@
         [self.labelContestName resizeToFit];
         self.title = currentContest.contest.info.title;
         
+        //custom UIlabel
+        UIColor *color = [UIColor blackColor];
+        self.labelBrandName.layer.shadowColor = [color CGColor];
+        self.labelBrandName.layer.shadowRadius = 4.0f;
+        self.labelBrandName.layer.shadowOpacity = .9;
+        self.labelBrandName.layer.shadowOffset = CGSizeZero;
+        self.labelBrandName.layer.masksToBounds = NO;
+        
+        self.labelContestName.layer.shadowColor = [color CGColor];
+        self.labelContestName.layer.shadowRadius = 4.0f;
+        self.labelContestName.layer.shadowOpacity = .9;
+        self.labelContestName.layer.shadowOffset = CGSizeZero;
+        self.labelContestName.layer.masksToBounds = NO;
+        
+        self.imageViewAvailable.layer.shadowColor = [color CGColor];
+        self.imageViewAvailable.layer.shadowRadius = 4.0f;
+        self.imageViewAvailable.layer.shadowOpacity = .9;
+        self.imageViewAvailable.layer.shadowOffset = CGSizeZero;
+        self.imageViewAvailable.layer.masksToBounds = NO;
+
+        
         // compare start & end to show available
-        if ([currentContest.contest.info.start_date caseInsensitiveCompare:currentContest.contest.info.current_date_server] == NSOrderedAscending &&
-            [currentContest.contest.info.end_date caseInsensitiveCompare:currentContest.contest.info.current_date_server] == NSOrderedDescending) {
+        if ([currentContest.contest.status isEqualToString:@"OPEN"]) {
             self.imageViewAvailable.hidden = NO;
             self.buttonEnter.enabled = YES;
         } else {
@@ -124,7 +145,14 @@
     int newHeight = self.viewDetailContainer.frame.origin.y + self.viewDetailContainer.frame.size.height + self.constraintDetailHeight.constant + self.constraintSubmissionHeight.constant;
     self.scrollViewContainer.contentSize = CGSizeMake(self.scrollViewContainer.frame.size.width, newHeight);
 }
-
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    textField.layer.cornerRadius=8.0f;
+    textField.layer.masksToBounds=YES;
+    textField.layer.borderColor=[[UIColor redColor]CGColor];
+    textField.layer.borderWidth= 1.0f;
+    return YES;
+}
 #pragma mark - Actions
 - (IBAction)buttonEnterContestTap:(id)sender {
     if ([Infrastructure sharedClient].currentUser) {

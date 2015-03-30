@@ -46,7 +46,6 @@
 {
     [super viewDidLoad];
     //browse mode
-    NSNumber *zeroValue = [NSNumber numberWithInt:0];
     if(![Infrastructure sharedClient].currentUser){
         [self.buttonFollow setEnabled:NO];
     }
@@ -74,6 +73,14 @@
     labelBrandName.textColor = [UIColor whiteColor];
     labelBrandName.font = [UIFont systemFontOfSize:18];
     labelBrandName.frame = frame2;
+    //glow effect
+    UIColor *color = [UIColor blackColor];
+    labelBrandName.layer.shadowColor = [color CGColor];
+    labelBrandName.layer.shadowRadius = 4.0f;
+    labelBrandName.layer.shadowOpacity = .9;
+    labelBrandName.layer.shadowOffset = CGSizeZero;
+    labelBrandName.layer.masksToBounds = NO;
+
     
     textViewWebsiteURL = [[UITextView alloc] init];
     CGRect frame4 = CGRectZero;
@@ -89,6 +96,12 @@
     textViewWebsiteURL.editable = NO;
     textViewWebsiteURL.dataDetectorTypes = UIDataDetectorTypeLink;
     textViewWebsiteURL.delegate = self;
+    //glow effect
+    textViewWebsiteURL.layer.shadowColor = [color CGColor];
+    textViewWebsiteURL.layer.shadowRadius = 4.0f;
+    textViewWebsiteURL.layer.shadowOpacity = .9;
+    textViewWebsiteURL.layer.shadowOffset = CGSizeZero;
+    textViewWebsiteURL.layer.masksToBounds = NO;
 
     
     textViewDescription = [[UITextView alloc] init];
@@ -104,6 +117,12 @@
     textViewDescription.frame = frame3;
     textViewDescription.editable = NO;
     textViewDescription.selectable = NO;
+    //glow effect
+    textViewDescription.layer.shadowColor = [color CGColor];
+    textViewDescription.layer.shadowRadius = 4.0f;
+    textViewDescription.layer.shadowOpacity = .9;
+    textViewDescription.layer.shadowOffset = CGSizeZero;
+    textViewDescription.layer.masksToBounds = NO;
     
     self.scrollViewHeader.contentSize = CGSizeMake(2 * self.view.frame.size.width, self.scrollViewHeader.frame.size.height);
     
