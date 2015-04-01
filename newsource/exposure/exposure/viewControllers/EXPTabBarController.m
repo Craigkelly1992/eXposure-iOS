@@ -288,6 +288,7 @@
     if ([SLComposeViewController
          isAvailableForServiceType:SLServiceTypeTwitter]) {
         
+        [SVProgressHUD showWithStatus:@"Loading"];
         //  Step 1:  Obtain access to the user's Twitter accounts
         ACAccountStore *accountStore = [[ACAccountStore alloc] init];
         ACAccountType *twitterAccountType =
@@ -298,6 +299,7 @@
          requestAccessToAccountsWithType:twitterAccountType
          options:NULL
          completion:^(BOOL granted, NSError *error) {
+             [SVProgressHUD dismiss];
              if (granted) {
                  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                  EXPGalleryViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPGalleryViewControllerIdentifier"];
