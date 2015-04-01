@@ -473,6 +473,7 @@
     Contest *contest = arrayContest[indexPath.row];
     EXPContestDetailViewController *contestVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EXPContestDetailViewControllerIdentifier"];
     contestVC.contestId = contest.contestId;
+    contestVC.image_url = contest.picture_url;
     [self.navigationController pushViewController:contestVC animated:YES];
 }
 
