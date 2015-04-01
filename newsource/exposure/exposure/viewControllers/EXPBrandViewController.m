@@ -141,6 +141,9 @@
     winnerTapGesture.numberOfTapsRequired = 1;
     [self.viewWinnerContainer setGestureRecognizers:[[NSArray alloc] initWithObjects:winnerTapGesture, nil]];
     //
+    UITapGestureRecognizer *websiteTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(websiteLogTap)];
+    websiteTapGesture.numberOfTapsRequired = 1;
+    [textViewWebsiteURL setGestureRecognizers:[[NSArray alloc] initWithObjects:websiteTapGesture, nil]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -177,6 +180,20 @@
         [self.navigationController pushViewController:winnerVC animated:YES];
     } else {
         [self.tabBarController.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+-(void)websiteLogTap {
+    if (currentBrand.instagram!= nil) {
+        [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"website" success:^(id responseObject) {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
+        
+        NSString *brandWebsite = currentBrand.website;
+        NSURL *url = [NSURL URLWithString:brandWebsite];
+        [[UIApplication sharedApplication] openURL:url];
+    } else {
+        
     }
 }
 
@@ -384,6 +401,10 @@
 
 - (IBAction)buttonTwitterTap:(id)sender {
     if(currentBrand.twitter != nil){
+        [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"twitter" success:^(id responseObject) {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
+        
         NSURL *twitterURL = [NSURL URLWithString:[NSString stringWithFormat:@"twitter:///user?screen_name=%@", currentBrand.twitter]];
         if ([[UIApplication sharedApplication] canOpenURL:twitterURL]){
             [[UIApplication sharedApplication] openURL:twitterURL];
@@ -397,6 +418,10 @@
 
 - (IBAction)buttonInstagramTap:(id)sender {
     if (currentBrand.instagram!= nil) {
+        [[APConnectionLayer sharedClient] logClickBrandId:self.brandId userEmail:currentUser.email userToken:currentUser.authentication_token via:@"instagram" success:^(id responseObject) {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
+        
         NSURL *instagramURL = [NSURL URLWithString:[NSString stringWithFormat:@"instagram://user?username=%@", currentBrand.instagram]];
         if ([[UIApplication sharedApplication] canOpenURL:instagramURL]){
             [[UIApplication sharedApplication] openURL:instagramURL];
