@@ -10,6 +10,7 @@
 #import "Contest.h"
 #import "EXPContestDetailViewController.h"
 #import "Util.h"
+#import "PPiFlatSegmentedControl.h"
 
 @interface EXPContestsViewController ()
 
@@ -22,6 +23,7 @@
     NSIndexPath *selectedIndexPath;
     User *currentUser;
     NSString *currentDateTime;
+    PPiFlatSegmentedControl *segmented;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,9 +40,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"Contests";
-    if(![Infrastructure sharedClient].currentUser){
-        self.segmentOption.selectedSegmentIndex = 1;
-    }
     // get all contest
     currentUser = [Infrastructure sharedClient].currentUser;
     arrayContest = [[NSArray alloc] init];
@@ -55,10 +54,35 @@
 - (void)viewWillAppear:(BOOL)animated {
     currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
     self.labelNoItem.hidden = YES;
-    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+    
+    /////
+    NSArray *items = @[[[PPiFlatSegmentItem alloc] initWithTitle:@"Following" andIcon:nil],
+                       [[PPiFlatSegmentItem alloc] initWithTitle:@"All" andIcon:nil]];
+    segmented=[[PPiFlatSegmentedControl alloc] initWithFrame:CGRectMake(99, 64, 123, 29) items:items
+                                          iconPosition:IconPositionRight andSelectionBlock:^(NSUInteger segmentIndex) {
+                                              
+                                              [self segmentValueChanged:segmentIndex];
+        
+    } iconSeparation:0.0f];
+    segmented.color=[UIColor colorWithRed:4.0f/255.0 green:45.0f/255.0 blue:104.0f/255.0 alpha:1];
+    segmented.borderWidth=0;
+    segmented.borderColor=[UIColor darkGrayColor];
+    segmented.selectedColor=[UIColor colorWithRed:237.0f/255.0 green:189.0f/255.0 blue:42.0f/255.0 alpha:1];
+    segmented.textAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                               NSForegroundColorAttributeName:[UIColor whiteColor]};
+    segmented.selectedTextAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                                       NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [self.view addSubview:segmented];
+    
+    if(![Infrastructure sharedClient].currentUser){
+        [segmented setSelected:YES segmentAtIndex:1];
+    }
+    
+    //
+    if ([segmented isSelectedSegmentAtIndex:0]) { // Following
         
         [self loadFollowingContest];
-    } else if (self.segmentOption.selectedSegmentIndex == 1) { // All
+    } else if ([segmented isSelectedSegmentAtIndex:1]) { // All
         [self loadAllContest];
     }
 }
@@ -69,9 +93,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Segment Delegate
-- (IBAction)segmentValueChanged:(id)sender {
-    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+#pragma mark - Segment
+- (void)segmentValueChanged:(NSUInteger) segmentIndex {
+    
+    if (segmentIndex == 0) { // Following
         if(![Infrastructure sharedClient].currentUser){
             // back to login screen
             [self.tabBarController.navigationController popViewControllerAnimated:YES];
@@ -79,7 +104,7 @@
             [self loadFollowingContest];
         }
 
-    } else if (self.segmentOption.selectedSegmentIndex == 1) { // All
+    } else if (segmentIndex == 1) { // All
         [self loadAllContest];
     }
 }
@@ -254,7 +279,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length <= 0) {
-        if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+        if ([segmented isSelectedSegmentAtIndex:0]) { // Following
             
             arrayContest = arrayFollowing;
             [self.tableViewContest reloadData];

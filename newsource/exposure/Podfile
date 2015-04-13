@@ -10,3 +10,4 @@ pod 'UIAlertView-Blocks', '0.0.1'
 pod 'SVProgressHUD', :head
 pod 'TTTAttributedLabel'
 # pod 'CLImageEditor/AllTools', :git => 'https://github.com/ndbinh99/CLImageEditor.git'
+pod 'PPiFlatSegmentedControl', :git => 'https://github.com/pepibumur/PPiFlatSegmentedControl.git'

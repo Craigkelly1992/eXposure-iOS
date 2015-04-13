@@ -21,6 +21,4 @@
 @property (strong, nonatomic) IBOutlet UIView *viewContainer;
 @property (strong, nonatomic) IBOutlet UILabel *labelNoItem;
 
-// Actions
-- (IBAction)segmentValueChanged:(id)sender;
 @end

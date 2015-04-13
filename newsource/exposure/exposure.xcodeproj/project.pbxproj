@@ -1066,7 +1066,7 @@
 				ORGANIZATIONNAME = looper;
 				TargetAttributes = {
 					B3CD739E196E879800CBE2C6 = {
-						DevelopmentTeam = WQY493BK39;
+						DevelopmentTeam = YU344669UU;
 					};
 				};
 			};
@@ -1375,7 +1375,7 @@
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "af6225d2-856a-4d15-ba83-58a2b5fb5ce4";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1398,7 +1398,7 @@
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "af6225d2-856a-4d15-ba83-58a2b5fb5ce4";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EXPBaseViewController.h"
 
-@interface EXPLoginViewController : EXPBaseViewController <UITextFieldDelegate>
+@interface EXPLoginViewController : EXPBaseViewController <UITextFieldDelegate, UIWebViewDelegate>
 
 
 //IB Outlets

@@ -12,7 +12,9 @@
 
 @end
 
-@implementation EXPRankingsViewController
+@implementation EXPRankingsViewController {
+
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

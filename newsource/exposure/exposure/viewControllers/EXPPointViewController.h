@@ -16,6 +16,5 @@
 //
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentOption;
 @property (strong, nonatomic) IBOutlet UITableView *tableViewUser;
-// Actions
-- (IBAction)segmentValueChanged:(id)sender;
+
 @end

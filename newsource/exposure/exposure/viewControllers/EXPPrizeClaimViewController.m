@@ -40,6 +40,21 @@
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickOnView)];
     tapGesture.numberOfTapsRequired = 1;
     [self.scrollViewContainer addGestureRecognizer:tapGesture];
+    
+    // get notification content
+    User *user = [Infrastructure sharedClient].currentUser;
+    [self.serviceAPI readNotificationWithNotificationId:[[Infrastructure sharedClient].notificationId intValue] UserEmail:user.email userToken:user.authentication_token success:^(id responseObject) {
+        
+        NSLog(@"Object: %@", responseObject);
+        [self.imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
+        if ([[Infrastructure sharedClient].AdPrizeClaim rangeOfString:@"placeholder"].location == NSNotFound) {
+            [self.imageView setImageURL:[NSURL URLWithString:[responseObject objectForKey:@"notification_image_url"]]];
+        }
+        self.labelWinnerText.text = [responseObject objectForKey:@"text"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+    }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -71,10 +86,6 @@
             self.textFieldLastName.text = winnerUser.last_name;
             self.textFieldEmail.text = winnerUser.email;
             self.textFieldPhone.text = winnerUser.phone;
-            [self.imageView setImage:[UIImage imageNamed:@"placeholder.png"]];
-            if ([[Infrastructure sharedClient].AdPrizeClaim rangeOfString:@"placeholder"].location == NSNotFound) {
-                [self.imageView setImageURL:[NSURL URLWithString:[Infrastructure sharedClient].AdPrizeClaim]];
-            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

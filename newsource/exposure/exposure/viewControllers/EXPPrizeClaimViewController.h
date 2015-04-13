@@ -15,7 +15,7 @@
 
 // IBOutlet
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
-
+@property (weak, nonatomic) IBOutlet UILabel *labelWinnerText;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollViewContainer;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldFirstName;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldLastName;

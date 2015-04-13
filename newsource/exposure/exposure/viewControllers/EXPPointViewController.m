@@ -9,6 +9,7 @@
 #import "EXPPointViewController.h"
 #import "User.h"
 #import "EXPPortfolioViewController.h"
+#import "PPiFlatSegmentedControl.h"
 
 @interface EXPPointViewController ()
 
@@ -19,6 +20,7 @@
     NSMutableArray *arrayFollowing;
     NSMutableArray *arrayGlobal;
     NSMutableArray *arrayData;
+    PPiFlatSegmentedControl *segmented;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,10 +45,47 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+    [super viewWillAppear:animated];
+    
+    /////
+    NSArray *items = @[[[PPiFlatSegmentItem alloc] initWithTitle:@"Following" andIcon:nil],
+                       [[PPiFlatSegmentItem alloc] initWithTitle:@"All" andIcon:nil]];
+    segmented=[[PPiFlatSegmentedControl alloc] initWithFrame:self.segmentOption.frame items:items
+                                                iconPosition:IconPositionRight andSelectionBlock:^(NSUInteger segmentIndex) {
+                                                    
+                                                    [self segmentValueChanged:segmentIndex];
+                                                    
+                                                } iconSeparation:0.0f];
+    segmented.color=[UIColor colorWithRed:4.0f/255.0 green:45.0f/255.0 blue:104.0f/255.0 alpha:1];
+    segmented.borderWidth=0;
+    segmented.borderColor=[UIColor darkGrayColor];
+    segmented.selectedColor=[UIColor colorWithRed:237.0f/255.0 green:189.0f/255.0 blue:42.0f/255.0 alpha:1];
+    segmented.textAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                               NSForegroundColorAttributeName:[UIColor whiteColor]};
+    segmented.selectedTextAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                                       NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [self.view addSubview:segmented];
+    
+    if(![Infrastructure sharedClient].currentUser){
+        [segmented setSelected:YES segmentAtIndex:1];
+    }
+    
+    if ([segmented isSelectedSegmentAtIndex:0]) { // Following
         [self getFollowingRanking:self.userId];
-    } else if (self.segmentOption.selectedSegmentIndex == 1) { // All
-         [self getGlobalRanking:self.userId];
+    } else if ([segmented isSelectedSegmentAtIndex:1]) { // All
+        [self getGlobalRanking:self.userId];
+    }
+}
+
+#pragma mark - Segment
+- (void)segmentValueChanged:(NSUInteger) segmentIndex {
+    
+    if (segmentIndex == 0) { // Following
+        
+        [self getFollowingRanking:self.userId];
+    } else if (segmentIndex == 1) { // Global
+        
+        [self getGlobalRanking:self.userId];
     }
 }
 
@@ -200,7 +239,7 @@
     } else {
         [self.serviceAPI unfollowUser:user.userId userEmail:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
             
-            if (self.segmentOption.selectedSegmentIndex == 1) {
+            if ([segmented isSelectedSegmentAtIndex:1]) {
                 [SVProgressHUD showSuccessWithStatus:@"Success"];
                 [buttonFollow setTitle:@"Follow" forState:UIControlStateNormal];
                 [buttonFollow setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -234,13 +273,4 @@
     [self.navigationController pushViewController:portfolioVC animated:YES];
 }
 
-- (IBAction)segmentValueChanged:(id)sender {
-    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
-        
-        [self getFollowingRanking:self.userId];
-    } else if (self.segmentOption.selectedSegmentIndex == 1) { // Global
-        
-        [self getGlobalRanking:self.userId];
-    }
-}
 @end

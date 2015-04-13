@@ -152,6 +152,7 @@
     //http://localhost:3000/agencies/password/new
     UIViewController *vc = [[UIViewController alloc]init];
     UIWebView *wv = [[UIWebView alloc]initWithFrame:vc.view.frame];
+    wv.delegate = self;
     [vc.view addSubview:wv];
     navController = [[UINavigationController alloc] initWithRootViewController:vc];
     vc.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelForgotPassword)];
@@ -159,6 +160,13 @@
     [wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://exposuretechnologies.com/users/password/new"]]];
     [self presentViewController:navController animated:YES completion:nil];
     
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    if (navigationType == UIWebViewNavigationTypeFormSubmitted) {
+        [navController dismissViewControllerAnimated:YES completion:nil];
+    }
+    return YES;
 }
 
 -(void)cancelForgotPassword {

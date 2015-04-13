@@ -11,6 +11,7 @@
 #import "EXPImageDetailViewController.h"
 #import "UIImageView+WebCache.h"
 #import "EXPLoginViewController.h"
+#import "PPiFlatSegmentedControl.h"
 
 #define VC_PORTFOLIO_ID @"EXPLoginViewControllerIdentifier"
 
@@ -22,6 +23,7 @@
     NSMutableArray *arrayPost;
     Post *currentPost;
     User *currentUser;
+    PPiFlatSegmentedControl *segmented;
 }
 
 #pragma mark - life cycle
@@ -47,9 +49,51 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.segmentOption.selectedSegmentIndex == 0) { // All user
+    
+    /////
+    NSArray *items = @[[[PPiFlatSegmentItem alloc] initWithTitle:@"Following" andIcon:nil],
+                       [[PPiFlatSegmentItem alloc] initWithTitle:@"All" andIcon:nil]];
+    segmented=[[PPiFlatSegmentedControl alloc] initWithFrame:self.segmentOption.frame items:items
+                                                iconPosition:IconPositionRight andSelectionBlock:^(NSUInteger segmentIndex) {
+                                                    
+                                                    [self segmentValueChanged:segmentIndex];
+                                                    
+                                                } iconSeparation:0.0f];
+    segmented.color=[UIColor colorWithRed:4.0f/255.0 green:45.0f/255.0 blue:104.0f/255.0 alpha:1];
+    segmented.borderWidth=0;
+    segmented.borderColor=[UIColor darkGrayColor];
+    segmented.selectedColor=[UIColor colorWithRed:237.0f/255.0 green:189.0f/255.0 blue:42.0f/255.0 alpha:1];
+    segmented.textAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                               NSForegroundColorAttributeName:[UIColor whiteColor]};
+    segmented.selectedTextAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                                       NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [self.view addSubview:segmented];
+    
+    if(![Infrastructure sharedClient].currentUser){
+        [segmented setSelected:YES segmentAtIndex:1];
+    }
+    
+    //
+    if ([segmented isSelectedSegmentAtIndex:0]) { // All User
+        
         [self getAllPhotoStream];
-    } else if (self.segmentOption.selectedSegmentIndex == 1) {
+    } else if ([segmented isSelectedSegmentAtIndex:1]) { // Following
+        [self getFollowingPhotoStream];
+    }
+}
+
+#pragma mark - Segment
+- (void)segmentValueChanged:(NSUInteger) segmentIndex {
+    
+    if (segmentIndex == 0) { // All User
+        if(![Infrastructure sharedClient].currentUser){
+            // back to login screen
+            [self.tabBarController.navigationController popViewControllerAnimated:YES];
+        }else{
+            [self getAllPhotoStream];
+        }
+        
+    } else if (segmentIndex == 1) { // All
         [self getFollowingPhotoStream];
     }
 }
@@ -101,17 +145,18 @@
 }
 
 #pragma mark - Actions
+// we don't use this anymore, replaced by PPiFlatSegmentedControl
 - (IBAction)segmentOptionValueChanged:(id)sender {
-    if (self.segmentOption.selectedSegmentIndex == 0) { // All user
-        [self getAllPhotoStream];
-    } else if (self.segmentOption.selectedSegmentIndex == 1) {
-        if(![Infrastructure sharedClient].currentUser){
-            // back to login screen
-            [self.tabBarController.navigationController popViewControllerAnimated:YES];
-        }else{
-            [self getFollowingPhotoStream];
-        }
-    }
+//    if (self.segmentOption.selectedSegmentIndex == 0) { // All user
+//        [self getAllPhotoStream];
+//    } else if (self.segmentOption.selectedSegmentIndex == 1) {
+//        if(![Infrastructure sharedClient].currentUser){
+//            // back to login screen
+//            [self.tabBarController.navigationController popViewControllerAnimated:YES];
+//        }else{
+//            [self getFollowingPhotoStream];
+//        }
+//    }
 }
 
 #pragma mark - Helper

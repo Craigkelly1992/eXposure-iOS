@@ -85,7 +85,12 @@
             
             [SVProgressHUD dismiss];
             NSString *badgeNumber = [NSString stringWithFormat:@"%@", [responseObject objectForKey:@"count_unread"]];
-            tabNotification.badgeValue = badgeNumber;
+            if ([badgeNumber intValue] > 0) {
+                tabNotification.badgeValue = badgeNumber;
+            } else {
+                tabNotification.badgeValue = nil;
+            }
+            
             [UIApplication sharedApplication].applicationIconBadgeNumber = [[responseObject objectForKey:@"count_unread"] intValue];
             NSLog(@"Unread notification: %@", responseObject);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

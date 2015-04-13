@@ -9,6 +9,7 @@
 #import "EXPFollowViewController.h"
 #import "User.h"
 #import "EXPPortfolioViewController.h"
+#import "PPiFlatSegmentedControl.h"
 
 @interface EXPFollowViewController ()
 
@@ -22,6 +23,7 @@
     User *userProfile; // user's profile we are watching
     NSMutableArray* current_user_following;
     int mode;
+    PPiFlatSegmentedControl *segmented;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,12 +43,7 @@
     arrayFollower = [[NSMutableArray alloc] init];
     //
     currentUser = [Infrastructure sharedClient].currentUser;
-    //
-    if (self.isFollowing) {
-        self.segmentOption.selectedSegmentIndex = 0;
-    } else {
-        self.segmentOption.selectedSegmentIndex = 1;
-    }
+    
     // add gesture for removing keyboard
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     tapGesture.numberOfTapsRequired = 1;
@@ -56,6 +53,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     // load user
     [SVProgressHUD showWithStatus:@"Loading"];
     [self.serviceAPI getUserWithId:self.userId email:currentUser.email token:currentUser.authentication_token success:^(id responseObject) {
@@ -65,10 +63,47 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD dismiss];
     }];
+    
+    /////
+    NSArray *items = @[[[PPiFlatSegmentItem alloc] initWithTitle:@"Following" andIcon:nil],
+                       [[PPiFlatSegmentItem alloc] initWithTitle:@"Followers" andIcon:nil]];
+    segmented=[[PPiFlatSegmentedControl alloc] initWithFrame:self.segmentOption.frame items:items
+                                                iconPosition:IconPositionRight andSelectionBlock:^(NSUInteger segmentIndex) {
+                                                    
+                                                    [self segmentValueChanged:segmentIndex];
+                                                    
+                                                } iconSeparation:0.0f];
+    segmented.color=[UIColor colorWithRed:4.0f/255.0 green:45.0f/255.0 blue:104.0f/255.0 alpha:1];
+    segmented.borderWidth=0;
+    segmented.borderColor=[UIColor darkGrayColor];
+    segmented.selectedColor=[UIColor colorWithRed:237.0f/255.0 green:189.0f/255.0 blue:42.0f/255.0 alpha:1];
+    segmented.textAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                               NSForegroundColorAttributeName:[UIColor whiteColor]};
+    segmented.selectedTextAttributes=@{NSFontAttributeName:[UIFont systemFontOfSize:11],
+                                       NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [self.view addSubview:segmented];
+    
     //
-    if (self.userId && self.segmentOption.selectedSegmentIndex == 0) {
+    if (self.isFollowing) {
+        [segmented setSegmentAtIndex:0 enabled:YES];
+    } else {
+        [segmented setSegmentAtIndex:1 enabled:YES];
+    }
+    
+    //
+    if (self.userId && [segmented isSelectedSegmentAtIndex:0]) {
         [self loadFollowingUser:self.userId];
-    } else if (self.userId && self.segmentOption.selectedSegmentIndex == 1) {
+    } else if (self.userId && [segmented isSelectedSegmentAtIndex:1]) {
+        [self loadFollowerUser:self.userId];
+    }
+}
+
+#pragma mark - Segment
+- (void)segmentValueChanged:(NSUInteger) segmentIndex {
+    
+    if (segmentIndex == 0) { // Following
+        [self loadFollowingUser:self.userId];
+    } else { // Follower
         [self loadFollowerUser:self.userId];
     }
 }
@@ -155,7 +190,7 @@
     if (user.profile_picture_url_thumb && [user.profile_picture_url_thumb rangeOfString:@"placeholder"].location == NSNotFound) {
         [imageViewUserProfile setImageURL:[NSURL URLWithString:user.profile_picture_url_thumb]];
     }
-    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+    if ([segmented isSelectedSegmentAtIndex:0]) { // Following
         buttonUnfollow.hidden = NO;
     } else {
         NSInteger index = indexPath.row;
@@ -185,9 +220,9 @@
         
         [SVProgressHUD showSuccessWithStatus:@"Success"];
         [arrayFollowing removeObject:user];
-        if (self.userId && self.segmentOption.selectedSegmentIndex == 0) {
+        if (self.userId && [segmented isSelectedSegmentAtIndex:0]) {
             [self loadFollowingUser:self.userId];
-        } else if (self.userId && self.segmentOption.selectedSegmentIndex == 1) {
+        } else if (self.userId && [segmented isSelectedSegmentAtIndex:1]) {
             [self loadFollowerUser:self.userId];
         }
         [self.collectionViewUser reloadData];
@@ -205,13 +240,13 @@
 }
 
 #pragma mark - Actions
-- (IBAction)segmentValueChanged:(id)sender {
-    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
-        [self loadFollowingUser:self.userId];
-    } else { // Follower
-        [self loadFollowerUser:self.userId];
-    }
-}
+//- (IBAction)segmentValueChanged:(id)sender {
+//    if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+//        [self loadFollowingUser:self.userId];
+//    } else { // Follower
+//        [self loadFollowerUser:self.userId];
+//    }
+//}
 
 #pragma mark - SearchBar Delegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -242,7 +277,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if (searchText.length <= 0) {
-        if (self.segmentOption.selectedSegmentIndex == 0) { // Following
+        if ([segmented isSelectedSegmentAtIndex:0]) { // Following
             arrayData = arrayFollowing;
             [self.collectionViewUser reloadData];
         } else { // Follower
