@@ -98,7 +98,10 @@
 
         
         // compare start & end to show available
-        if ([currentContest.contest.status isEqualToString:@"OPEN"]) {
+        NSString *currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
+        if ([currentContest.contest.info.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedAscending &&
+            [currentContest.contest.info.end_date caseInsensitiveCompare:currentDateTime] == NSOrderedDescending) { // end date < current date
+//        if ([currentContest.contest.status isEqualToString:@"OPEN"]) {
             self.imageViewAvailable.hidden = NO;
             self.buttonEnter.enabled = YES;
         } else {
@@ -111,7 +114,7 @@
                 self.buttonEnter.enabled = NO;
         }
         //
-        NSString *endDate = currentContest.contest.info.end_date;
+        NSString *endDate = currentContest.contest.info.end_date_text;
         
         NSString *detail = [NSString stringWithFormat:@" Prize: %@ \n End date: %@\n\n %@", currentContest.contest.info.prizes, endDate, currentContest.contest.info.mDescription];
         self.textViewDetail.text = detail;

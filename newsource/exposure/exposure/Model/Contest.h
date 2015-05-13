@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSNumber *voting; // false || true
 @property (nonatomic, copy) NSString *start_date;
 @property (nonatomic, copy) NSString *end_date;
+@property (nonatomic, copy) NSString *end_date_text;
 @property (nonatomic, copy) NSString *created_at;
 @property (nonatomic, copy) NSString *updated_at;
 @property (nonatomic, copy) NSString *location;

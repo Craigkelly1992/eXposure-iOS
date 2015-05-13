@@ -279,6 +279,7 @@
 // get all contest
 - (void)getAllContestWithUserEmail:(NSString*)userEmail
                          userToken:(NSString*)userToken
+                            userId:(NSNumber*)userId
                            success:(void (^)(id responseObject))success
                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 

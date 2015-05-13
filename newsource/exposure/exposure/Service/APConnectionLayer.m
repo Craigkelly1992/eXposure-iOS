@@ -529,6 +529,7 @@
 // get all contest - checked
 - (void)getAllContestWithUserEmail:(NSString*)userEmail
                          userToken:(NSString*)userToken
+                            userId:(NSNumber*)userId
                            success:(void (^)(id responseObject))success
                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
@@ -536,6 +537,7 @@
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:
                                 userEmail, PARAM_USER_EMAIL,
                                 userToken, PARAM_USER_TOKEN,
+                                userId, PARAM_USER_ID,
                                 nil];
     [self GET:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // if success, return list of Contest object

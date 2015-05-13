@@ -9,12 +9,12 @@
 
 #import "CLFilterBase.h"
 
-
 @implementation CLFilterTool
 {
     UIImage *_originalImage;
     
     UIScrollView *_menuScroll;
+    int numberFilterUnlocked;
 }
 
 + (NSArray*)subtools
@@ -76,43 +76,50 @@
     //get values
     NSString *totalXp = [Infrastructure sharedClient].total_xp;
     int totalXpVal = [totalXp intValue];
-    int numberFilterUnlocked = 0;
+    numberFilterUnlocked = 0;
+    
 
-    if(totalXpVal<=9){
+    if(totalXpVal<=15){
         numberFilterUnlocked = 4;
-    }else{
-        if(totalXpVal<=19){
-            numberFilterUnlocked = 5;
-        }else{
-            if(totalXpVal<=39){
-                numberFilterUnlocked = 6;
-            }else{
-                if(totalXpVal<=69){
-                    numberFilterUnlocked = 7;
-                }else{
-                    if(totalXpVal<=109){
-                        numberFilterUnlocked = 8;
-                    }else{
-                        if(totalXpVal == 110){
-                            numberFilterUnlocked = 9;
-                        }else{
-                            numberFilterUnlocked = 14;
-                        }
-                    }
-                }
-            }
-        }
+    }else if (totalXpVal<=20){
+        numberFilterUnlocked = 5;
+    }else if(totalXpVal<=25){
+        numberFilterUnlocked = 6;
+    }else if(totalXpVal<=30){
+        numberFilterUnlocked = 7;
+    }else if(totalXpVal<=35){
+        numberFilterUnlocked = 8;
+    }else if(totalXpVal <= 40){
+        numberFilterUnlocked = 9;
+    }else {
+        numberFilterUnlocked = 14;
     }
     
     
     //process the iconimage
     UIImage *iconThumbnail = [_originalImage aspectFill:CGSizeMake(50, 50)];
-    for(CLImageToolInfo *info in self.toolInfo.sortedSubtools){
+    for(int i = 0; i < self.toolInfo.sortedSubtools.count; i++){
+        CLImageToolInfo *info = self.toolInfo.sortedSubtools[i];
         if(!info.available){
             continue;
         }
         
         CLToolbarMenuItem *view = [CLImageEditorTheme menuItemWithFrame:CGRectMake(x, 0, W, _menuScroll.height) target:self action:@selector(tappedFilterPanel:) toolInfo:info];
+        if (i <= 4) {
+            view.tag = 0;
+        } else if (i <= 5) {
+            view.tag = 20;
+        } else if (i <= 6) {
+            view.tag = 25;
+        } else if (i <= 7) {
+            view.tag = 30;
+        } else if (i <= 8) {
+            view.tag = 35;
+        } else if (i <= 9) {
+            view.tag = 40;
+        } else {
+        }
+        
         
         [_menuScroll addSubview:view];
         
@@ -156,6 +163,28 @@
     inProgress = YES;
     
     UIView *view = sender.view;
+    
+    //get values
+    NSString *totalXp = [Infrastructure sharedClient].total_xp;
+    int totalXpVal = [totalXp intValue];
+    numberFilterUnlocked = 0;
+    
+    if(totalXpVal<=15){
+        numberFilterUnlocked = 4;
+    }else if (totalXpVal<=20){
+        numberFilterUnlocked = 5;
+    }else if(totalXpVal<=25){
+        numberFilterUnlocked = 6;
+    }else if(totalXpVal<=30){
+        numberFilterUnlocked = 7;
+    }else if(totalXpVal<=35){
+        numberFilterUnlocked = 8;
+    }else if(totalXpVal <= 40){
+        numberFilterUnlocked = 9;
+    }else {
+        numberFilterUnlocked = 14;
+    }
+    
     view.alpha = 0.2;
     [UIView animateWithDuration:kCLImageToolAnimationDuration
                      animations:^{

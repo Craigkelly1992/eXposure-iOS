@@ -87,8 +87,9 @@
     frame4.origin.x = 107;
     frame4.origin.y = 106;
     frame4.size.width = 193;
-    frame4.size.height = 25;
+    frame4.size.height = 40;
     textViewWebsiteURL.textColor = [UIColor whiteColor];
+    textViewWebsiteURL.linkTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     textViewWebsiteURL.backgroundColor = [UIColor clearColor];
     textViewWebsiteURL.font = [UIFont systemFontOfSize:15];
     textViewWebsiteURL.frame = frame4;

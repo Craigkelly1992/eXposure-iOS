@@ -52,7 +52,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
     self.labelNoItem.hidden = YES;
     
     /////
@@ -137,21 +136,23 @@
     }
     // load view
     UIImageView *imageViewLeft = (UIImageView*)[cell viewWithTag:1];
+    UIImageView *imageViewRight = (UIImageView*)[cell viewWithTag:4];
     UILabel *labelContestName = (UILabel*)[cell viewWithTag:2];
     UILabel *labelContestDetail = (UILabel*)[cell viewWithTag:3];
-    UIImageView *imageViewRight = (UIImageView*)[cell viewWithTag:4];
     // fill data
     NSInteger reverseOrder = arrayContest.count - 1 - indexPath.row;
     Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:reverseOrder]];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewLeft];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewRight];
     // compare start & end to show available
-    if ([contest.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedAscending &&
-        [contest.end_date caseInsensitiveCompare:currentDateTime] == NSOrderedDescending) {
+    currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
+    if (
+        //[contest.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedAscending &&
+        [contest.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedDescending) { // start date > current date === future contest
         
-        imageViewRight.hidden = NO;
-    } else {
         imageViewRight.hidden = YES;
+    } else {
+        imageViewRight.hidden = NO;
     }
     //
     [imageViewLeft setImage:[UIImage imageNamed:@"placeholder.png"]];
@@ -194,7 +195,10 @@
 - (void) loadAllContest {
     [SVProgressHUD showWithStatus:@"Loading"];
     arrayAll = [[NSMutableArray alloc] init];
-    [self.serviceAPI getAllContestWithUserEmail:currentUser.email userToken:currentUser.authentication_token success:^(id responseObject) {
+    [self.serviceAPI getAllContestWithUserEmail:currentUser.email
+                                      userToken:currentUser.authentication_token
+                                         userId:currentUser.userId
+                                        success:^(id responseObject) {
         
         [SVProgressHUD dismiss];
         arrayAll = responseObject;
