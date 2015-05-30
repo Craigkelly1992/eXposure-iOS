@@ -78,6 +78,10 @@
  */
 
 - (NSString *)elapsedTimeSince:(NSDate *)date {
+    if (!date) {
+        NSLog(@"Can't find elapsed time since now");
+        return @"";
+    }
     NSTimeInterval timeInterval = [date timeIntervalSinceNow];
     NSAssert(timeInterval<0, @"Please provide past date for elapsed time");
     

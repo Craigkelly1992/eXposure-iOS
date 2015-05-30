@@ -67,6 +67,11 @@
                                                object:nil];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
 // When the notification occurs, a message will be sent to the following method
 - (void)eventListenerDidReceiveNotification:(NSNotification *)notif
 {
@@ -344,6 +349,26 @@
     
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
+    
+//    [picker pushViewController:editor animated:YES];
+    [picker dismissViewControllerAnimated:NO completion:nil];
+    [self showImageEditor:image];
+}
+
+#pragma mark - image editor delegate
+- (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
+{
+    [self postImage:image withEditor:editor];
+}
+
+- (void) postImage:(UIImage*)image withEditor:(CLImageEditor *)editor{
+    //
+    [editor dismissViewControllerAnimated:YES completion:nil];
+    //
+    [self showImageCreatePost:image];
+}
+
+-(void)showImageEditor:(UIImage*)image{
     CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:image];
     editor.delegate = self;
     CLImageToolInfo *tonalTool = [editor.toolInfo subToolInfoWithToolName:@"CLToneCurveTool" recursive:NO];
@@ -362,26 +387,17 @@
     for (CLImageToolInfo *tool in array) {
         NSLog(@"%@",tool.toolName);
     }
-    [picker pushViewController:editor animated:YES];
-    
+    [self.navigationController pushViewController:editor animated:YES];
 }
 
-#pragma mark - image editor delegate
-- (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
-{
-    [self postImage:image withEditor:editor];
-}
-
-- (void) postImage:(UIImage*)image withEditor:(CLImageEditor *)editor{
-    //
-    [editor dismissViewControllerAnimated:YES completion:nil];
-    //
+-(void)showImageCreatePost:(UIImage*)image {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     EXPNewPostViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"EXPNewPostViewControllerIdentifier"];
-    //
+    
     viewController.imagePost = image;
     viewController.contestId = contestId;
     [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController popViewControllerAnimated:NO];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

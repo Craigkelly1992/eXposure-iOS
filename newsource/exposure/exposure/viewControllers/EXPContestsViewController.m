@@ -140,8 +140,8 @@
     UILabel *labelContestName = (UILabel*)[cell viewWithTag:2];
     UILabel *labelContestDetail = (UILabel*)[cell viewWithTag:3];
     // fill data
-    NSInteger reverseOrder = arrayContest.count - 1 - indexPath.row;
-    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:reverseOrder]];
+//    NSInteger reverseOrder = arrayContest.count - 1 - indexPath.row;
+    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:indexPath.row]];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewLeft];
     [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:imageViewRight];
     // compare start & end to show available
@@ -245,8 +245,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     EXPContestDetailViewController *contestDetailVC = segue.destinationViewController;
-    NSInteger reverseOrder = arrayContest.count - 1 - selectedIndexPath.row;
-    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:reverseOrder]];
+//    NSInteger reverseOrder = arrayContest.count - 1 - selectedIndexPath.row;
+    Contest *contest = [Contest objectFromDictionary:[arrayContest objectAtIndex:selectedIndexPath.row]];
     contestDetailVC.contestId = contest.contestId;
     contestDetailVC.image_url = contest.picture_url;
     contestDetailVC.image_url_thumb = contest.picture_url_thumb;

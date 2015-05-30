@@ -43,6 +43,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO];
     self.imageViewPost.image = self.imagePost;
     self.buttonSend.enabled = YES;
 }
