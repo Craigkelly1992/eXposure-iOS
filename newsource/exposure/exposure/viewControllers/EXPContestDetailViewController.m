@@ -116,7 +116,7 @@
         //
         NSString *endDate = currentContest.contest.info.end_date_text;
         
-        NSString *detail = [NSString stringWithFormat:@" Prize: %@ \n End date: %@\n\n %@", currentContest.contest.info.prizes, endDate, currentContest.contest.info.mDescription];
+        NSString *detail = [NSString stringWithFormat:@"%@\n\n Rewards: %@ \n End date: %@", currentContest.contest.info.mDescription, currentContest.contest.info.prizes, endDate];
         self.textViewDetail.text = detail;
         
         //

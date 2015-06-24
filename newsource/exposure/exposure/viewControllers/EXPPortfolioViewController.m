@@ -16,6 +16,7 @@
 #import "EXPImageDetailViewController.h"
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
+#import "Util.h"
 
 #define kContestHeightMin 33
 #define kContestHeightMax 142
@@ -551,6 +552,7 @@
     // fill data
     Contest *contest = arrayContest[indexPath.row];
     UIImageView *imageViewContest = (UIImageView*)[cell viewWithTag:1];
+    UIImageView *imageViewValid = (UIImageView*)[cell viewWithTag:4];
     UILabel *labelContestName = (UILabel*)[cell viewWithTag:2];
     UILabel *labelContestDescription = (UILabel*)[cell viewWithTag:3];
     //
@@ -561,7 +563,16 @@
     }
     //
     labelContestName.text = contest.title;
-    labelContestDescription.text = contest.mDescription;
+    labelContestDescription.text = contest.brand_name;
+    NSString *currentDateTime = [[Util sharedUtil] getCurrentSystemDateString];
+    if (
+        //[contest.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedAscending &&
+        [contest.start_date caseInsensitiveCompare:currentDateTime] == NSOrderedDescending) { // start date > current date === future contest
+        
+        imageViewValid.hidden = YES;
+    } else {
+        imageViewValid.hidden = NO;
+    }
     return cell;
 }
 
