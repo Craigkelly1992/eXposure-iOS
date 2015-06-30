@@ -102,6 +102,8 @@
 		B3CD74DC19791F4D00CBE2C6 /* Submission.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD74DB19791F4D00CBE2C6 /* Submission.m */; };
 		B3CD74DF1979202000CBE2C6 /* ContestDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD74DE1979202000CBE2C6 /* ContestDetail.m */; };
 		B3CD74E21979210B00CBE2C6 /* SubmissionList.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD74E11979210B00CBE2C6 /* SubmissionList.m */; };
+		B3D6EA761B428FD1007D5DAF /* EXPTermOfUseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D6EA751B428FD1007D5DAF /* EXPTermOfUseViewController.m */; };
+		B3D6EA791B42952C007D5DAF /* eXposure_Terms_of_Use.docx in Resources */ = {isa = PBXBuildFile; fileRef = B3D6EA731B428B9B007D5DAF /* eXposure_Terms_of_Use.docx */; };
 		B3DB55561986385A00402BA8 /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3DB55551986385A00402BA8 /* sample.jpg */; };
 		B3DB55621987C38400402BA8 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB555B1987C38300402BA8 /* UIImage+Alpha.m */; };
 		B3DB55631987C38400402BA8 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DB555D1987C38300402BA8 /* UIImage+Resize.m */; };
@@ -325,6 +327,9 @@
 		B3CD74DE1979202000CBE2C6 /* ContestDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContestDetail.m; path = Model/ContestDetail.m; sourceTree = "<group>"; };
 		B3CD74E01979210B00CBE2C6 /* SubmissionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SubmissionList.h; path = Model/SubmissionList.h; sourceTree = "<group>"; };
 		B3CD74E11979210B00CBE2C6 /* SubmissionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubmissionList.m; path = Model/SubmissionList.m; sourceTree = "<group>"; };
+		B3D6EA731B428B9B007D5DAF /* eXposure_Terms_of_Use.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = eXposure_Terms_of_Use.docx; path = ../eXposure_Terms_of_Use.docx; sourceTree = "<group>"; };
+		B3D6EA741B428FD1007D5DAF /* EXPTermOfUseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXPTermOfUseViewController.h; path = viewControllers/EXPTermOfUseViewController.h; sourceTree = "<group>"; };
+		B3D6EA751B428FD1007D5DAF /* EXPTermOfUseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXPTermOfUseViewController.m; path = viewControllers/EXPTermOfUseViewController.m; sourceTree = "<group>"; };
 		B3DB55551986385A00402BA8 /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sample.jpg; path = Resources/Images/sample.jpg; sourceTree = "<group>"; };
 		B3DB555A1987C38300402BA8 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "Library/UIImage+Resize/UIImage+Alpha.h"; sourceTree = "<group>"; };
 		B3DB555B1987C38300402BA8 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Alpha.m"; path = "Library/UIImage+Resize/UIImage+Alpha.m"; sourceTree = "<group>"; };
@@ -757,6 +762,8 @@
 		B3CD73A8196E879800CBE2C6 /* exposure */ = {
 			isa = PBXGroup;
 			children = (
+				B3CD73B1196E879800CBE2C6 /* AppDelegate.h */,
+				B3CD73B2196E879800CBE2C6 /* AppDelegate.m */,
 				B35801111A5FEE6F007C0079 /* Util */,
 				B3DB558819890CE500402BA8 /* Custom View */,
 				B3A4D507197EB0150070185E /* constant */,
@@ -764,8 +771,6 @@
 				B3CD742F196E98E200CBE2C6 /* service */,
 				B3CD742E196E98DA00CBE2C6 /* model */,
 				B3CD73DC196E8C1F00CBE2C6 /* resources */,
-				B3CD73B1196E879800CBE2C6 /* AppDelegate.h */,
-				B3CD73B2196E879800CBE2C6 /* AppDelegate.m */,
 				B3CD73D7196E87B000CBE2C6 /* viewControllers */,
 				B3CD73D8196E87C300CBE2C6 /* ui */,
 				B3CD73A9196E879800CBE2C6 /* Supporting Files */,
@@ -776,6 +781,7 @@
 		B3CD73A9196E879800CBE2C6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B3D6EA731B428B9B007D5DAF /* eXposure_Terms_of_Use.docx */,
 				B3CD73AA196E879800CBE2C6 /* exposure-Info.plist */,
 				B3CD73AB196E879800CBE2C6 /* InfoPlist.strings */,
 				B3CD73AE196E879800CBE2C6 /* main.m */,
@@ -849,6 +855,8 @@
 				B3DB558F198A296400402BA8 /* IKLoginViewController.m */,
 				B3DB55B3198B8B3700402BA8 /* EXPGalleryViewController.h */,
 				B3DB55B4198B8B3700402BA8 /* EXPGalleryViewController.m */,
+				B3D6EA741B428FD1007D5DAF /* EXPTermOfUseViewController.h */,
+				B3D6EA751B428FD1007D5DAF /* EXPTermOfUseViewController.m */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -1064,11 +1072,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = looper;
-				TargetAttributes = {
-					B3CD739E196E879800CBE2C6 = {
-						DevelopmentTeam = YU344669UU;
-					};
-				};
 			};
 			buildConfigurationList = B3CD739A196E879700CBE2C6 /* Build configuration list for PBXProject "exposure" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1094,6 +1097,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5DE43571A709BE10058F08B /* key.png in Resources */,
+				B3D6EA791B42952C007D5DAF /* eXposure_Terms_of_Use.docx in Resources */,
 				B3CD73BB196E879800CBE2C6 /* Images.xcassets in Resources */,
 				B3DB55561986385A00402BA8 /* sample.jpg in Resources */,
 				B3DB55B2198A2F7300402BA8 /* InstagramKit.plist in Resources */,
@@ -1212,6 +1216,7 @@
 				B36BFB261A4FC5DC002B8B14 /* CLHighlightShadowEffect.m in Sources */,
 				B34CDF5319C0A2AC0038F28C /* EXPBrandFollowViewController.m in Sources */,
 				B3CD74D3197837D900CBE2C6 /* EXPImageDetailViewController.m in Sources */,
+				B3D6EA761B428FD1007D5DAF /* EXPTermOfUseViewController.m in Sources */,
 				B36BFB361A4FC5DC002B8B14 /* CLFontPickerView.m in Sources */,
 				B36BFB371A4FC5DC002B8B14 /* CLPickerDrum.m in Sources */,
 				B36BFB251A4FC5DC002B8B14 /* CLGloomEffect.m in Sources */,
@@ -1387,7 +1392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_RESOURCE_RULES_PATH = "$(SDKROOT)/ResourceRules.plist";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
