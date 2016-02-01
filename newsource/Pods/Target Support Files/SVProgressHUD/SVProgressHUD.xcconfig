@@ -1,0 +1,5 @@
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/SVProgressHUD" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/DAKeyboardControl" "${PODS_ROOT}/Headers/Public/FontAwesome+iOS" "${PODS_ROOT}/Headers/Public/PPiAwesomeButton" "${PODS_ROOT}/Headers/Public/PPiFlatSegmentedControl" "${PODS_ROOT}/Headers/Public/SVProgressHUD" "${PODS_ROOT}/Headers/Public/SVPullToRefresh" "${PODS_ROOT}/Headers/Public/TTTAttributedLabel" "${PODS_ROOT}/Headers/Public/UIAlertView-Blocks"
+OTHER_LDFLAGS = -framework "QuartzCore"
+PODS_ROOT = ${SRCROOT}
+SKIP_INSTALL = YES

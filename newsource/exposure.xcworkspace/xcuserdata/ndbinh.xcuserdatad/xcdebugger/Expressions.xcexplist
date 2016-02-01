@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "__45-[EXPGalleryViewController loadFromInstagram]_block_invoke:EXPGalleryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPGalleryViewController collectionView:cellForItemAtIndexPath:]:EXPGalleryViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPSignUpViewController keyboardWasShown:]:EXPSignUpViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.textFieldConfirmPassword.frame.origin.y">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPortFolioSettingsViewController fetchTimelineForUser:]:EXPPortFolioSettingsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.accountStore">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__42-[EXPLoginViewController buttonSignInTap:]_block_invoke:EXPLoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[Infrastructure sharedClient].deviceToken">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPhotoStreamViewController collectionView:didDeselectItemAtIndexPath:]:EXPPhotoStreamViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__59-[EXPPortFolioSettingsViewController fetchTimelineForUser:]_block_invoke:EXPPortFolioSettingsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "account.username">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPContestDetailViewController viewWillAppear:]:EXPContestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPortfolioViewController updateScrollView]:EXPPortfolioViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPImageDetailViewController likePostHandler:]:EXPImageDetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[responseObject objectForKey:@&quot;like&quot;]">
+            </PersistentString>
+            <PersistentString
+               value = "NO">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPImageDetailViewController viewDidLoad]:EXPImageDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPortfolioViewController viewDidLayoutSubviews]:EXPPortfolioViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__59-[EXPPortFolioSettingsViewController fetchTimelineForUser:]_block_invoke_2:EXPPortFolioSettingsViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPBrandViewController collectionView:cellForItemAtIndexPath:]:EXPBrandViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPortfolioViewController unfollowTap:]:EXPPortfolioViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPNewPostViewController buttonSendTap:]:EXPNewPostViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.contestId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPointViewController tableView:cellForRowAtIndexPath:]:EXPPointViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "buttonFollow.tag">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPPointViewController changeFollow:]:EXPPointViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__45-[EXPImageDetailViewController loadPostUser:]_block_invoke:EXPImageDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[EXPContestDetailViewController updateScrollView]:EXPContestDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__43-[EXPImageDetailViewController viewDidLoad]_block_invoke:EXPImageDetailViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__42-[EXPLoginViewController buttonSignInTap:]_block_invoke_3:EXPLoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentUser">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

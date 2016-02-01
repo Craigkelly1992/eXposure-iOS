@@ -1,0 +1,63 @@
+PODS:
+  - AFNetworking (2.3.1):
+    - AFNetworking/NSURLConnection (= 2.3.1)
+    - AFNetworking/NSURLSession (= 2.3.1)
+    - AFNetworking/Reachability (= 2.3.1)
+    - AFNetworking/Security (= 2.3.1)
+    - AFNetworking/Serialization (= 2.3.1)
+    - AFNetworking/UIKit (= 2.3.1)
+  - AFNetworking/NSURLConnection (2.3.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.3.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.3.1)
+  - AFNetworking/Security (2.3.1)
+  - AFNetworking/Serialization (2.3.1)
+  - AFNetworking/UIKit (2.3.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - DAKeyboardControl (2.3.1)
+  - FontAwesome+iOS (0.1.4)
+  - PPiAwesomeButton (1.5.2):
+    - FontAwesome+iOS
+  - PPiFlatSegmentedControl (1.4.0):
+    - PPiAwesomeButton
+  - SVProgressHUD (HEAD based on 2.0-beta8)
+  - SVPullToRefresh (0.4.1)
+  - TTTAttributedLabel (1.13.0)
+  - UIAlertView-Blocks (0.0.1)
+
+DEPENDENCIES:
+  - AFNetworking
+  - DAKeyboardControl (~> 2.3)
+  - PPiFlatSegmentedControl (from `https://github.com/pepibumur/PPiFlatSegmentedControl.git`)
+  - SVProgressHUD (HEAD)
+  - SVPullToRefresh (~> 0.4.1)
+  - TTTAttributedLabel
+  - UIAlertView-Blocks (= 0.0.1)
+
+EXTERNAL SOURCES:
+  PPiFlatSegmentedControl:
+    :git: https://github.com/pepibumur/PPiFlatSegmentedControl.git
+
+CHECKOUT OPTIONS:
+  PPiFlatSegmentedControl:
+    :commit: cab186da43a1c99a5eda1eb2a3f81aa0f1a94dde
+    :git: https://github.com/pepibumur/PPiFlatSegmentedControl.git
+
+SPEC CHECKSUMS:
+  AFNetworking: 05b9f6e3aa5ac45bc383b4bb108ef338080a26c7
+  DAKeyboardControl: 0a5be55ec44d1a1f223c72a31c14b3e4dc15b437
+  FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
+  PPiAwesomeButton: 16f7279582fd36f65186b24b83ef876217363eb5
+  PPiFlatSegmentedControl: f5afcba22d090d6f55df3dd52319011cc79164c0
+  SVProgressHUD: 6e48a1dda09ce3b58adc41d013baed3a8e8980ff
+  SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
+  TTTAttributedLabel: 8aeaf67481bb38970711e2641211cba912bd5239
+  UIAlertView-Blocks: 142d62bad7dd3a137fe297f5cc25dff6bb4fcc95
+
+COCOAPODS: 0.39.0
