@@ -1054,7 +1054,10 @@
 				B3CD739C196E879800CBE2C6 /* Frameworks */,
 				B3CD739D196E879800CBE2C6 /* Resources */,
 				044450EE2CC54F30944C4838 /* Copy Pods Resources */,
+<<<<<<< HEAD
 				DD7ABAFE9152087A41730145 /* Embed Pods Frameworks */,
+=======
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 			);
 			buildRules = (
 			);
@@ -1071,7 +1074,11 @@
 		B3CD7397196E879700CBE2C6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+<<<<<<< HEAD
 				LastUpgradeCheck = 0720;
+=======
+				LastUpgradeCheck = 0510;
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 				ORGANIZATIONNAME = looper;
 				TargetAttributes = {
 					B3CD739E196E879800CBE2C6 = {
@@ -1148,6 +1155,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+<<<<<<< HEAD
 		DD7ABAFE9152087A41730145 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1163,6 +1171,8 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+=======
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1331,7 +1341,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+<<<<<<< HEAD
 				ENABLE_TESTABILITY = YES;
+=======
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1400,11 +1413,17 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "exposure/exposure-Prefix.pch";
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.looper.exposure;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1425,11 +1444,17 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "exposure/exposure-Prefix.pch";
 				INFOPLIST_FILE = "exposure/exposure-Info.plist";
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.looper.exposure;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -7,22 +7,28 @@
       "scale" : "2x"
     },
     {
+<<<<<<< HEAD
       "idiom" : "iphone",
       "size" : "29x29",
       "scale" : "3x"
     },
     {
+=======
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
       "size" : "40x40",
       "idiom" : "iphone",
       "filename" : "app_icon_80px.png",
       "scale" : "2x"
     },
     {
+<<<<<<< HEAD
       "idiom" : "iphone",
       "size" : "40x40",
       "scale" : "3x"
     },
     {
+=======
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
       "size" : "60x60",
       "idiom" : "iphone",
       "filename" : "app_icon_120px.png",

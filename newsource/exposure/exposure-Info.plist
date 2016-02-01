@@ -9,7 +9,11 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
+<<<<<<< HEAD
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+=======
+	<string>com.looper.exposure</string>
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

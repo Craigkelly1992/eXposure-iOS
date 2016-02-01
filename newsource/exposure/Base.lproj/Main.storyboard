@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ugi-0Q-BOs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+=======
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ugi-0Q-BOs">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -1001,7 +1008,11 @@
                         <viewControllerLayoutGuide type="bottom" id="8hW-oC-fzw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JOo-AL-cJB">
+<<<<<<< HEAD
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+=======
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="There's no item" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Qj-8Y-lQY">
@@ -1019,7 +1030,11 @@
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContestTableViewCellIdentifier" rowHeight="58" id="SxS-Ct-yWu">
+<<<<<<< HEAD
                                                 <rect key="frame" x="0.0" y="1" width="320" height="58"/>
+=======
+                                                <rect key="frame" x="0.0" y="22" width="320" height="58"/>
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SxS-Ct-yWu" id="KKH-6v-xug">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
@@ -1135,7 +1150,11 @@
                                                 <nil key="highlightedColor"/>
                                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </label>
+<<<<<<< HEAD
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No brand lorem ipsum" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ndJ-sn-iIE">
+=======
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No brand lorem ipsum" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="ndJ-sn-iIE">
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                                 <rect key="frame" x="8" y="94" width="171" height="20"/>
                                                 <rect key="contentStretch" x="1" y="1" width="1" height="1"/>
                                                 <constraints>
@@ -1298,7 +1317,11 @@
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubmissionCollectionViewCellIdentifier" id="lxs-Er-lXj">
+<<<<<<< HEAD
                                                                 <rect key="frame" x="5" y="5" width="100" height="100"/>
+=======
+                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -1807,7 +1830,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
+<<<<<<< HEAD
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d9F-F2-qau">
+=======
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d9F-F2-qau">
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PoG-0Z-SFZ">
@@ -1998,7 +2025,11 @@ Team eXposure</string>
             </objects>
             <point key="canvasLocation" x="715" y="-716"/>
         </scene>
+<<<<<<< HEAD
         <!--Delegate-->
+=======
+        <!--Port Folio Settings View Controller-->
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
         <scene sceneID="Qbw-w7-Xqe">
             <objects>
                 <viewController storyboardIdentifier="EXPPortFolioSettingsViewControllerIdentifier" id="tFd-K8-ZEb" customClass="EXPPortFolioSettingsViewController" sceneMemberID="viewController">
@@ -2010,7 +2041,11 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+<<<<<<< HEAD
                             <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BbU-oU-O3G">
+=======
+                            <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BbU-oU-O3G">
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Pw-xh-MCd" userLabel="View - Container">
@@ -2236,7 +2271,11 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+<<<<<<< HEAD
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XpQ-f8-nK4">
+=======
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpQ-f8-nK4">
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="You have won! We'll be needing to confirm a few things from you to ship your prize!" translatesAutoresizingMaskIntoConstraints="NO" id="p4Q-b7-a6B">
@@ -2427,7 +2466,11 @@ Team eXposure</string>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EXPGalleryCollectionViewCellIdentifier" id="VVz-bN-0on">
+<<<<<<< HEAD
                                         <rect key="frame" x="5" y="5" width="100" height="100"/>
+=======
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -2479,7 +2522,11 @@ Team eXposure</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+<<<<<<< HEAD
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="2bY-sV-O2S">
+=======
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="2bY-sV-O2S">
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WbE-bo-FWB">
@@ -2889,4 +2936,12 @@ Team eXposure</string>
         <image name="placeholder.png" width="256" height="256"/>
         <image name="sample.jpg" width="640" height="480"/>
     </resources>
+<<<<<<< HEAD
+=======
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+>>>>>>> d6060880aac300b7a62b33700c1b983bd63aba17
 </document>
